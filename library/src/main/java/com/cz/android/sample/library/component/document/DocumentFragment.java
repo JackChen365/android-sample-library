@@ -102,10 +102,10 @@ public class DocumentFragment extends Fragment {
                 markdownView.loadMarkdownFromAssets(documentUrl,null);
             } else {
                 //相对路径地址
-                String repositoryUrl = AndroidSample.getInstance().getRepositoryUrl();
-                if(null==repositoryUrl){
-                    //warning
-                } else {
+//                String repositoryUrl = AndroidSample.getInstance().getRepositoryUrl();
+//                if(null==repositoryUrl){
+//                    //warning
+//                } else {
 //                    val documentPackagePath = TemplateConfiguration.getDocumentPath(className,documentUrl)
 //                    if(null!=documentPackagePath){
 //                        //动态获取相对路径
@@ -116,7 +116,7 @@ public class DocumentFragment extends Fragment {
 //                    }
 //                    //网络加载
 //                    markdownView.loadUrl(documentUrl)
-                }
+//                }
             }
         }
     }

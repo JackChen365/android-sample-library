@@ -278,6 +278,7 @@ public class AndroidSampleProcessor extends AbstractProcessor {
                 .build();
 
         FieldSpec mainComponentField=null;
+        FieldSpec repositoryUrlField=null;
         Iterator<? extends Element> iterator = mainComponentElements.iterator();
         if(iterator.hasNext()){
             Element element = iterator.next();
@@ -285,6 +286,11 @@ public class AndroidSampleProcessor extends AbstractProcessor {
             mainComponentField = FieldSpec.builder(String.class, AndroidSampleConstant.MAIN_COMPONENT_FIELD_NAME)
                     .addModifiers(Modifier.FINAL)
                     .initializer("\""+className+"\"")
+                    .build();
+            MainComponent mainComponent = element.getAnnotation(MainComponent.class);
+            repositoryUrlField = FieldSpec.builder(String.class, AndroidSampleConstant.REPOSITORY_URL_FIELD_NAME)
+                    .addModifiers(Modifier.FINAL)
+                    .initializer("\""+mainComponent.value()+"\"")
                     .build();
         }
 
@@ -300,6 +306,9 @@ public class AndroidSampleProcessor extends AbstractProcessor {
                 .addField(processorField);
         if(null!=mainComponentField){
             builder.addField(mainComponentField);
+        }
+        if(null!=repositoryUrlField){
+            builder.addField(repositoryUrlField);
         }
         String sourcePath=null;
         TypeSpec sampleClass =builder.build();
@@ -371,7 +380,8 @@ public class AndroidSampleProcessor extends AbstractProcessor {
 
 
         final MethodSpec.Builder methodSpec = MethodSpec.constructorBuilder();
-        FieldSpec fileListField = FieldSpec.builder(fileList, "fileList")
+        methodSpec.addModifiers(Modifier.PUBLIC);
+        FieldSpec fileListField = FieldSpec.builder(fileList, AndroidSampleConstant.PROJECT_FILE_LIST_FIELD_NAME)
                 .addModifiers(Modifier.FINAL)
                 .initializer("new $T<>()", arrayList)
                 .build();
@@ -383,7 +393,7 @@ public class AndroidSampleProcessor extends AbstractProcessor {
             File f = fileQueue.poll();
             if(!f.isDirectory()){
                 String sourcePath = f.getAbsolutePath();
-                methodSpec.addStatement("fileList.add(new $T($S))", File.class,sourcePath.substring(javaSourcePath.length()+1));
+                methodSpec.addStatement(AndroidSampleConstant.PROJECT_FILE_LIST_FIELD_NAME+".add(new $T($S))", File.class,sourcePath.substring(javaSourcePath.length()+1));
             } else {
                 for(File subFile:f.listFiles()){
                     if(!".".equals(subFile.getName())&& !"..".equals(subFile.getName())){

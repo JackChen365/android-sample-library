@@ -14,13 +14,14 @@ import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.component.ComponentManager;
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.function.SampleFunction;
-import com.cz.android.sample.library.lifecycle.SampleActivityLifeCycleCallback;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 import com.cz.android.sample.library.component.memory.SampleMemoryComponent;
 import com.cz.android.sample.library.component.message.SampleMessageComponent;
 import com.cz.android.sample.library.function.permission.SamplePermissionFunction;
+import com.cz.android.sample.library.lifecycle.SampleActivityLifeCycleCallback;
 import com.cz.android.sample.library.main.DefaultMainSampleFragment;
 import com.cz.android.sample.library.processor.FragmentClassActionProcessor;
+import com.cz.android.sample.library.project.SampleProjectFileSystem;
 import com.cz.android.sample.main.MainComponentFactory;
 import com.cz.android.sample.processor.AbsActionProcessor;
 import com.cz.android.sample.processor.ActionProcessManager;
@@ -47,12 +48,8 @@ public class AndroidSample {
     private final ActionProcessManager actionProcessManager=new ActionProcessManager();
     private final ComponentManager componentManager=ComponentManager.getInstance();
     private final FunctionManager functionManager=new FunctionManager();
+    private final SampleProjectFileSystem fileSystem=new SampleProjectFileSystem();
     private MainComponentFactory mainComponentContainer=new DefaultMainSampleFragment();
-
-    /**
-     * repository url
-     */
-    private String repositoryUrl;
 
     /**
      * initialize all the template data
@@ -60,20 +57,23 @@ public class AndroidSample {
      * @param context
      */
     private void initAndroidSampleTemplate(Context context){
-        Class clazz=null;
+        Object object=null;
         try {
-            clazz = Class.forName(AndroidSampleConstant.ANDROID_SIMPLE_CLASS);
-        } catch (ClassNotFoundException e){
+            Class clazz = Class.forName(AndroidSampleConstant.ANDROID_SIMPLE_CLASS);
+            object = clazz.newInstance();
+        } catch (Exception e){
             Log.w(TAG,"Couldn't load class:"+AndroidSampleConstant.ANDROID_SIMPLE_CLASS_NAME+"!");
         }
-        if(null!=clazz){
-            List<CategoryItem> categoryList=getObjectValue(clazz,AndroidSampleConstant.CATEGORY_FIELD_NAME);
-            List<RegisterItem> registerList=getObjectValue(clazz,AndroidSampleConstant.REGISTER_FIELD_NAME);
-            List<String> functionList=getObjectValue(clazz,AndroidSampleConstant.FUNCTION_FIELD_NAME);
-            List<String> componentList=getObjectValue(clazz,AndroidSampleConstant.COMPONENT_FIELD_NAME);
-            List<String> actionProcessorList=getObjectValue(clazz,AndroidSampleConstant.PROCESSOR_FIELD_NAME);
-            String mainComponentClass=getObjectValue(clazz,AndroidSampleConstant.MAIN_COMPONENT_FIELD_NAME);
-
+        if(null!=object){
+            List<CategoryItem> categoryList=getObjectValue(object,AndroidSampleConstant.CATEGORY_FIELD_NAME);
+            List<RegisterItem> registerList=getObjectValue(object,AndroidSampleConstant.REGISTER_FIELD_NAME);
+            List<String> functionList=getObjectValue(object,AndroidSampleConstant.FUNCTION_FIELD_NAME);
+            List<String> componentList=getObjectValue(object,AndroidSampleConstant.COMPONENT_FIELD_NAME);
+            List<String> actionProcessorList=getObjectValue(object,AndroidSampleConstant.PROCESSOR_FIELD_NAME);
+            String mainComponentClass=getObjectValue(object,AndroidSampleConstant.MAIN_COMPONENT_FIELD_NAME);
+            //Here if we have repository. related to this repository
+            String repositoryUrl=getObjectValue(object,AndroidSampleConstant.REPOSITORY_URL_FIELD_NAME);
+            fileSystem.setRepositoryUrl(repositoryUrl);
             //process register and category translate string resources to string
             try {
                 processCategoryList(context,categoryList,registerList);
@@ -94,21 +94,18 @@ public class AndroidSample {
 
     /**
      * Get object field value by reflect
-     * @param clazz
+     * @param object
      * @param fieldName
      * @param <T>
      * @return
      */
-    private<T> T getObjectValue(Class clazz,String fieldName){
+    private<T> T getObjectValue(Object object,String fieldName){
         try {
-            if(null!=clazz) {
-                Object item = clazz.newInstance();
-                Field registerItemField = clazz.getDeclaredField(fieldName);
-                registerItemField.setAccessible(true);
-                Object fieldValue = registerItemField.get(item);
-                if (null != fieldValue) {
-                    return (T) fieldValue;
-                }
+            Field registerItemField = object.getClass().getDeclaredField(fieldName);
+            registerItemField.setAccessible(true);
+            Object fieldValue = registerItemField.get(object);
+            if (null != fieldValue) {
+                return (T) fieldValue;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -194,6 +191,9 @@ public class AndroidSample {
         Application applicationContext = (Application)context.getApplicationContext();
         //initialize all the template data
         initAndroidSampleTemplate(context);
+
+        //initialize project file
+        fileSystem.initAndroidSampleProjectFile(context);
         //register fragment class processor
         actionProcessManager.register(new FragmentClassActionProcessor());
 
@@ -207,16 +207,6 @@ public class AndroidSample {
 
         //register activity lifecycle
         applicationContext.registerActivityLifecycleCallbacks(new SampleActivityLifeCycleCallback());
-    }
-
-    /**
-     * set up repository url in order to use relative path
-     * this url link to src/main/java
-     * e.g. https://github.com/momodae/SuperTextView/tree/master/app/src/main/java
-     * @param url
-     */
-    public void setRepositoryUrl(String url){
-        this.repositoryUrl=url;
     }
 
     /**
@@ -296,9 +286,5 @@ public class AndroidSample {
 
     public FunctionManager getFunctionManager() {
         return functionManager;
-    }
-
-    public String getRepositoryUrl() {
-        return repositoryUrl;
     }
 }

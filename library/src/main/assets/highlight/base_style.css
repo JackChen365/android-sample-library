@@ -1,0 +1,10 @@
+body {
+    display: block;
+    margin: 0px;
+}
+pre {
+    display: block;
+    font-family: monospace;
+    white-space: pre;
+    margin: 0px 0px;
+}

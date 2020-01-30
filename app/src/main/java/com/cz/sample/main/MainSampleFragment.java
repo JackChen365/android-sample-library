@@ -41,7 +41,7 @@ import java.util.List;
  * @email bingo110@126.com
  */
 @Keep
-@MainComponent
+@MainComponent("https://raw.githubusercontent.com/momodae/AndroidSampleLibrary/master/app/src/main/java/")
 public class MainSampleFragment extends Fragment implements MainComponentFactory {
 
     @Override

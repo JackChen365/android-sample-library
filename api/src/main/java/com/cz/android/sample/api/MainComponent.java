@@ -6,4 +6,5 @@ package com.cz.android.sample.api;
  * @email bingo110@126.com
  */
 public @interface MainComponent {
+    String value() default "";
 }

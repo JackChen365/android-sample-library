@@ -38,12 +38,18 @@ public class AndroidSampleConstant {
     public static final int REF_TYPE=1;
 
     /**
-     * all the field that template class needed
+     * All the field that template class needed
      */
     public static final String REGISTER_FIELD_NAME="registerList";
     public static final String CATEGORY_FIELD_NAME="categoryList";
     public static final String MAIN_COMPONENT_FIELD_NAME="mainComponent";
+    public static final String REPOSITORY_URL_FIELD_NAME="repositoryUrl";
     public static final String FUNCTION_FIELD_NAME="functionList";
     public static final String COMPONENT_FIELD_NAME="componentList";
     public static final String PROCESSOR_FIELD_NAME="processorList";
+
+    /**
+     * All the field that class:AndroidProjectFile has
+     */
+    public static final String PROJECT_FILE_LIST_FIELD_NAME="projectFileList";
 }
