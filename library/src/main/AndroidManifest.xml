@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cz.android.sample.library" >
+
+    <application>
+        <activity android:name=".appcompat.SampleFragmentContainerActivity"/>
+
+        <provider
+            android:authorities="${applicationId}"
+            android:name="com.cz.android.sample.library.provider.SampleContentProvider"/>
+    </application>
+</manifest>

@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Library</string>
+
+    <string name="sample_invalid_data">无效的数据</string>
+    <string name="message_output">消息输出</string>
+</resources>

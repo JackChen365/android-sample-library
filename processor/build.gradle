@@ -1,0 +1,31 @@
+apply plugin: 'java-library'
+
+
+configurations {
+    bundled
+}
+
+jar {
+    // include anything in the bundled configuration in the final jar
+    from {
+        configurations.bundled.collect {
+            if(!it.isDirectory()){
+                zipTree(it)
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.squareup:javapoet:1.11.1'
+    implementation 'com.google.auto.service:auto-service:1.0-rc2'
+    annotationProcessor "com.google.auto.service:auto-service:1.0-rc2"
+
+    bundled(project(':api'))
+    implementation project(path: ':api')
+}
+
+
+sourceCompatibility = "7"
+targetCompatibility = "7"

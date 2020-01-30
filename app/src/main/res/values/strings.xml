@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AndroidSampleLibrary</string>
+    <string name="animation">Animation</string>
+    <string name="animation_desc">Animation description</string>
+    <string name="animation_sample1">Animation1</string>
+    <string name="animation_sample_desc1">Animation Description1</string>
+    <string name="animation_sample2">Animation2</string>
+    <string name="animation_sample_desc2">Animation description2</string>
+    <string name="animation_sample3">Animation3</string>
+    <string name="animation_sample_desc3">AnimationDesciription3</string>
+</resources>
