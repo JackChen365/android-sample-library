@@ -77,6 +77,11 @@ public class CategoryItem implements Demonstrable{
     }
 
     @Override
+    public String toString() {
+        return title;
+    }
+
+    @Override
     public int compareTo(Demonstrable demonstrable) {
         int i = demonstrable.getPriority() - this.getPriority();
         return 0==i ? -1 : 0;

@@ -38,7 +38,26 @@ public class ComponentManager {
      */
     public void addComponentContainer(ComponentContainer componentContainer){
         componentContainerSet.add(componentContainer);
-        System.out.println();
+    }
+
+    /**
+     * Relate companion component
+     */
+    public void relateCompanionComponent() {
+        Set<ComponentContainer> componentContainerSet = componentManager.getComponentContainerSet();
+        for(ComponentContainer componentContainer:componentContainerSet){
+            if(componentContainer instanceof CompanionComponentContainer){
+                CompanionComponentContainer companionComponentContainer = (CompanionComponentContainer) componentContainer;
+                Class<CompanionComponentContainer>[] companionComponentClassArray = companionComponentContainer.getCompanionComponent();
+                for(Class<CompanionComponentContainer> clazz:companionComponentClassArray){
+                    for(ComponentContainer component:componentContainerSet){
+                        if(clazz.isInstance(component)){
+                            companionComponentContainer.addCompanionComponent((CompanionComponentContainer) component);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public Set<ComponentContainer> getComponentContainerSet() {

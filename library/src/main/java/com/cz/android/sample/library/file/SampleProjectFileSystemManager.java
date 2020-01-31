@@ -1,11 +1,13 @@
-package com.cz.android.sample.library.project;
+package com.cz.android.sample.library.file;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.cz.android.sample.api.AndroidSampleConstant;
+import com.cz.android.sample.library.main.SampleConfiguration;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,20 +19,29 @@ import java.util.Map;
  * @date 2020-01-30 22:05
  * @email chenzhen@okay.cn
  */
-public class SampleProjectFileSystem {
+public class SampleProjectFileSystemManager implements SampleConfiguration {
     private static final String TAG="SampleProjectFileSystem";
+    private static final SampleProjectFileSystemManager fileSystemManager=new SampleProjectFileSystemManager();
     private Map<String,List<String>> fileSystemMap=new HashMap<>();
     /**
      * repository url
      */
     private String repositoryUrl;
 
+    public static SampleProjectFileSystemManager getInstance(){
+        return fileSystemManager;
+    }
+
+    private SampleProjectFileSystemManager() {
+    }
+
     /**
      * initialize all the template data
      * see :process#AndroidSampleProcessor this will generate all the sample template by annotation processor
      * @param context
      */
-    public void initAndroidSampleProjectFile(Context context){
+    @Override
+    public void onCreate(Context context) {
         if(null!=repositoryUrl){
             Object object=null;
             try {
@@ -107,5 +118,27 @@ public class SampleProjectFileSystem {
 
     public String getRepositoryUrl() {
         return repositoryUrl;
+    }
+
+    /**
+     * Return all repository file that in the same package name. Including all the sub directory
+     * @param packageName
+     * @return
+     */
+    public List<String> getProjectFileList(String packageName){
+        List<String> fileList=null;
+        for(Map.Entry<String,List<String>> entry:fileSystemMap.entrySet()){
+            String filePackageName = entry.getKey();
+            if(filePackageName.startsWith(packageName)){
+                if(null==fileList){
+                    fileList=new ArrayList<>();
+                }
+                List<String> value = entry.getValue();
+                if(null!=value){
+                    fileList.addAll(value);
+                }
+            }
+        }
+        return fileList;
     }
 }

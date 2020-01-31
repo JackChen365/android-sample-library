@@ -1,4 +1,4 @@
-package com.cz.android.sample.library.component.document;
+package com.cz.android.sample.library.component.document.view;
 
 import android.content.Context;
 import android.content.res.AssetManager;

@@ -14,7 +14,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.util.SparseArray;
 
-import com.cz.android.sample.library.AndroidSample;
+import com.cz.android.sample.library.main.SampleApplication;
 import com.cz.android.sample.library.provider.annotations.FieldFilter;
 import com.cz.android.sample.library.provider.annotations.Table;
 import com.cz.android.sample.library.provider.annotations.TableField;
@@ -37,7 +37,7 @@ public class SampleContentProvider extends ContentProvider {
     private static final UriMatcher matcher;
     private static final SparseArray<String> matchIds;
     private static final SparseArray<LinkedHashMap<String, String>> selectionMaps;
-    public static SQLiteOpenHelper myDatabase;// 数据库操作对象
+    public static SQLiteOpenHelper myDatabase;
 
     static {
         matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -60,10 +60,9 @@ public class SampleContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         Context context = getContext();
-        AndroidSample androidSample=AndroidSample.getInstance();
-        androidSample.init(context);
+        SampleApplication projectApplication = SampleApplication.getProjectApplication();
+        projectApplication.attachToContext(context);
 
-        DatabaseHelper.init(context);
         myDatabase = getSQLiteOpenHelper(context);
         return true;
     }

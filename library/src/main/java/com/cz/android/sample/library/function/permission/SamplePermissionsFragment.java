@@ -41,7 +41,7 @@ public class SamplePermissionsFragment extends Fragment {
     // Once granted or denied, they are removed from it.
     private Map<String, PermissionObserver> permissionObservers = new HashMap<>();
 
-    private SamplePermissionsFragment() {
+    public SamplePermissionsFragment() {
     }
 
     @Override

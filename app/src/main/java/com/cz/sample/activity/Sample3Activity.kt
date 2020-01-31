@@ -3,6 +3,7 @@ package com.cz.sample.activity
 import android.os.Bundle
 import com.cz.android.sample.api.RefRegister
 import com.cz.android.sample.api.Register
+import com.cz.android.sample.api.TestCase
 import com.cz.android.sample.library.appcompat.SampleAppCompatActivity
 import com.cz.sample.R
 import kotlinx.android.synthetic.main.activity_demo3.*

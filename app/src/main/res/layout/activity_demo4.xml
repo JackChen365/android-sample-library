@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.cz.android.sample.library.component.code.SourceCodeView
+    <com.cz.android.sample.library.component.code.view.SourceCodeView
         android:id="@+id/sourceCodeView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

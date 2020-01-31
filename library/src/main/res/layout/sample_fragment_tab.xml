@@ -16,14 +16,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:theme="@style/AppTheme.AppBarOverlay"/>
 
-    <com.cz.android.sample.library.component.document.WebViewProgressBar
-        android:id="@+id/sampleProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sampleToolBar"/>
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/sampleTabLayout"
         android:layout_width="match_parent"
@@ -31,7 +23,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sampleToolBar"
-        app:tabMode="fixed"/>
+        app:tabMode="scrollable"/>
     
     <View
         android:id="@+id/viewDivider"

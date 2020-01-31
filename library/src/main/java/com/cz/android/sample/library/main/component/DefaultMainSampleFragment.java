@@ -1,7 +1,8 @@
-package com.cz.android.sample.library.main;
+package com.cz.android.sample.library.main.component;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -18,19 +19,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.cz.android.sample.AndroidSample;
 import com.cz.android.sample.api.AndroidSampleConstant;
-import com.cz.android.sample.api.MainComponent;
 import com.cz.android.sample.api.item.Demonstrable;
 import com.cz.android.sample.api.item.RegisterItem;
-import com.cz.android.sample.library.AndroidSample;
 import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.main.SampleApplication;
 import com.cz.android.sample.library.main.adapter.SampleTemplateAdapter;
-import com.cz.android.sample.main.MainComponentFactory;
+import com.cz.android.sample.main.MainSampleComponentFactory;
 
 import java.util.List;
 
@@ -39,10 +41,10 @@ import java.util.List;
  * @date 2020-01-27 19:25
  * @email bingo110@126.com
  */
-public class DefaultMainSampleFragment extends Fragment implements MainComponentFactory {
+public class DefaultMainSampleFragment extends Fragment implements MainSampleComponentFactory {
 
     @Override
-    public Fragment createComponent() {
+    public Fragment getFragmentComponent() {
         return new DefaultMainSampleFragment();
     }
 
@@ -60,9 +62,10 @@ public class DefaultMainSampleFragment extends Fragment implements MainComponent
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final AndroidSample androidSample = AndroidSample.getInstance();
         final FragmentActivity context = getActivity();
         final AppCompatActivity fragmentActivity = (AppCompatActivity)context;
+        SampleApplication projectApplication = SampleApplication.getProjectApplication();
+        final AndroidSample androidSample = projectApplication.getAndroidSample();
         Intent intent = fragmentActivity.getIntent();
         String title = intent.getStringExtra("title");
         View view = getView();
@@ -70,13 +73,15 @@ public class DefaultMainSampleFragment extends Fragment implements MainComponent
         ListView sampleListView=view.findViewById(R.id.sampleListView);
         String category;
         if(null==title) {
-//            val document=TemplateConfiguration.document
-//            if(!document.isNullOrBlank()){
-//                setHasOptionsMenu(true)
-//            }
             category=AndroidSampleConstant.CATEGORY_ROOT;
             sampleToolBar.setTitle(R.string.app_name);
             fragmentActivity.setSupportActionBar(sampleToolBar);
+
+            //Here show all the testCases
+            List<RegisterItem> testCases = androidSample.getTestCases();
+            if(null!=testCases&&!testCases.isEmpty()){
+                alertTestCaseDialog(androidSample,context,testCases);
+            }
         } else {
             category = title;
             sampleToolBar.setTitle(title);
@@ -101,7 +106,7 @@ public class DefaultMainSampleFragment extends Fragment implements MainComponent
                 if(demonstrable instanceof RegisterItem){
                     //run this sample
                     RegisterItem registerItem = (RegisterItem) demonstrable;
-                    androidSample.run(context,registerItem);
+                    androidSample.start(context,registerItem);
                 } else {
                     //move to the subcategories
                     String category = demonstrable.getTitle();
@@ -119,6 +124,35 @@ public class DefaultMainSampleFragment extends Fragment implements MainComponent
                 }
             }
         });
+    }
+
+    /**
+     * Show all the testCases.
+     * @param context
+     * @param testCases
+     */
+    private void alertTestCaseDialog(final AndroidSample androidSample, final FragmentActivity context,@NonNull final List<RegisterItem> testCases) {
+        if(1==testCases.size()){
+            //Run this testcase immediately
+            RegisterItem registerItem = testCases.get(0);
+            androidSample.start(context,registerItem);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            CharSequence[] items=new CharSequence[testCases.size()];
+            for(int i=0;i<testCases.size();i++){
+                RegisterItem registerItem = testCases.get(i);
+                items[i]=registerItem.getTitle();
+            }
+            builder.setTitle(R.string.sample_choice_test_case)
+                    .setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            RegisterItem registerItem = testCases.get(i);
+                            androidSample.start(context,registerItem);
+                        }
+                    }).setCancelable(false);
+            builder.show();
+        }
     }
 
     /**

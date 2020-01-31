@@ -1,4 +1,4 @@
-package com.cz.android.sample.library.component.document;
+package com.cz.android.sample.library.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

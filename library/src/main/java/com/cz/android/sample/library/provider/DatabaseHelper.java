@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Pair;
 
+import com.cz.android.sample.library.main.SampleConfiguration;
 import com.cz.android.sample.library.provider.annotations.FieldFilter;
 import com.cz.android.sample.library.provider.annotations.Table;
 import com.cz.android.sample.library.provider.annotations.TableField;
@@ -26,7 +27,7 @@ import java.util.Map;
  * @email bingo110@126.com
  * 数据库操作对象
  */
-public class DatabaseHelper {
+public class DatabaseHelper implements SampleConfiguration {
     /**
      * 保存字节码对象与uri路径
      */
@@ -52,11 +53,8 @@ public class DatabaseHelper {
      */
     private int version=1;
 
-    /**
-     * 初部初始化操作
-     * @param context
-     */
-    static void init(Context context){
+    @Override
+    public void onCreate(Context context) {
         applicationContext = context.getApplicationContext();
     }
 

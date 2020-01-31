@@ -47,6 +47,7 @@ public class AndroidSampleConstant {
     public static final String FUNCTION_FIELD_NAME="functionList";
     public static final String COMPONENT_FIELD_NAME="componentList";
     public static final String PROCESSOR_FIELD_NAME="processorList";
+    public static final String TEST_FIELD_NAME="testCaseList";
 
     /**
      * All the field that class:AndroidProjectFile has

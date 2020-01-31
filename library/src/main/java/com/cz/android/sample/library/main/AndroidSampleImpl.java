@@ -1,4 +1,4 @@
-package com.cz.android.sample.library;
+package com.cz.android.sample.library.main;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,23 +6,25 @@ import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.cz.android.sample.AndroidSample;
 import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.Demonstrable;
 import com.cz.android.sample.api.item.RegisterItem;
+import com.cz.android.sample.component.CompanionComponentContainer;
 import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.component.ComponentManager;
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.function.SampleFunction;
+import com.cz.android.sample.library.component.code.SampleSourceCodeComponent;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 import com.cz.android.sample.library.component.memory.SampleMemoryComponent;
 import com.cz.android.sample.library.component.message.SampleMessageComponent;
 import com.cz.android.sample.library.function.permission.SamplePermissionFunction;
-import com.cz.android.sample.library.lifecycle.SampleActivityLifeCycleCallback;
-import com.cz.android.sample.library.main.DefaultMainSampleFragment;
+import com.cz.android.sample.library.main.component.DefaultMainSampleFragment;
 import com.cz.android.sample.library.processor.FragmentClassActionProcessor;
-import com.cz.android.sample.library.project.SampleProjectFileSystem;
-import com.cz.android.sample.main.MainComponentFactory;
+import com.cz.android.sample.library.file.SampleProjectFileSystemManager;
+import com.cz.android.sample.main.MainSampleComponentFactory;
 import com.cz.android.sample.processor.AbsActionProcessor;
 import com.cz.android.sample.processor.ActionProcessManager;
 import com.cz.android.sample.processor.exception.ActionExceptionHandler;
@@ -40,16 +42,19 @@ import java.util.TreeSet;
  * @date 2020-01-27 20:31
  * @email bingo110@126.com
  */
-public class AndroidSample {
+class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
     private static final String TAG="SampleConfiguration";
-    private final static AndroidSample configuration=new AndroidSample();
+    private final static AndroidSampleImpl androidSampleImpl =new AndroidSampleImpl();
 
     private final List<Demonstrable> demonstrableList = new ArrayList<>();
+    private final List<RegisterItem> registerTestCaseList=new ArrayList<>();
     private final ActionProcessManager actionProcessManager=new ActionProcessManager();
     private final ComponentManager componentManager=ComponentManager.getInstance();
     private final FunctionManager functionManager=new FunctionManager();
-    private final SampleProjectFileSystem fileSystem=new SampleProjectFileSystem();
-    private MainComponentFactory mainComponentContainer=new DefaultMainSampleFragment();
+    private MainSampleComponentFactory mainComponentContainer=new DefaultMainSampleFragment();
+
+    public AndroidSampleImpl() {
+    }
 
     /**
      * initialize all the template data
@@ -70,9 +75,11 @@ public class AndroidSample {
             List<String> functionList=getObjectValue(object,AndroidSampleConstant.FUNCTION_FIELD_NAME);
             List<String> componentList=getObjectValue(object,AndroidSampleConstant.COMPONENT_FIELD_NAME);
             List<String> actionProcessorList=getObjectValue(object,AndroidSampleConstant.PROCESSOR_FIELD_NAME);
+            List<String> testCaseList=getObjectValue(object,AndroidSampleConstant.TEST_FIELD_NAME);
             String mainComponentClass=getObjectValue(object,AndroidSampleConstant.MAIN_COMPONENT_FIELD_NAME);
             //Here if we have repository. related to this repository
             String repositoryUrl=getObjectValue(object,AndroidSampleConstant.REPOSITORY_URL_FIELD_NAME);
+            SampleProjectFileSystemManager fileSystem=SampleProjectFileSystemManager.getInstance();
             fileSystem.setRepositoryUrl(repositoryUrl);
             //process register and category translate string resources to string
             try {
@@ -86,6 +93,7 @@ public class AndroidSample {
             //process main component
             try {
                 processMainComponentClass(mainComponentClass);
+                processTestCases(testCaseList);
             } catch (Exception e) {
                 Log.w(TAG,e.getMessage());
             }
@@ -165,42 +173,57 @@ public class AndroidSample {
     }
 
     private void processMainComponentClass(String mainComponentClassName) throws Exception {
-        if(null!=mainComponentClassName) {
+        if (null != mainComponentClassName) {
             Class<?> clazz = Class.forName(mainComponentClassName);
             Object object = clazz.newInstance();
-            if(null==object||!(object instanceof MainComponentFactory)){
-                throw new IllegalArgumentException("Class:"+mainComponentClassName+" should implement from MainComponentFactory!");
+            if (null == object || !(object instanceof MainSampleComponentFactory)) {
+                throw new IllegalArgumentException("Class:" + mainComponentClassName + " should implement from MainComponentFactory!");
             } else {
-               this.mainComponentContainer = (MainComponentFactory) object;
+                this.mainComponentContainer = (MainSampleComponentFactory) object;
+            }
+        }
+    }
+
+    private void processTestCases(List<String> testCaseList)throws Exception{
+        //here if we have a test case,Check this class from register sample list
+        registerTestCaseList.clear();
+        if(!testCaseList.isEmpty()){
+            for(String className:testCaseList){
+                Class<?> clazz = Class.forName(className);
+                for(Demonstrable demonstrable:demonstrableList){
+                    if(demonstrable instanceof RegisterItem){
+                        RegisterItem registerItem = (RegisterItem) demonstrable;
+                        if(clazz==registerItem.clazz){
+                            //Collect all the register item
+                            registerTestCaseList.add(registerItem);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
 
     /**
-     * Get the singleton of android sample configuration
+     * Get the singleton of android sample androidSampleImpl
      * @return
      */
-    public static AndroidSample getInstance(){
-        return configuration;
+    public static AndroidSampleImpl getInstance(){
+        return androidSampleImpl;
     }
-
-    /**
-     * initialize all the setting
-     */
-    public void init(Context context){
+    @Override
+    public void onCreate(Context context) {
         Application applicationContext = (Application)context.getApplicationContext();
         //initialize all the template data
         initAndroidSampleTemplate(context);
-
-        //initialize project file
-        fileSystem.initAndroidSampleProjectFile(context);
         //register fragment class processor
         actionProcessManager.register(new FragmentClassActionProcessor());
-
         //register component
         componentManager.addComponentContainer(new SampleDocumentComponent());
         componentManager.addComponentContainer(new SampleMessageComponent());
         componentManager.addComponentContainer(new SampleMemoryComponent());
+        componentManager.addComponentContainer(new SampleSourceCodeComponent());
+        componentManager.relateCompanionComponent();
 
         //register function
         functionManager.register(new SamplePermissionFunction());
@@ -210,25 +233,28 @@ public class AndroidSample {
     }
 
     /**
+     * run this sample
+     * @param context
+     * @param demonstrable
+     */
+    @Override
+    public void start(FragmentActivity context, RegisterItem demonstrable){
+        actionProcessManager.process(functionManager,context,demonstrable);
+    }
+
+    /**
      * Register an exceptionHandler for action com.cz.android.sample.library.processor
      * @param exceptionHandler
      */
+    @Override
     public void registerExceptionHandler(ActionExceptionHandler exceptionHandler){
         this.actionProcessManager.registerExceptionHandler(exceptionHandler);
     }
 
     /**
-     * run this sample
-     * @param context
-     * @param demonstrable
-     */
-    public void run(FragmentActivity context, RegisterItem demonstrable){
-        actionProcessManager.process(functionManager,context,demonstrable);
-    }
-
-    /**
      * Return all the demonstrable if is belong to this category
      */
+    @Override
     public List<Demonstrable> getDemonstrableList(String category){
         Set<Demonstrable> filterDemonstrableSet=null;
         for(Demonstrable demonstrable: demonstrableList){
@@ -280,7 +306,12 @@ public class AndroidSample {
         }
     }
 
-    public MainComponentFactory getMainComponentContainer() {
+    @Override
+    public List<RegisterItem> getTestCases() {
+        return registerTestCaseList;
+    }
+
+    public MainSampleComponentFactory getMainComponentContainer() {
         return this.mainComponentContainer;
     }
 

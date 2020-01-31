@@ -7,10 +7,10 @@ import androidx.fragment.app.Fragment;
  * @date 2020-01-29 14:19
  * @email bingo110@126.com
  */
-public interface MainComponentFactory {
+public interface MainSampleComponentFactory {
     /**
      * return a new fragment that home pager need
      * @return
      */
-    Fragment createComponent();
+    Fragment getFragmentComponent();
 }

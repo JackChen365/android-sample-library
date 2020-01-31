@@ -42,9 +42,11 @@ public class HtmlSource extends Source<String,String> {
             urlConnection.setConnectTimeout(5 * 1000);
             urlConnection.setReadTimeout(5 * 1000);
             urlConnection.setUseCaches(true);
+            urlConnection.setDefaultUseCaches (true);
             urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.addRequestProperty("Connection", "Keep-Alive");
+
             urlConnection.connect();
             if (HttpURLConnection.HTTP_OK==urlConnection.getResponseCode()) {
                 result = IOUtils.toString(urlConnection.getInputStream(), Charset.forName("utf-8"));

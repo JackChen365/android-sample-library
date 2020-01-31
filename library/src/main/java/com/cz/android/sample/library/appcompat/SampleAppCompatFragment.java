@@ -33,7 +33,7 @@ import com.cz.android.sample.window.impl.ComponentWindowDelegate;
  * @email bingo110@126.com
  */
 @Keep
-public abstract class SampleCompatFragment extends Fragment implements SampleComponentContainer {
+public abstract class SampleAppCompatFragment extends Fragment implements SampleComponentContainer {
     private ComponentWindowDelegate windowDelegate=new ComponentWindowDelegate();
     @Nullable
     public abstract View onCreateView(@Nullable ViewGroup container,@NonNull LayoutInflater inflater, @Nullable Bundle savedInstanceState);

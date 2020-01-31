@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import com.cz.android.sample.component.CompanionComponentContainer;
 import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.component.ComponentManager;
 import com.cz.android.sample.window.WindowDelegate;
@@ -18,6 +19,7 @@ import java.util.Set;
  * @email bingo110@126.com
  */
 public class ComponentWindowDelegate implements WindowDelegate {
+    private static final String TAG="ComponentWindowDelegate";
     @NonNull
     @Override
     public View onCreateView(@NonNull FragmentActivity context,@NonNull Object object,@NonNull ViewGroup parentView, @NonNull View view) {
@@ -27,10 +29,25 @@ public class ComponentWindowDelegate implements WindowDelegate {
         for(ComponentContainer componentContainer:componentContainerSet){
             //If this component is available
             if(componentContainer.isComponentAvailable(object)){
+                //process companionComponentContainer
+                if(componentContainer instanceof CompanionComponentContainer){
+                    CompanionComponentContainer companionComponentContainer = (CompanionComponentContainer) componentContainer;
+                    if(!companionComponentContainer.isComponentCreated()){
+                        componentView=companionComponentContainer.getCompanionComponent(context, object, parentView, componentView);
+                        companionComponentContainer.setComponentCreated();
+                    }
+                }
                 //We use different component change the view
                 componentView = componentContainer.getComponentView(context,object, parentView,componentView);
                 //Here we call onCreateView function
                 componentContainer.onCreatedView(context,componentContainer,componentView);
+            }
+        }
+        //Restore create state
+        for(ComponentContainer componentContainer:componentContainerSet) {
+            if (componentContainer instanceof CompanionComponentContainer) {
+                CompanionComponentContainer companionComponentContainer = (CompanionComponentContainer) componentContainer;
+                companionComponentContainer.resetComponent();
             }
         }
         return componentView;

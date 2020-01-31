@@ -1,4 +1,4 @@
-package com.cz.android.sample.library.lifecycle;
+package com.cz.android.sample.library.main;
 
 import android.app.Activity;
 import android.app.Application;
@@ -18,9 +18,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.function.SampleFunction;
-import com.cz.android.sample.library.AndroidSample;
 import com.cz.android.sample.library.R;
-import com.cz.android.sample.main.MainComponentFactory;
+import com.cz.android.sample.main.MainSampleComponentFactory;
 
 import java.util.List;
 
@@ -57,9 +56,9 @@ public class SampleActivityLifeCycleCallback implements Application.ActivityLife
                 //Add the main fragment if needed;
                 FragmentManager supportFragmentManager = appCompatActivity.getSupportFragmentManager();
                 if (supportFragmentManager.findFragmentByTag(BIND_MAIN_SAMPLE_FRAGMENT_TAG) == null) {
-                    AndroidSample androidSample = AndroidSample.getInstance();
-                    MainComponentFactory mainComponentContainer = androidSample.getMainComponentContainer();
-                    Fragment fragment = mainComponentContainer.createComponent();
+                    AndroidSampleImpl androidSample = AndroidSampleImpl.getInstance();
+                    MainSampleComponentFactory componentContainer = androidSample.getMainComponentContainer();
+                    Fragment fragment = componentContainer.getFragmentComponent();
                     supportFragmentManager.beginTransaction().add(android.R.id.content,fragment, BIND_MAIN_SAMPLE_FRAGMENT_TAG).commit();
                 }
             }
@@ -83,7 +82,7 @@ public class SampleActivityLifeCycleCallback implements Application.ActivityLife
     }
 
     private void initializeFunction(@NonNull Activity activity) {
-        AndroidSample androidSample = AndroidSample.getInstance();
+        AndroidSampleImpl androidSample = AndroidSampleImpl.getInstance();
         FunctionManager functionManager = androidSample.getFunctionManager();
         List<SampleFunction> functionList = functionManager.getFunctionList();
         for(SampleFunction function:functionList){

@@ -5,10 +5,12 @@ import com.cz.android.sample.api.Category;
 import com.cz.android.sample.api.Component;
 import com.cz.android.sample.api.Function;
 import com.cz.android.sample.api.MainComponent;
+import com.cz.android.sample.api.ProjectRepository;
 import com.cz.android.sample.api.RefCategory;
 import com.cz.android.sample.api.RefRegister;
 import com.cz.android.sample.api.Register;
 import com.cz.android.sample.api.AndroidSampleConstant;
+import com.cz.android.sample.api.TestCase;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.RegisterItem;
 import com.google.auto.service.AutoService;
@@ -24,14 +26,11 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Writer;
-import java.sql.Ref;
 import java.util.ArrayDeque;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -93,6 +92,8 @@ public class AndroidSampleProcessor extends AbstractProcessor {
         supportedAnnotationTyped.add(Function.class.getName());
         supportedAnnotationTyped.add(MainComponent.class.getName());
         supportedAnnotationTyped.add(ActionProcessor.class.getName());
+        supportedAnnotationTyped.add(ProjectRepository.class.getName());
+        supportedAnnotationTyped.add(TestCase.class.getName());
         return supportedAnnotationTyped;
     }
 
@@ -105,7 +106,6 @@ public class AndroidSampleProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         messager.printMessage(Diagnostic.Kind.NOTE, "======>start");
-        //遍历所有配置注解类
         Set<? extends Element> registerElements = roundEnvironment.getElementsAnnotatedWith(Register.class);
         Set<? extends Element> categoryElements = roundEnvironment.getElementsAnnotatedWith(Category.class);
         Set<? extends Element> refRegisterElements = roundEnvironment.getElementsAnnotatedWith(RefRegister.class);
@@ -115,22 +115,10 @@ public class AndroidSampleProcessor extends AbstractProcessor {
         Set<? extends Element> componentElements = roundEnvironment.getElementsAnnotatedWith(Component.class);
         Set<? extends Element> mainComponentElements = roundEnvironment.getElementsAnnotatedWith(MainComponent.class);
         Set<? extends Element> processorElements = roundEnvironment.getElementsAnnotatedWith(ActionProcessor.class);
-        //处理配置元素
-        String sourcePath = generateClass(registerElements,refRegisterElements, categoryElements,refCategoryElements,functionElements, componentElements, mainComponentElements, processorElements);
-        //one more thing,output all the source code structure of the project
-        generateFileStructure(sourcePath);
-        messager.printMessage(Diagnostic.Kind.NOTE, "=======>end");
-        return true;
-    }
+        Set<? extends Element> projectRepositoryElements = roundEnvironment.getElementsAnnotatedWith(ProjectRepository.class);
+        Set<? extends Element> testElements = roundEnvironment.getElementsAnnotatedWith(TestCase.class);
 
-    private String generateClass(Set<? extends Element> registerElements,
-                                 Set<? extends Element> refRegisterElements,
-                                  Set<? extends Element> categoryElements,
-                                 Set<? extends Element> refCategoryElements,
-                                 Set<? extends Element> functionElements,
-                                  Set<? extends Element> componentElements,
-                                  Set<? extends Element> mainComponentElements,
-                                  Set<? extends Element> processorElements) {
+        //start process all annotations
         messager.printMessage(Diagnostic.Kind.NOTE, "register:"+registerElements.size()+" category:"+categoryElements.size());
         final MethodSpec.Builder methodSpec = MethodSpec.constructorBuilder();
         methodSpec.addModifiers(Modifier.PUBLIC);
@@ -139,7 +127,13 @@ public class AndroidSampleProcessor extends AbstractProcessor {
         addFunctionItems(functionElements, methodSpec);
         addComponentItems(componentElements, methodSpec);
         addProcessorItems(processorElements, methodSpec);
-        return createConfigFile(methodSpec,mainComponentElements);
+        addTestItems(testElements, methodSpec);
+
+        String sourcePath = createConfigFile(methodSpec,mainComponentElements,projectRepositoryElements);
+        //one more thing,output all the source code structure of the project
+        generateFileStructure(sourcePath);
+        messager.printMessage(Diagnostic.Kind.NOTE, "=======>end");
+        return true;
     }
 
     /**
@@ -240,7 +234,23 @@ public class AndroidSampleProcessor extends AbstractProcessor {
         }
     }
 
-    private String createConfigFile(MethodSpec.Builder methodSpec,Set<? extends Element> mainComponentElements) {
+
+    /**
+     * Add test case item. If you want to open a sample case immediately.
+     * @param testElements
+     * @param methodSpec
+     */
+    private void addTestItems(Set<? extends Element> testElements, MethodSpec.Builder methodSpec) {
+        if(!testElements.isEmpty()){
+            methodSpec.addCode("// add register test classes\n");
+        }
+        for(Element element:testElements){
+            String className=element.asType().toString();
+            methodSpec.addStatement(AndroidSampleConstant.TEST_FIELD_NAME+".add($S)",className);
+        }
+    }
+
+    private String createConfigFile(MethodSpec.Builder methodSpec,Set<? extends Element> mainComponentElements,Set<? extends Element> projectRepositoryElements) {
         ClassName stringItem = ClassName.get(String.class);
         ClassName registerItem = ClassName.get(AndroidSampleConstant.ITEM_CLASS_NAME, "RegisterItem");
         ClassName categoryItem = ClassName.get(AndroidSampleConstant.ITEM_CLASS_NAME, "CategoryItem");
@@ -277,8 +287,13 @@ public class AndroidSampleProcessor extends AbstractProcessor {
                 .initializer("new $T<>()", arrayList)
                 .build();
 
+        TypeName testCaseList = ParameterizedTypeName.get(list, stringItem);
+        FieldSpec testCaseField = FieldSpec.builder(testCaseList, AndroidSampleConstant.TEST_FIELD_NAME)
+                .addModifiers(Modifier.FINAL)
+                .initializer("new $T<>()", arrayList)
+                .build();
+
         FieldSpec mainComponentField=null;
-        FieldSpec repositoryUrlField=null;
         Iterator<? extends Element> iterator = mainComponentElements.iterator();
         if(iterator.hasNext()){
             Element element = iterator.next();
@@ -287,10 +302,16 @@ public class AndroidSampleProcessor extends AbstractProcessor {
                     .addModifiers(Modifier.FINAL)
                     .initializer("\""+className+"\"")
                     .build();
-            MainComponent mainComponent = element.getAnnotation(MainComponent.class);
+        }
+
+        FieldSpec repositoryUrlField=null;
+        iterator = projectRepositoryElements.iterator();
+        if(iterator.hasNext()){
+            Element element = iterator.next();
+            ProjectRepository projectRepository = element.getAnnotation(ProjectRepository.class);
             repositoryUrlField = FieldSpec.builder(String.class, AndroidSampleConstant.REPOSITORY_URL_FIELD_NAME)
                     .addModifiers(Modifier.FINAL)
-                    .initializer("\""+mainComponent.value()+"\"")
+                    .initializer("\""+projectRepository.value()+"\"")
                     .build();
         }
 
@@ -303,7 +324,8 @@ public class AndroidSampleProcessor extends AbstractProcessor {
                 .addField(categoryField)
                 .addField(functionField)
                 .addField(componentField)
-                .addField(processorField);
+                .addField(processorField)
+                .addField(testCaseField);
         if(null!=mainComponentField){
             builder.addField(mainComponentField);
         }

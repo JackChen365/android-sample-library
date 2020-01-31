@@ -25,5 +25,5 @@
         android:layout_marginTop="@dimen/sample_activity_vertical_margin"
         android:layout_marginBottom="@dimen/sample_activity_vertical_margin"
         android:dividerHeight="1dp"
-        android:divider="@color/lightGray"/>
+        android:divider="@color/sampleLightGray"/>
 </LinearLayout>

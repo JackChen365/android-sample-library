@@ -1,7 +1,8 @@
-package com.cz.android.sample.library.component.code;
+package com.cz.android.sample.library.component.code.view;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -87,7 +88,7 @@ public class SourceCodeView extends WebView {
                 String templateSource = IOUtils.toString(inputStream, Charset.defaultCharset());
                 int i = url.lastIndexOf(".");
                 String language = url.substring(i+1);
-                final String html=String.format(templateSource,language,text);
+                final String html=String.format(templateSource,language,Html.escapeHtml(text));
                 post(new Runnable() {
                     @Override
                     public void run() {
