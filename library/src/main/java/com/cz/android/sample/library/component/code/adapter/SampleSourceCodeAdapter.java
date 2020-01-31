@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.cz.android.sample.library.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +47,7 @@ public class SampleSourceCodeAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(null==view){
-            view=layoutInflater.inflate(android.R.layout.simple_list_item_1,viewGroup,false);
+            view=layoutInflater.inflate(R.layout.sample_file_list_item,viewGroup,false);
         }
         TextView text1=view.findViewById(android.R.id.text1);
         String item = getItem(i);

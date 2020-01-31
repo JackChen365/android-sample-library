@@ -1,4 +1,4 @@
-package com.cz.sample.component;
+package com.cz.sample.custom.component;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

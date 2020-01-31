@@ -1,4 +1,4 @@
-package com.cz.sample.component;
+package com.cz.sample.custom.component;
 
 import android.content.Context;
 import android.graphics.Canvas;

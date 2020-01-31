@@ -97,7 +97,8 @@ public class SampleSourceCodeComponent extends CompanionComponentContainer {
         Class<?> clazz = object.getClass();
         String packageName = clazz.getPackage().getName();
         fragmentList.add(SampleSourceFileFragmentListFragment.newInstance(packageName));
-        sampleViewPager.setAdapter(SimpleFragmentPagerAdapter.create(context.getSupportFragmentManager(), fragmentList, titleList));
+        FragmentPagerAdapter fragmentPagerAdapter = SimpleFragmentPagerAdapter.create(context.getSupportFragmentManager(), fragmentList, titleList);
+        sampleViewPager.setAdapter(fragmentPagerAdapter);
         sampleTabLayout.setupWithViewPager(sampleViewPager);
         return view;
     }

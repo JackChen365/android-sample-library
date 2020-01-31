@@ -1,6 +1,5 @@
 package com.cz.android.sample.library.function.permission;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -100,29 +99,6 @@ public class SamplePermissionsFragment extends Fragment {
             throw new IllegalStateException("This fragment must be attached to an activity.");
         }
         return fragmentActivity.getPackageManager().isPermissionRevokedByPolicy(permission, getActivity().getPackageName());
-    }
-
-    /**
-     * 权限的提示文字
-     * 可以根据应用需求自行更改
-     *
-     * @param perms
-     * @return
-     */
-    public static String permissionText(String[] perms) {
-        StringBuilder sb = new StringBuilder();
-        for (String s : perms) {
-            if (s.equals(Manifest.permission.CAMERA)) {
-                sb.append("相机权限(用于拍照，视频聊天);\n");
-            } else if (s.equals(Manifest.permission.RECORD_AUDIO)) {
-                sb.append("麦克风权限(用于发语音，语音及视频聊天);\n");
-            } else if (s.equals(Manifest.permission.READ_EXTERNAL_STORAGE)){
-                sb.append("读取权限(用于读取数据);\n");
-            }else if (s.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                sb.append("存储(用于存储必要信息，缓存数据);\n");
-            }
-        }
-        return "程序运行需要如下权限：\n" + sb.toString();
     }
 
 

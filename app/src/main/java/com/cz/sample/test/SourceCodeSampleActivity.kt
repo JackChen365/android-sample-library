@@ -1,9 +1,7 @@
-package com.cz.sample.activity
+package com.cz.sample.test
 
 import android.os.Bundle
-import com.cz.android.sample.api.Category
-import com.cz.android.sample.api.Register
-import com.cz.android.sample.api.TestCase
+import com.cz.android.sample.api.RefRegister
 import com.cz.android.sample.library.appcompat.SampleAppCompatActivity
 import com.cz.sample.R
 import kotlinx.android.synthetic.main.activity_demo4.*
@@ -12,9 +10,9 @@ import kotlinx.android.synthetic.main.activity_demo4.*
  * @author :Created by cz
  * @date 2019-05-09 14:56
  * @email bingo110@126.com
- * 演示4,见演示配置
+ * @see com.cz.android.sample.library.component.code.view.SourceCodeView A webView that responsible for demonstrate source code.
  */
-@Register(title = "源码查看",desc = "查看 java 源码")
+@RefRegister(title = R.string.other_sample2,desc=R.string.other_sample2_desc,category = R.string.other)
 class SourceCodeSampleActivity : SampleAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

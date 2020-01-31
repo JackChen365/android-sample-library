@@ -1,4 +1,4 @@
-package com.cz.sample.component;
+package com.cz.sample.custom.component;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.api.Component;
 import com.cz.android.sample.component.ComponentContainer;
-import com.cz.android.sample.library.component.memory.SampleMemory;
 
 /**
  * @author Created by cz

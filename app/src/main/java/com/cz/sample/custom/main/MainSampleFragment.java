@@ -1,4 +1,4 @@
-package com.cz.sample.main;
+package com.cz.sample.custom.main;
 
 import android.content.ComponentName;
 import android.content.Context;

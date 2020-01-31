@@ -1,5 +1,7 @@
 package com.cz.android.sample.library.function.permission;
 
+import androidx.annotation.NonNull;
+
 /**
  * @author Created by cz
  * @date 2020-01-30 12:41
@@ -10,11 +12,11 @@ public interface PermissionObserver {
      * when user granted this permission
      * @param permission
      */
-    void onGranted(Permission permission);
+    void onGranted(@NonNull Permission permission);
 
     /**
      * When user denied you have this permission
      * @param permission
      */
-    void onDenied(Permission permission);
+    void onDenied(@NonNull Permission permission);
 }

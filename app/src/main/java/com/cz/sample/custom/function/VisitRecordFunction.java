@@ -1,4 +1,4 @@
-package com.cz.sample.function;
+package com.cz.sample.custom.function;
 
 import android.util.Log;
 

@@ -6,9 +6,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.cz.android.sample.api.Category;
-import com.cz.android.sample.api.Register;
+import com.cz.android.sample.api.RefCategory;
+import com.cz.android.sample.api.RefRegister;
 import com.cz.android.sample.library.sample.SampleObject;
+import com.cz.sample.R;
+import com.cz.sample.custom.processor.AlertDialogActionProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +19,15 @@ import java.util.List;
  * @author Created by cz
  * @date 2020-01-29 21:31
  * @email bingo110@126.com
+ * @see AlertDialogActionProcessor Our own action processor
  */
-@Category(title="Dialog",desc="对话框描述")
+@RefCategory(title= R.string.dialog,desc=R.string.dialog_desc,priority = 3)
 public class DialogSample{
 
     public DialogSample() {
     }
 
-    @Register(title = "Login Alert",desc = "Dialog sample description1",category = "Dialog")
+    @RefRegister(title = R.string.dialog_sample1,desc =R.string.dialog_sample1_desc,category = R.string.dialog)
     public class DialogSample1 implements SampleObject {
         @Override
         public Object getObject(final Context context) {
@@ -49,7 +52,7 @@ public class DialogSample{
         }
     }
 
-    @Register(title = "Choose Colors",desc = "Dialog sample description2",category = "Dialog")
+    @RefRegister(title = R.string.dialog_sample2,desc =R.string.dialog_sample2_desc,category = R.string.dialog)
     public class DialogSample2 implements SampleObject {
         final CharSequence[] colors = { "Pink", "Red", "Yellow", "Blue" };
         private List<Integer> selectList=new ArrayList<>();

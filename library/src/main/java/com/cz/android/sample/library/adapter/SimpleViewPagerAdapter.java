@@ -5,5 +5,5 @@ package com.cz.android.sample.library.adapter;
  * @date 2020-01-28 18:37
  * @email bingo110@126.com
  */
-public class SimpleViewPagerAdapter {
+class SimpleViewPagerAdapter{
 }

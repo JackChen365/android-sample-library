@@ -70,17 +70,18 @@ public class SampleSystemConsole{
             }
         }
 
+        private String TAG="test";
         @Override
         public void run() {
             final byte[] buf = new byte[1024];
             while (isRunning) {
                 try {
-                    final int len = inputStream.read(buf);
-                    if (len == -1 || buf[0]=='\n') {
+                    int len = inputStream.read(buf);
+                    if (len == -1 || 1==len) {
                         continue;
                     }
                     String text = new String(buf, 0, len);
-                    workThread.post(text);
+                    workThread.post(text.trim()+"\n");
                 } catch (IOException e){
                     e.printStackTrace();
                 }

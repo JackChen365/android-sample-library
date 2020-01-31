@@ -1,11 +1,9 @@
 package com.cz.android.sample.library.component.document;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -19,13 +17,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.cz.android.sample.component.CompanionComponentContainer;
 import com.cz.android.sample.library.R;
-import com.cz.android.sample.library.appcompat.SampleWrapperViewFragment;
 import com.cz.android.sample.library.adapter.SimpleFragmentPagerAdapter;
+import com.cz.android.sample.library.appcompat.SampleWrapperViewFragment;
 import com.cz.android.sample.library.component.code.SampleSourceCodeComponent;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -102,8 +99,10 @@ public class SampleDocumentComponent extends CompanionComponentContainer {
         fragmentList.add(SampleDocumentFragment.newInstance(packageName+url));
         titleList.add(context.getString(R.string.sample_document));
 
-        sampleViewPager.setAdapter(SimpleFragmentPagerAdapter.create(context.getSupportFragmentManager(), fragmentList, titleList));
+        FragmentPagerAdapter fragmentPagerAdapter = SimpleFragmentPagerAdapter.create(context.getSupportFragmentManager(), fragmentList, titleList);
+        sampleViewPager.setAdapter(fragmentPagerAdapter);
         sampleTabLayout.setupWithViewPager(sampleViewPager);
+
         return view;
     }
 

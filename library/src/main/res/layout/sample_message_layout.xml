@@ -22,9 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/message_output"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:background="@color/sampleLightGray"
-            android:padding="12dp"/>
+            android:paddingLeft="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -34,7 +36,7 @@
                 android:id="@+id/sampleMessageText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="16sp"
+                android:textSize="12sp"
                 android:padding="8dp"
                 android:textColor="@android:color/black"/>
         </androidx.core.widget.NestedScrollView>
