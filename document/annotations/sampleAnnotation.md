@@ -102,11 +102,11 @@ Make sure after you have your own ActionProcessor. mark as ActionProcessor
 
 * *Component*
 
-    If you want to inject a common view into some specific samples. You should check this out[More detail](document/component/sampleComponent.md)
+    If you want to inject a common view into some specific samples. You should check this out [More detail](https://github.com/momodae/AndroidSampleLibrary/blob/master/document/component/sampleCompoent.md)
 
 * *Function*
 
-    If you want to do something every time when you open a sample. You should check this out[More detail](document/function/sampleFunction.md)
+    If you want to do something every time when you open a sample. You should check this out [More detail](https://github.com/momodae/AndroidSampleLibrary/blob/master/document/function/sampleFunction.md)
 
 * *MainComponent*
 
@@ -114,7 +114,7 @@ Make sure after you have your own ActionProcessor. mark as ActionProcessor
     The component is for the programmer who want to have their own home page. I will give you all the information that you registered in.
 
 
-Take a look at [MainSampleFragment](app/src/main/java/com/cz/sample/custom/main/MainSampleFragment.java)
+Take a look at [MainSampleFragment](https://github.com/momodae/AndroidSampleLibrary/blob/master/app/src/main/java/com/cz/sample/custom/main/MainSampleFragment.java)
 
 
 * *ProjectRepository*
