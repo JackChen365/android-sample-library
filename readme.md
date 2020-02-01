@@ -1,7 +1,7 @@
 ## AndroidSampleLibrary
 
 > During the very critical moment. I made a plan for learning other computer languages. I was realized that I've lost a lot of source code.<br>
-  After a finished one project or one part of the business. I forgot it immediately. That's why I just keep working on the Sample Library. Here is the fourth or fifth version of a test project.<br>
+  After I finished one project or finished one part of the project. I forgot it immediately. That's why I was keep working on the Sample Library. Here is the fourth or fifth version of a test project.<br>
   I must say it's my favorite<br>
 
 After one week of hard working. I've finished some functions:
