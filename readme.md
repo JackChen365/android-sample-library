@@ -9,6 +9,9 @@ After one week of hard working. I've finished some functions:
 * [Sample function](document/function/sampleFunction.md)
 * Action processor
 
+### Annotations
+The [Annotations](document/annotations/sampleAnnotation.md)
+
 #### [中文文档](document/readme-cn.md)
 
 
@@ -44,15 +47,19 @@ dependencies {
 }
 
 
+//Use my sample style.
+<!-- Extend from my style. -->
+<style name="AppTheme" parent="SampleAppCompat">
+    <!-- Customize your theme here. -->
+    ...
+</style>
+
 ```
 
 ### Pictures
 
 ![Image1](https://github.com/momodae/AndroidSampleLibrary/blob/master/image/image1.gif?raw=true)<br>
 ![Image2](https://github.com/momodae/AndroidSampleLibrary/blob/master/image/image2.gif?raw=true)<br>
-
-### Annotations
-The [Annotations](document/annotations/sampleAnnotation.md)
 
 ### How to use
 
@@ -135,7 +142,7 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 
 ### Problems
 
-Sorry, I do know a lot of problems with this project. I just do all of this by myself during the Spring festival. I was working on this project for one week.
+> Sorry, I do know a lot of problems with this project. I just do all of this by myself during the Spring festival. I was working on this project for one week.<br>
 It's just the early version of this project. So issue me when you find a bug.
 
 The problems that I knew was:

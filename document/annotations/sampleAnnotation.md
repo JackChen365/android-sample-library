@@ -39,8 +39,8 @@ Make sure that all your samples has an exact category or it will lose from nowhe
 * *ActonProcessor*
 > If you got a special sample that I do not support. You could implement your own sample action processor
 
-    For instance:
-    * I am not support alertDialog. Then I write some code like this.
+For instance:
+* I am not support alertDialog. Then I write some code like this.
 
 ```
 //With this annotation. this class will register to the action processor manager automatically
@@ -102,11 +102,11 @@ Make sure after you have your own ActionProcessor. mark as ActionProcessor
 
 * *Component*
 
-    If you want to inject a common view into some specific samples. You should check this out[More detail](document/component/sampleComponent.md)
+    If you want to inject a common view into some specific samples. You should check this out [More detail](https://github.com/momodae/AndroidSampleLibrary/blob/master/document/component/sampleCompoent.md)
 
 * *Function*
 
-    If you want to do something every time when you open a sample. You should check this out[More detail](document/function/sampleFunction.md)
+    If you want to do something every time when you open a sample. You should check this out [More detail](https://github.com/momodae/AndroidSampleLibrary/blob/master/document/function/sampleFunction.md)
 
 * *MainComponent*
 
@@ -114,19 +114,17 @@ Make sure after you have your own ActionProcessor. mark as ActionProcessor
     The component is for the programmer who want to have their own home page. I will give you all the information that you registered in.
 
 
-Take a look at [MainSampleFragment](app/src/main/java/com/cz/sample/custom/main/MainSampleFragment.java)
+Take a look at [MainSampleFragment](https://github.com/momodae/AndroidSampleLibrary/blob/master/app/src/main/java/com/cz/sample/custom/main/MainSampleFragment.java)
 
 
 * *ProjectRepository*
 
-<pre>
-If you want me to show you all the source code and document located in your source code path.
-First I should find your repository and related all the information to your repository.
-Then from the annotation, I will get the file relative path and combine them together
-You may curious about one thing. Why I just packing all the source code to asset and load file from asset
-One thing I was concern about is This may cost extra space and It could be really hard for you to load the local images.
+> If you want me to show you all the source code and document located in your source code path.<br>
+First I should find your repository and related all the information to your repository.<br>
+Then from the annotation, I will get the file relative path and combine them together<br>
+You may curious about one thing. Why I just packing all the source code to asset and load file from asset<br>
+One thing I was concern about is This may cost extra space and It could be really hard for you to load the local images.<br>
 Anyway, I gave that solution up. I think this is better. However, sometimes I load the document from the Github was failed. That's really bothered me.
-</pre>
 
 
 * *TestCase*
