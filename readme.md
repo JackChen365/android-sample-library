@@ -13,7 +13,7 @@ After one week of hard working. I've finished some functions:
 
 
 ### Sample
-[APK FILE](apk/app-debug.apk)
+[APK FILE](https://github.com/momodae/AndroidSampleLibrary/raw/master/apk/app-debug.apk)
 
 
 ### Gradle
@@ -48,8 +48,8 @@ dependencies {
 
 ### Pictures
 
-![Image1](image/image1.gif)<br>
-![Image2](image/image2.gif)<br>
+![Image1](https://github.com/momodae/AndroidSampleLibrary/blob/master/image/image1.gif?raw=true)<br>
+![Image2](https://github.com/momodae/AndroidSampleLibrary/blob/master/image/image2.gif?raw=true)<br>
 
 ### Annotations
 The [Annotations](document/annotations/sampleAnnotation.md)
