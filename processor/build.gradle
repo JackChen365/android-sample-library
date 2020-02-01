@@ -22,7 +22,7 @@ dependencies {
     implementation 'com.google.auto.service:auto-service:1.0-rc2'
     annotationProcessor "com.google.auto.service:auto-service:1.0-rc2"
 
-    bundled(project(':api'))
+//    bundled(project(':api'))
     implementation 'com.cz.android.sample.api:sample-api:1.0.0'
 }
 

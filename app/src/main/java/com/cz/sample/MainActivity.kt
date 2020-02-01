@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val projectApplication = SampleApplication.getProjectApplication()
-        projectApplication.androidSample.registerExceptionHandler { context, e, registerItem, item ->
+        projectApplication.androidSample.registerExceptionHandler { _, e, _, _ ->
             Log.e(TAG, "Exception occurs:" + e.message)
         }
     }

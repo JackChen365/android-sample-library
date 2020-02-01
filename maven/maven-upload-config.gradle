@@ -22,7 +22,7 @@ maven {
             name="processor"
             groupId "com.cz.android.sample.processor"
             artifactId "sample-processor"
-            version "1.0.0"
+            version "1.0.3"
             description "android sample library annotation processor"
         }
         module{
