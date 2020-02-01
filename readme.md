@@ -44,6 +44,13 @@ dependencies {
 }
 
 
+//Use my sample style.
+<!-- Extend from my style. -->
+<style name="AppTheme" parent="SampleAppCompat">
+    <!-- Customize your theme here. -->
+    ...
+</style>
+
 ```
 
 ### Pictures
