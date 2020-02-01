@@ -56,7 +56,7 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 
 ### How to use
 
-* Initialize you repository if you have. This will allow you demonstrate all the source code and document in this project
+* Initialize your repository if you have. This will allow you demonstrate all the source code and document in this project
 
     ```
     @ProjectRepository("https://raw.githubusercontent.com/momodae/AndroidSampleLibrary/master/app/src/main/java/")
@@ -120,7 +120,7 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 
     But if this category does not exist. The sample will be lost.
 
-* How to use different kinds components
+* How to use different kinds of components
 
     ```
     //Mark each component annotation to this sample
