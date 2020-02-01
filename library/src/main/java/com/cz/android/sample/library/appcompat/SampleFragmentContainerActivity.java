@@ -87,7 +87,7 @@ public class SampleFragmentContainerActivity extends AppCompatActivity{
             //set toolbar elevation
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Resources resources = getResources();
-                toolBar.setElevation(resources.getDimension(R.dimen.sampleToolBarElevation));
+                toolBar.setElevation(resources.getDimension(R.dimen.sample_toolbar_elevation));
             }
             //initialize all the information
             setSupportActionBar(toolBar);
@@ -104,7 +104,7 @@ public class SampleFragmentContainerActivity extends AppCompatActivity{
             });
             contentView.addView(toolBar, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         }
-        //add child view to content view
+        //add children view to content view
         contentView.addView(createView,ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
         super.setContentView(contentView);
 

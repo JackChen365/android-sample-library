@@ -12,8 +12,7 @@ import android.webkit.WebView;
 import androidx.annotation.WorkerThread;
 
 import com.cz.android.sample.library.analysis.HtmlSource;
-
-import org.apache.commons.io.IOUtils;
+import com.cz.android.sample.library.utils.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;

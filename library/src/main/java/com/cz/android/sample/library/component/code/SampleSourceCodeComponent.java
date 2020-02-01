@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Created by cz
  * @date 2020-01-31 11:38
- * @email chenzhen@okay.cn
+ * @email bingo110@126.com
  */
 public class SampleSourceCodeComponent extends CompanionComponentContainer {
 

@@ -33,6 +33,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation project(path: ':library')
+//    implementation "com.cz.android.sample.library:sample-library:1.0.0"
     kapt project(path: ':processor')
 }
 repositories {

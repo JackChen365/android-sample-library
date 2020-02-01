@@ -96,7 +96,7 @@ public class SampleDocumentComponent extends CompanionComponentContainer {
             }
         }
         String packageName = object.getClass().getPackage().getName();
-        fragmentList.add(SampleDocumentFragment.newInstance(packageName+url));
+        fragmentList.add(SampleDocumentFragment.newInstance(packageName,url));
         titleList.add(context.getString(R.string.sample_document));
 
         FragmentPagerAdapter fragmentPagerAdapter = SimpleFragmentPagerAdapter.create(context.getSupportFragmentManager(), fragmentList, titleList);

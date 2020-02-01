@@ -10,7 +10,6 @@ import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 
 import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.component.code.view.SourceCodeView;
@@ -53,12 +52,6 @@ public class SampleSourceCodeDialogFragment extends BottomSheetDialogFragment {
         String fileUrl = arguments.getString(SAMPLE_FILE_URL);
         SourceCodeView sampleSourceCodeView=view.findViewById(R.id.sampleSourceCodeView);
         sampleSourceCodeView.loadSourceCodeFromUrl(fileUrl);
-
-        int index = fileUrl.lastIndexOf("/");
-        String fileName = fileUrl.substring(index + 1);
-
-        Toolbar sampleToolBar=view.findViewById(R.id.sampleToolBar);
-        sampleToolBar.setTitle(fileName);
     }
 
     @Override

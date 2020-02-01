@@ -33,7 +33,7 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
      * override fun onCreate(savedInstanceState: Bundle?) {
      *     super.onCreate(savedInstanceState)
      *     setContentView(R.layout.activity_component_document_sample)
-     *     // Here we may change this content view. and put content view input fragment.
+     *     // Here we may change this content view. and put content view into fragment.
      *     // Then If you try to findViewById It doesn't existed
      *     testButton.setOnClickListener {
      *     }
@@ -77,7 +77,7 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
                 //set toolbar elevation
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     Resources resources = getResources();
-                    toolBar.setElevation(resources.getDimension(R.dimen.sampleToolBarElevation));
+                    toolBar.setElevation(resources.getDimension(R.dimen.sample_toolbar_elevation));
                 }
                 //initialize all the information
                 setSupportActionBar(toolBar);
@@ -94,7 +94,7 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
                 });
                 contentView.addView(toolBar, ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
             }
-            //add child view to content view
+            //add children view to content view
             contentView.addView(createView,ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
             super.setContentView(contentView);
         }

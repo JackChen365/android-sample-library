@@ -2,7 +2,6 @@ package com.cz.android.sample.library.component.document.view;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -12,8 +11,7 @@ import android.webkit.WebView;
 import androidx.annotation.WorkerThread;
 
 import com.cz.android.sample.library.analysis.HtmlSource;
-
-import org.apache.commons.io.IOUtils;
+import com.cz.android.sample.library.utils.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +48,12 @@ public class MarkdownView extends WebView {
         settings.setJavaScriptEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
     }
+
+    @Override
+    public void loadUrl(String url) {
+        loadMarkdownFromUrl(url);
+    }
+
     /**
      * Load Markdown from url to the view as rich formatted HTML. The
      * HTML output will be styled based on the given CSS file.

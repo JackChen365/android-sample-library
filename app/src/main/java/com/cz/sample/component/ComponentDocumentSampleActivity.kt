@@ -29,7 +29,7 @@ import com.cz.sample.R
  *
  * @see SampleDocument This annotation will add a additional panel to your sample.
  */
-@SampleDocument("DocumentSample.md")
+@SampleDocument("documentSample.md")
 @RefCategory(title=R.string.component_category,desc = R.string.component_category_desc,priority = 1)
 @RefRegister(title=R.string.component_sample2,desc=R.string.component_sample2_desc,category = R.string.component_category,priority = 1)
 class ComponentDocumentSampleActivity : SampleAppCompatActivity() {

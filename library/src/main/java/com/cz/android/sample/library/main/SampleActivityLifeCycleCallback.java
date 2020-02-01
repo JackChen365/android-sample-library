@@ -109,7 +109,7 @@ public class SampleActivityLifeCycleCallback implements Application.ActivityLife
                 if(null==sampleFragmentContainer){
                     contentLayout.removeAllViews();
                 } else {
-                    //remove all the child from content view except my boy
+                    //remove all the children from content view except my boy
                     int keepSize = 0;
                     while(keepSize<contentLayout.getChildCount()){
                         View childView = contentLayout.getChildAt(keepSize);

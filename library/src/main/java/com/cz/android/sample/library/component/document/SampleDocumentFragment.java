@@ -25,10 +25,12 @@ import com.cz.android.sample.library.file.SampleProjectFileSystemManager;
  */
 public class SampleDocumentFragment extends Fragment {
     private final static String URL="url";
+    private final static String PACKAGE_NAME="package_name";
 
-    public static Fragment newInstance(String url){
+    public static Fragment newInstance(String packageName,String url){
         Bundle argument=new Bundle();
         argument.putString(URL,url);
+        argument.putString(PACKAGE_NAME,packageName);
         Fragment fragment=new SampleDocumentFragment();
         fragment.setArguments(argument);
         return fragment;
@@ -49,10 +51,11 @@ public class SampleDocumentFragment extends Fragment {
         //初始化markdown
         Bundle arguments = getArguments();
         String url = arguments.getString(URL);
-        if(null!=url){
+        String packageName = arguments.getString(PACKAGE_NAME);
+        if(null!=url&&null!=packageName){
             //设置base_url session
             initLoadProgress();
-            initMarkdown(url);
+            initMarkdown(url,packageName);
         }
     }
 
@@ -85,27 +88,28 @@ public class SampleDocumentFragment extends Fragment {
     /**
      * 初始化markdown
      */
-    private void initMarkdown(String documentUrl) {
+    private void initMarkdown(String url,String packageName) {
         FragmentActivity activity = getActivity();
         MarkdownView markdownView=activity.findViewById(R.id.sampleMarkdownView);
-        if (TextUtils.isEmpty(documentUrl)) {
+        if (TextUtils.isEmpty(url)) {
             markdownView.loadUrl("about:blank");
         } else {
-            if(documentUrl.startsWith("http")){
-                markdownView.loadMarkdownFromUrl(documentUrl);
-            } else if(documentUrl.startsWith("assets://")){
-                documentUrl=documentUrl.substring("assets://".length());
-                markdownView.loadMarkdownFromAssets(documentUrl,null);
+            if(url.startsWith("http")){
+                markdownView.loadMarkdownFromUrl(url);
+            } else if(url.startsWith("assets://")){
+                url=url.substring("assets://".length());
+                markdownView.loadMarkdownFromAssets(url,null);
             } else {
                 SampleProjectFileSystemManager projectFileSystemManager = SampleProjectFileSystemManager.getInstance();
                 String repositoryUrl = projectFileSystemManager.getRepositoryUrl();
                 if(null==repositoryUrl){
                     //warning
                 } else {
+                    String fileUrl=packageName.replace('.','/')+"/"+url;
                     if(repositoryUrl.endsWith("/")){
-                        markdownView.loadUrl(repositoryUrl+documentUrl);
+                        markdownView.loadMarkdownFromUrl(repositoryUrl+fileUrl);
                     } else {
-                        markdownView.loadUrl(repositoryUrl+"/"+documentUrl);
+                        markdownView.loadMarkdownFromUrl(repositoryUrl+"/"+fileUrl);
                     }
                 }
             }

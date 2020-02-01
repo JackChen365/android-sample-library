@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Created by cz
  * @date 2020-01-31 13:03
- * @email chenzhen@okay.cn
+ * @email bingo110@126.com
  * This component container is used for two different component container that has same work
  * For example the first one will create a ViewPager. So did the second one.
  *

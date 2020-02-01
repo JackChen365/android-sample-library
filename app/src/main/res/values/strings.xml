@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidSampleLibrary</string>
+    <string name="app_name">示例演示</string>
     <string name="output">输出</string>
     <string name="sample_source_code_description">展示示例源码</string>
     <string name="sample_basic_component_description">展示基本的组件扩展</string>
@@ -48,5 +48,11 @@
     <string name="other_sample2_desc">演示源码加载,高度展示</string>
     <string name="other_sample3">消息输出</string>
     <string name="other_sample3_desc">演示加载系统System.out流操作</string>
+    <string name="other_sample4">树形文件</string>
+    <string name="other_sample4_desc">展示所有本地文本以树形展示</string>
+
+    <string name="other_sample5">源码查看</string>
+    <string name="other_sample5_desc">查看多层级的源码目录</string>
+    <string name="loading">加载中...</string>
 
 </resources>

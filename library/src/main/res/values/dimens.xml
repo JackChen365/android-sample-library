@@ -2,5 +2,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="sample_activity_horizontal_margin">16dp</dimen>
     <dimen name="sample_activity_vertical_margin">16dp</dimen>
-    <dimen name="sampleToolBarElevation">4dp</dimen>
+    <dimen name="sample_toolbar_elevation">4dp</dimen>
+    <dimen name="sample_tree_level_padding">16dp</dimen>
 </resources>

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * @author Created by cz
  * @date 2020-01-31 10:23
- * @email chenzhen@okay.cn
+ * @email bingo110@126.com
  *
  * Project Application is not an android application.
  * Its duty was try to make the different part of this project have the change to initialize something with context

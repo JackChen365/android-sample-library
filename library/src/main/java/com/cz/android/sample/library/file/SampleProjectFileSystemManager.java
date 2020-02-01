@@ -7,7 +7,6 @@ import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.library.main.SampleConfiguration;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +16,7 @@ import java.util.Map;
 /**
  * @author Created by cz
  * @date 2020-01-30 22:05
- * @email chenzhen@okay.cn
+ * @email bingo110@126.com
  */
 public class SampleProjectFileSystemManager implements SampleConfiguration {
     private static final String TAG="SampleProjectFileSystem";
@@ -70,7 +69,15 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
      */
     private void processProjectFileList(String repositoryUrl, List<File> fileList) {
         for(File file:fileList){
-            String packageName=file.getParent().replace(File.separator,".");
+            String parent = file.getParent();
+            String name = file.getName();
+            String packageName;
+            if(null==parent){
+                packageName="";
+                //For example:there is a file without package.
+            } else {
+                packageName=parent.replace(File.separator,".");
+            }
             List<String> files = fileSystemMap.get(packageName);
             if(null==files){
                 files=new ArrayList<>();

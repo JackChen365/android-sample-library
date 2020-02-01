@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?colorPrimary"
-        android:elevation="@dimen/sampleToolBarElevation"
+        android:elevation="@dimen/sample_toolbar_elevation"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         android:theme="@style/AppTheme.AppBarOverlay"/>
 

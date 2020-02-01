@@ -6,15 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.cz.android.sample.api.RefRegister
+import com.cz.android.sample.library.component.code.SampleSourceCode
 import com.cz.android.sample.library.component.message.SampleMessage
 import com.cz.sample.R
 import kotlinx.android.synthetic.main.fragment_message_layout.*
 
 /**
- * 示例 Fragment类型的Demo
+ * This sample demonstrated how to output message and show it to your sample
+ * @see SampleSourceCode add additional panel that show all the source code
  */
 @SampleMessage
-@RefRegister(title=R.string.other_sample1,desc = R.string.other_sample3_desc,category = R.string.other)
+@SampleSourceCode
+@RefRegister(title=R.string.other_sample3,desc = R.string.other_sample3_desc,category = R.string.other)
 class SampleMessageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_message_layout, container, false);
@@ -23,11 +26,11 @@ class SampleMessageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         outButton.setOnClickListener {
-            println("Message from fragment!\n")
+            println("System.out from fragment!")
         }
 
         outErrButton.setOnClickListener {
-            System.err.println("Message from fragment!\n")
+            System.err.println("System.err from fragment!")
         }
     }
 }

@@ -15,12 +15,24 @@ import com.cz.android.sample.function.SampleFunction;
  */
 @Function
 public class SamplePermissionFunction implements SampleFunction {
+
+    /**
+     * If your function wants to do some initial work. Here we inject the fragment.
+     * But if we don't we this function, call SamplePermissionsFragment.injectIfNeededIn(context);
+     * and then try to get fragment from the FragmentManager It just didn't exist
+     * @param context
+     */
     @Override
     public void init(FragmentActivity context) {
         //inject permission fragment
         SamplePermissionsFragment.injectIfNeededIn(context);
     }
 
+    /**
+     * Check this class and determined this class needs to run this function
+     * @param clazz
+     * @return
+     */
     @Override
     public boolean isAvailable(Class<?> clazz) {
         SamplePermission samplePermission = clazz.getAnnotation(SamplePermission.class);

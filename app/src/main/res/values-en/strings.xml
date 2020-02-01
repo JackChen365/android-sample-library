@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Sample</string>
     <string name="output">output</string>
     <string name="sample_source_code_description">Display sample source code</string>
     <string name="sample_basic_component_description">Display the basic component</string>
@@ -11,7 +12,7 @@
     <string name="component_sample1">Basic Component Usage</string>
     <string name="component_sample1_desc">We will add three different component in order to support different function</string>
     <string name="component_sample2">Document component</string>
-    <string name="component_sample2_desc">It shows how you add a document by use Annotation:SampleDocument</string>
+    <string name="component_sample2_desc">It shows how you add a document by use Annotation-SampleDocument</string>
     <string name="component_sample3">Component source code</string>
     <string name="component_sample3_desc">It shows all the source files in this package</string>
     <string name="component_sample4">All component sample</string>
@@ -49,4 +50,9 @@
     <string name="other_sample2_desc">Demonstrated how to load a source code and highlight it</string>
     <string name="other_sample3">Message output sample</string>
     <string name="other_sample3_desc">Demonstrated how to use display system out stream</string>
+    <string name="other_sample4">TreeAdapter</string>
+    <string name="other_sample4_desc">Demonstrated all the storage files</string>
+    <string name="other_sample5">SourceCode</string>
+    <string name="other_sample5_desc">View the multi-level directory</string>
+    <string name="loading">Loading...</string>
 </resources>

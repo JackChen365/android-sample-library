@@ -56,7 +56,7 @@ public class BorderLayout extends FrameLayout {
     }
 
     /**
-     * Draw child view border
+     * Draw children view border
      */
     private void drawChildViewBorder(Canvas canvas, View childView){
         childView.getHitRect(outRect);
