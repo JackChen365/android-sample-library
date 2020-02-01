@@ -5,7 +5,7 @@
   I must say it's my favorite<br>
 
 After one week of hard working. I've finished some functions:
-* [Sample component](document/component/sampleComponent.md)
+* [Sample component](document/component/sampleCompoent.md)
 * [Sample function](document/function/sampleFunction.md)
 * Action processor
 
