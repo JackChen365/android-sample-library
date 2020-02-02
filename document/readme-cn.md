@@ -3,14 +3,14 @@
 >  春节特殊时期,本来打算学点其他的,发现.以前有很多库,写了可能都挺长时间没更新了.也没有一个足够方便的基础扩展演示库.于是带着这种想法.便着手设计了此库
 
 * #### 已经完成的基本功能为:
-* [扩展组件](document/component/sampleComponent.md)
-* [扩展功能](document/function/sampleFunction.md)
+* [扩展组件](../document/component/sampleComponent.md)
+* [扩展功能](../document/function/sampleFunction.md)
 * 演示处理器
 
 #### [英文文档](../readme.md)
 
 ### 示例下载
-[apk file](apk/app-debug.apk)
+[apk file](https://github.com/momodae/AndroidSampleLibrary/raw/master/apk/app-debug.apk)
 
 ### 演示图片
 
