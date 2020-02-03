@@ -36,14 +36,14 @@ apply plugin: 'kotlin-kapt'
 dependencies {
     ...
     implementation "com.cz.android.sample.library:sample-library:1.0.1"
-    kapt "com.cz.android.sample.processor:sample-processor:1.0.1"
+    kapt "com.cz.android.sample.processor:sample-processor:1.0.3"
 }
 
 //For a java andorid project
 dependencies {
     ...
     implementation "com.cz.android.sample.library:sample-library:1.0.1"
-    annotationProcessor "com.cz.android.sample.processor:sample-processor:1.0.1"
+    annotationProcessor "com.cz.android.sample.processor:sample-processor:1.0.3"
 }
 
 
