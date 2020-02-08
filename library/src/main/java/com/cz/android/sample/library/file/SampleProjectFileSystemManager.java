@@ -41,24 +41,22 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
      */
     @Override
     public void onCreate(Context context) {
-        if(null!=repositoryUrl){
-            Object object=null;
+        Object object=null;
+        try {
+            Class clazz = Class.forName(AndroidSampleConstant.PROJECT_FILE_CLASS);
+            object = clazz.newInstance();
+        } catch (Exception e){
+            Log.w(TAG,"Couldn't load class:"+AndroidSampleConstant.PROJECT_FILE_CLASS+"!");
+        }
+        if(null!=object){
+            List<File> projectFileList=getObjectValue(object,AndroidSampleConstant.PROJECT_FILE_LIST_FIELD_NAME);
+            //Process all the project files
             try {
-                Class clazz = Class.forName(AndroidSampleConstant.PROJECT_FILE_CLASS);
-                object = clazz.newInstance();
-            } catch (Exception e){
-                Log.w(TAG,"Couldn't load class:"+AndroidSampleConstant.PROJECT_FILE_CLASS+"!");
+                processProjectFileList(repositoryUrl,projectFileList);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            if(null!=object){
-                List<File> projectFileList=getObjectValue(object,AndroidSampleConstant.PROJECT_FILE_LIST_FIELD_NAME);
-                //Process all the project files
-                try {
-                    processProjectFileList(repositoryUrl,projectFileList);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                System.out.println();
-            }
+            System.out.println();
         }
     }
 

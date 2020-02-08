@@ -2,6 +2,7 @@ package com.cz.android.sample.library.analysis;
 
 import android.content.Context;
 import android.net.http.HttpResponseCache;
+import android.util.Log;
 
 import androidx.annotation.WorkerThread;
 
@@ -23,6 +24,7 @@ import java.nio.charset.Charset;
  */
 public class HtmlSource extends Source<String,String> {
     private static final int MAX_HTTP_CACHE_SIZE=10*1024*1024;
+    private static final String TAG="HtmlSource";
 
     @WorkerThread
     @Override
@@ -51,7 +53,7 @@ public class HtmlSource extends Source<String,String> {
                 result = IOUtils.toString(urlConnection.getInputStream(), Charset.forName("utf-8"));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.w(TAG,"Url:"+url+" load fained:");
         } finally {
             if(null!=urlConnection){
                 urlConnection.disconnect();

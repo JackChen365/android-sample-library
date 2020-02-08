@@ -11,7 +11,6 @@ import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.Demonstrable;
 import com.cz.android.sample.api.item.RegisterItem;
-import com.cz.android.sample.component.CompanionComponentContainer;
 import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.component.ComponentManager;
 import com.cz.android.sample.function.FunctionManager;
@@ -20,10 +19,10 @@ import com.cz.android.sample.library.component.code.SampleSourceCodeComponent;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 import com.cz.android.sample.library.component.memory.SampleMemoryComponent;
 import com.cz.android.sample.library.component.message.SampleMessageComponent;
+import com.cz.android.sample.library.file.SampleProjectFileSystemManager;
 import com.cz.android.sample.library.function.permission.SamplePermissionFunction;
 import com.cz.android.sample.library.main.component.DefaultMainSampleFragment;
 import com.cz.android.sample.library.processor.FragmentClassActionProcessor;
-import com.cz.android.sample.library.file.SampleProjectFileSystemManager;
 import com.cz.android.sample.main.MainSampleComponentFactory;
 import com.cz.android.sample.processor.AbsActionProcessor;
 import com.cz.android.sample.processor.ActionProcessManager;
@@ -116,7 +115,7 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
                 return (T) fieldValue;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.w(TAG,"Object:"+object.getClass().getName()+"can't get field:"+fieldName+".");
         }
         return null;
     }

@@ -96,7 +96,7 @@ public class RandomData {
     /**
      * English word array
      */
-    public String[] englishWorkArray;
+    public String[] englishWordArray;
     /**
      * Cached family name array
      */
@@ -132,8 +132,9 @@ public class RandomData {
 
     public List<String> getWorkList(@IntRange(from = 0) int start, @IntRange(from = 0,to = 200) int count) {
         String[] items = new String[count];
+        String[] englishWordArray = getEnglishWordArray();
         for (int i = 0; i < start+count; i++) {
-            items[i] = englishWorkArray[i];
+            items[i] = englishWordArray[i];
         }
         return Arrays.asList(items);
     }
@@ -143,7 +144,8 @@ public class RandomData {
      * @return
      */
     public String getWord() {
-        return englishWorkArray[RANDOM.nextInt(englishWorkArray.length)];
+        String[] englishWordArray = getEnglishWordArray();
+        return englishWordArray[RANDOM.nextInt(englishWordArray.length)];
     }
 
     public String getName(){
@@ -224,8 +226,8 @@ public class RandomData {
      * lazily load family name data from assets
      */
     private String[] getEnglishWordArray() {
-        if(null!= englishWorkArray){
-            return englishWorkArray;
+        if(null!= englishWordArray){
+            return englishWordArray;
         } else {
             final List<String> wordList=new ArrayList<>();
             AssetManager assets = context.getAssets();
@@ -237,7 +239,7 @@ public class RandomData {
                 while ((line = reader.readLine()) != null) {
                     wordList.add(line);
                 }
-                englishWorkArray=wordList.toArray(new String[wordList.size()]);
+                englishWordArray =wordList.toArray(new String[wordList.size()]);
             } catch (IOException e) {
                 //nothing to do
             } finally {
@@ -248,7 +250,7 @@ public class RandomData {
                     }
                 }
             }
-            return englishWorkArray;
+            return englishWordArray;
         }
     }
 

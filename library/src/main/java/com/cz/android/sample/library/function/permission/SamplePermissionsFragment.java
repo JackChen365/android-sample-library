@@ -15,14 +15,14 @@ import java.util.Map;
 
 public class SamplePermissionsFragment extends Fragment {
 
-    private static final int PERMISSIONS_REQUEST_CODE = 8080;
+    private static final int PERMISSIONS_REQUEST_CODE = 42;
 
     private static final String BIND_SAMPLE_PERMISSION_FRAGMENT_TAG = "cz.sample.permission.bind_fragment_tag";
 
     public static void injectIfNeededIn(FragmentActivity activity) {
         FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
         if (supportFragmentManager.findFragmentByTag(BIND_SAMPLE_PERMISSION_FRAGMENT_TAG) == null) {
-            supportFragmentManager.beginTransaction().add(new SamplePermissionsFragment(), BIND_SAMPLE_PERMISSION_FRAGMENT_TAG).commit();
+            supportFragmentManager.beginTransaction().add(new SamplePermissionsFragment(), BIND_SAMPLE_PERMISSION_FRAGMENT_TAG).commitNow();
         }
     }
 
@@ -82,25 +82,6 @@ public class SamplePermissionsFragment extends Fragment {
             }
         }
     }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    boolean isGranted(String permission) {
-        final FragmentActivity fragmentActivity = getActivity();
-        if (fragmentActivity == null) {
-            throw new IllegalStateException("This fragment must be attached to an activity.");
-        }
-        return fragmentActivity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    boolean isRevoked(String permission) {
-        final FragmentActivity fragmentActivity = getActivity();
-        if (fragmentActivity == null) {
-            throw new IllegalStateException("This fragment must be attached to an activity.");
-        }
-        return fragmentActivity.getPackageManager().isPermissionRevokedByPolicy(permission, getActivity().getPackageName());
-    }
-
 
     public void addPermissionObserver(String[] permissions, PermissionObserver permissionObserver) {
         for(String permission:permissions){

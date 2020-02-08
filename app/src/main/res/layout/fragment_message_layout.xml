@@ -24,13 +24,6 @@
             android:textAllCaps="false"
             android:text="out"/>
 
-        <Button
-            android:id="@+id/outErrButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="err"/>
-
     </LinearLayout>
 
 </FrameLayout>

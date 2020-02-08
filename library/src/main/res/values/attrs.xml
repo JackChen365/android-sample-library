@@ -39,4 +39,11 @@
         <attr name="sample_curveChartCount" format="integer"/>
         <attr name="sample_curveStrokeWidth" format="dimension"/>
     </declare-styleable>
+
+    <attr name="sampleSlidingLayout" format="reference"/>
+
+    <declare-styleable name="SampleSlidingLayout">
+        <attr name="sliding_handle" format="reference"/>
+        <attr name="sliding_weight" format="float"/>
+    </declare-styleable>
 </resources>

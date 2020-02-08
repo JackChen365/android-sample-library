@@ -119,6 +119,11 @@ public class SampleFragmentContainerActivity extends AppCompatActivity{
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
     /**
      * Return fragment from class string
      * @return

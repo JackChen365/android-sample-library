@@ -66,7 +66,7 @@ public class SampleDocumentComponent extends CompanionComponentContainer {
         titleList.add(context.getString(R.string.sample));
         List<Fragment> fragmentList=new ArrayList<>();
         fragmentList.add(SampleWrapperViewFragment.newFragment(view));
-
+        sampleViewPager.setOffscreenPageLimit(3);
         sampleViewPager.setAdapter(SimpleFragmentPagerAdapter.create(context.getSupportFragmentManager(), fragmentList,titleList));
         return contentLayout;
     }

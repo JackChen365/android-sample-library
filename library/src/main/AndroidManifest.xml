@@ -2,7 +2,7 @@
     package="com.cz.android.sample.library" >
 
     <application>
-        <activity android:name=".appcompat.SampleFragmentContainerActivity"/>
+        <activity android:name=".appcompat.SampleFragmentContainerActivity" />
 
         <provider
             android:authorities="${applicationId}"

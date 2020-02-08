@@ -42,4 +42,8 @@
         <item name="sample_curveChartCount">5</item>
         <item name="sample_curveStrokeWidth">1dp</item>
     </style>
+
+    <style name="SampleSlidingLayout">
+        <item name="sliding_weight">0.6</item>
+    </style>
 </resources>

@@ -1,7 +1,5 @@
 package com.cz.android.sample.library.component.message;
 
-import android.util.Log;
-
 import com.cz.android.sample.library.thread.WorkThread;
 
 import java.io.IOException;
@@ -16,36 +14,26 @@ import java.util.concurrent.Executors;
  *
  */
 public class SampleSystemConsole{
-    private final ExecutorService executorService = Executors.newFixedThreadPool(2);
-    private ReadStreamRunnable readStreamRunnable;
-    private ReadStreamRunnable errorReadStreamRunnable;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private ReadStreamRunnable readStreamRunnable=null;
 
-    public SampleSystemConsole(WorkThread<String> workThread) {
+    public void setup(WorkThread<String> workThread){
         PipedOutputStream pipedOutputStream=null;
-        PipedOutputStream pipedErrorOutputStream=null;
         PipedInputStream pipedInputStream = new PipedInputStream();
-        PipedInputStream pipedErrorInputStream = new PipedInputStream();
         try {
             pipedOutputStream = new PipedOutputStream(pipedInputStream);
-            pipedErrorOutputStream = new PipedOutputStream(pipedErrorInputStream);
         } catch (IOException e) {
+            e.printStackTrace();
         }
         // set up System.out
         System.setOut(new PrintStream(pipedOutputStream, true));
-        // set up System.err
-        System.setErr(new PrintStream(pipedErrorOutputStream, true));
         readStreamRunnable=new ReadStreamRunnable(workThread,pipedInputStream);
-        errorReadStreamRunnable=new ReadStreamRunnable(workThread,pipedErrorInputStream);
         executorService.execute(readStreamRunnable);
-        executorService.execute(errorReadStreamRunnable);
     }
 
     public void stop(){
         if(null!=readStreamRunnable){
             readStreamRunnable.stop();
-        }
-        if(null!=errorReadStreamRunnable){
-            errorReadStreamRunnable.stop();
         }
     }
 
@@ -61,8 +49,7 @@ public class SampleSystemConsole{
 
         public void stop(){
             isRunning=false;
-            System.out.println('\n');
-            System.err.println('\n');
+            System.setOut(null);
             try {
                 inputStream.close();
             } catch (IOException e) {
@@ -70,22 +57,43 @@ public class SampleSystemConsole{
             }
         }
 
-        private String TAG="test";
         @Override
         public void run() {
             final byte[] buf = new byte[1024];
             while (isRunning) {
                 try {
                     int len = inputStream.read(buf);
-                    if (len == -1 || 1==len) {
+                    if (len == -1) {
                         continue;
                     }
                     String text = new String(buf, 0, len);
-                    workThread.post(text.trim()+"\n");
+                    workThread.post(text);
+//                    CharSequence charSequence = trimEnd(text);
+//                    if(null!=charSequence&& 0 < charSequence.length()){
+//                        workThread.post(charSequence+"\n");
+//                    }
                 } catch (IOException e){
                     e.printStackTrace();
                 }
             }
         }
+        /**
+         * Trip text from end
+         * @param text
+         * @return
+         */
+        private CharSequence trimEnd(CharSequence text){
+            for(int i=text.length()-1;i>=0;i--){
+                if(' '!=text.charAt(i)&&'\n'!=text.charAt(i)){
+                    if(0 != i){
+                        return text.subSequence(0,i);
+                    } else {
+                        return "";
+                    }
+                }
+            }
+            return text;
+        }
     }
+
 }

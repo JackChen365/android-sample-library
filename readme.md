@@ -35,15 +35,15 @@ allprojects {
 apply plugin: 'kotlin-kapt'
 dependencies {
     ...
-    implementation "com.cz.android.sample.library:sample-library:1.0.0"
-    kapt "com.cz.android.sample.processor:sample-processor:1.0.0"
+    implementation "com.cz.android.sample.library:sample-library:1.0.2"
+    kapt "com.cz.android.sample.processor:sample-processor:1.0.3"
 }
 
 //For a java andorid project
 dependencies {
     ...
-    implementation "com.cz.android.sample.library:sample-library:1.0.0"
-    annotationProcessor "com.cz.android.sample.processor:sample-processor:1.0.0"
+    implementation "com.cz.android.sample.library:sample-library:1.0.2"
+    annotationProcessor "com.cz.android.sample.processor:sample-processor:1.0.3"
 }
 
 

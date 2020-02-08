@@ -32,8 +32,8 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-//    implementation project(path: ':library')
-    implementation "com.cz.android.sample.library:sample-library:1.0.0"
+    implementation project(path: ':library')
+//    implementation "com.cz.android.sample.library:sample-library:1.0.1"
     kapt "com.cz.android.sample.processor:sample-processor:1.0.3"
 //    kapt project(path: ':processor')
 }
