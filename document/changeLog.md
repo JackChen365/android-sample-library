@@ -27,3 +27,11 @@ Fixed a few bugs
 1. MessageComponent add two action buttons.
     The first one is auto scroll to bottom.
     The second one is clean all the message
+
+
+### 1.0.3
+*时间:* 2020/2/16<br>
+*作者:* Jack chen
+
+* Fixed SampleSystemConsole's PipedInputStream write end dead
+* You could check this [how-can-i-fix-my-write-end-dead-and-read-end-dead-errors-for-objectinputstre](https://stackoverflow.com/questions/43640846/how-can-i-fix-my-write-end-dead-and-read-end-dead-errors-for-objectinputstre)
