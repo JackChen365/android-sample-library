@@ -36,7 +36,7 @@ maven {
             name="library"
             groupId "com.cz.android.sample.library"
             artifactId "sample-library"
-            version "1.0.3"
+            version "1.0.6"
             description "android sample library"
         }
     }

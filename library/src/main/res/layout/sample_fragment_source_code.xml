@@ -4,10 +4,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <com.cz.android.sample.library.component.code.view.SourceCodeView
+    <com.cz.android.sample.library.view.NestedWebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.cz.android.sample.library.component.code.view.SourceCodeView
             android:id="@+id/sampleSourceCodeView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
+
+    </com.cz.android.sample.library.view.NestedWebView>
 
     <com.cz.android.sample.library.view.WebViewProgressBar
         android:id="@+id/sampleProgressBar"

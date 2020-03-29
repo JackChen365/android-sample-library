@@ -16,6 +16,11 @@ public class DataManager {
      * all registered data service
      */
     private static final Map<Class,Object> dataService=new HashMap<>();
+
+    public static DataProvider getDataProvider(Context context){
+        return DataManager.getDataService(context, DataProvider.class);
+    }
+
     /**
      * Return a data service by class
      * @param clazz

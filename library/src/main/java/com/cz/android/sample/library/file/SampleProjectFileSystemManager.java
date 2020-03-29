@@ -1,6 +1,7 @@
 package com.cz.android.sample.library.file;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.cz.android.sample.api.AndroidSampleConstant;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * @author Created by cz
@@ -68,7 +71,6 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
     private void processProjectFileList(String repositoryUrl, List<File> fileList) {
         for(File file:fileList){
             String parent = file.getParent();
-            String name = file.getName();
             String packageName;
             if(null==parent){
                 packageName="";
@@ -82,10 +84,12 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
                 fileSystemMap.put(packageName,files);
             }
             String filePath = file.getPath();
-            if(!repositoryUrl.endsWith("/")){
-                files.add(repositoryUrl+"/"+filePath);
-            } else {
-                files.add(repositoryUrl+filePath);
+            if(null!=repositoryUrl){
+                if(!repositoryUrl.endsWith("/")){
+                    files.add(repositoryUrl+"/"+filePath);
+                } else {
+                    files.add(repositoryUrl+filePath);
+                }
             }
         }
     }
@@ -130,8 +134,16 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
      * @param packageName
      * @return
      */
-    public List<String> getProjectFileList(String packageName){
+    public List<String> getProjectFileList(String packageName,String fileFilter){
         List<String> fileList=null;
+        Pattern pattern=null;
+        if(!TextUtils.isEmpty(fileFilter)){
+            try {
+                pattern = Pattern.compile(fileFilter);
+            } catch (PatternSyntaxException e){
+                Log.w(TAG,e.getMessage());
+            }
+        }
         for(Map.Entry<String,List<String>> entry:fileSystemMap.entrySet()){
             String filePackageName = entry.getKey();
             if(filePackageName.startsWith(packageName)){
@@ -140,7 +152,12 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
                 }
                 List<String> value = entry.getValue();
                 if(null!=value){
-                    fileList.addAll(value);
+                    for(String fileName:value){
+                        if(!fileName.startsWith(".")&&
+                                (null==pattern||pattern.matcher(fileName).matches())){
+                            fileList.add(fileName);
+                        }
+                    }
                 }
             }
         }

@@ -13,4 +13,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface SampleSourceCode {
+    /**
+     * If you want to filter the source files by regex.
+     * @return
+     */
+    String value() default "";
 }

@@ -2,6 +2,7 @@ package com.cz.android.sample.library.component.code.view;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -18,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 /**
  * @author Created by cz
@@ -29,7 +29,7 @@ import java.util.concurrent.Executors;
  */
 public class SourceCodeView extends WebView {
     public static final String BASE_URL="file:///android_asset/";
-    private static final Executor threadExecutor = Executors.newSingleThreadExecutor();
+    private static final Executor threadExecutor = AsyncTask.THREAD_POOL_EXECUTOR;
 
     public SourceCodeView(Context context) {
         this(context,null,0);
@@ -54,15 +54,25 @@ public class SourceCodeView extends WebView {
      * - input in markdown format
      */
     public void loadSourceCodeFromUrl(final String url){
-        final Context context = getContext().getApplicationContext();
-       threadExecutor.execute(new Runnable() {
-           @Override
-           public void run() {
-               final HtmlSource htmlSource=new HtmlSource();
-               String source = htmlSource.getSource(context,url);
-               loadSourceCode(context,source,url);
-           }
-       });
+        loadSourceCodeFromUrlInternal(url,1);
+    }
+
+    private void loadSourceCodeFromUrlInternal(final String url,final int retryCount){
+        if(0 <= retryCount){
+            final Context context = getContext().getApplicationContext();
+            threadExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    final HtmlSource htmlSource=new HtmlSource();
+                    String source = htmlSource.getSource(context,url);
+                    if(null==htmlSource){
+                        loadSourceCodeFromUrlInternal(url,retryCount-1);
+                    } else {
+                        loadSourceCode(context,source,url);
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -71,12 +81,13 @@ public class SourceCodeView extends WebView {
      *
      */
     @WorkerThread
-    private void loadSourceCode(Context context, String text,String url) {
+    private void loadSourceCode(Context context, String text, final String url) {
         if(TextUtils.isEmpty(text)){
             post(new Runnable() {
                 @Override
                 public void run() {
-                    loadUrl("about:blank");
+                    loadDataWithBaseURL(BASE_URL,"about:blank", "text/html", "UTF-8",null);
+                    invalidate();
                 }
             });
         } else {

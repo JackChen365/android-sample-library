@@ -92,11 +92,13 @@ public class SampleSourceCodeComponent extends CompanionComponentContainer {
                 titleList.add(title);
             }
         }
+        SampleSourceCode sampleSourceCode = object.getClass().getAnnotation(SampleSourceCode.class);
+        String filter = sampleSourceCode.value();
         //Plus our component
         titleList.add(context.getString(R.string.sample_source_code));
         Class<?> clazz = object.getClass();
         String packageName = clazz.getPackage().getName();
-        fragmentList.add(SampleSourceFileFragmentListFragment.newInstance(packageName));
+        fragmentList.add(SampleSourceFileFragmentListFragment.newInstance(packageName,filter));
         FragmentPagerAdapter fragmentPagerAdapter = SimpleFragmentPagerAdapter.create(context.getSupportFragmentManager(), fragmentList, titleList);
         sampleViewPager.setAdapter(fragmentPagerAdapter);
         sampleTabLayout.setupWithViewPager(sampleViewPager);

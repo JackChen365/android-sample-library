@@ -53,7 +53,7 @@ public class HtmlSource extends Source<String,String> {
                 result = IOUtils.toString(urlConnection.getInputStream(), Charset.forName("utf-8"));
             }
         } catch (Exception e) {
-            Log.w(TAG,"Url:"+url+" load fained:");
+            Log.w(TAG,"Url:"+url+" load failed!");
         } finally {
             if(null!=urlConnection){
                 urlConnection.disconnect();

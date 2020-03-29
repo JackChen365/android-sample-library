@@ -63,7 +63,7 @@ public class ActionProcessManager {
     /**
      * process the action when user execute an action
      */
-    public void process(FunctionManager functionManager, final FragmentActivity context, final RegisterItem item){
+    public void process(FunctionManager functionManager, final FragmentActivity context, final RegisterItem item) throws Exception {
         Class clazz=item.clazz;
         for (final AbsActionProcessor processor:processorList) {
             if (processor.isInstance(clazz)) {
@@ -74,15 +74,21 @@ public class ActionProcessManager {
                     e.printStackTrace();
                 }
                 if(null!=instance){
-                    try {
+                    if(exceptionHandlerList.isEmpty()){
                         processor.run(context, item, instance);
-                    } catch (Exception e) {
-                        for(ActionExceptionHandler exceptionHandler:exceptionHandlerList){
-                            exceptionHandler.handleException(context,e,item, instance);
+                        //process all the functions
+                        functionManager.execute(context,item,instance);
+                    } else {
+                        try {
+                            processor.run(context, item, instance);
+                            //process all the functions
+                            functionManager.execute(context,item,instance);
+                        } catch (Exception e) {
+                            for(ActionExceptionHandler exceptionHandler:exceptionHandlerList){
+                                exceptionHandler.handleException(context,e,item, instance);
+                            }
                         }
                     }
-                    //process all the functions
-                    functionManager.execute(context,item,instance);
                 }
             }
         }

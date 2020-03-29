@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.util.SparseArray;
 
 import androidx.annotation.IntRange;
+import androidx.annotation.Keep;
 
 import com.cz.android.sample.library.R;
 
@@ -25,7 +26,8 @@ import java.util.Random;
  * @date 2020-01-30 18:20
  * @email bingo110@126.com
  */
-public class RandomData {
+@Keep
+public class DataProvider {
     /**
      * an random object
      */
@@ -96,7 +98,7 @@ public class RandomData {
     /**
      * English word array
      */
-    public String[] englishWordArray;
+    private String[] englishWordArray;
     /**
      * Cached family name array
      */
@@ -117,32 +119,27 @@ public class RandomData {
 
     private final Context context;
 
-    public RandomData(Context context) {
+    public DataProvider(Context context) {
         this.context = context.getApplicationContext();
     }
 
-    /**
-     * 获得指定数据英文数据
-     * @param count
-     * @return
-     */
-    public List<String> getWorkList(@IntRange(from = 0,to = 200) int count){
-        return getWorkList(0,count);
+    public String[] getWordList(){
+        return getEnglishWordArray();
     }
 
-    public List<String> getWorkList(@IntRange(from = 0) int start, @IntRange(from = 0,to = 200) int count) {
+    public List<String> getWordList(@IntRange(from = 0,to = 200) int count){
+        return getWordList(0,count);
+    }
+
+    public List<String> getWordList(@IntRange(from = 0) int start, @IntRange(from = 0,to = 200) int count) {
         String[] items = new String[count];
         String[] englishWordArray = getEnglishWordArray();
-        for (int i = 0; i < start+count; i++) {
-            items[i] = englishWordArray[i];
+        for (int i = 0; i < count; i++) {
+            items[i] = englishWordArray[start+i];
         }
         return Arrays.asList(items);
     }
 
-    /**
-     * 随机获得一个英文单词
-     * @return
-     */
     public String getWord() {
         String[] englishWordArray = getEnglishWordArray();
         return englishWordArray[RANDOM.nextInt(englishWordArray.length)];
@@ -152,16 +149,13 @@ public class RandomData {
         return RANDOM.nextBoolean()? getMaleName() : getFemaleName();
     }
     /**
-     * 获得一个男性名称
+     * Return a male name.
      * @return
      */
     public String getMaleName(){
         initFamilyNameData();
-        //随机1-2位
         int nameCount = 1+RANDOM.nextInt(1);
-        //临时数据置空
         Arrays.fill(nameTempArray,0,nameTempArray.length,' ');
-        //随机获得姓氏
         int familyNameIndex = RANDOM.nextInt(familyNameArray.length);
         String familyName=familyNameArray[familyNameIndex];
         for(int i=0;i<nameCount;i++){
@@ -182,7 +176,7 @@ public class RandomData {
         int familyNameIndex = RANDOM.nextInt(familyNameArray.length);
         String familyName=familyNameArray[familyNameIndex];
         for(int i=0;i<nameCount;i++){
-            int index = RANDOM.nextInt(familyNameArray.length);
+            int index = RANDOM.nextInt(familyName.length());
             nameTempArray[i]=familyName.charAt(index);
         }
         return familyName+new String(nameTempArray).trim();
@@ -202,11 +196,10 @@ public class RandomData {
 
     /**
      * Get a specific color array
-     * @param context
      * @param index
      * @return
      */
-    public int[] getColorArray(Context context, @IntRange(from=COLOR_RED,to=COLOR_BLUE_GREY) int index){
+    public int[] getColorArray(@IntRange(from=COLOR_RED,to=COLOR_BLUE_GREY) int index){
         int[] cacheArray = colorSparseArray.get(index);
         if(null!=cacheArray){
             return cacheArray;
@@ -278,18 +271,19 @@ public class RandomData {
         }
         if(null==femaleNameTextLibrary||null==maleNameLibrary){
             AssetManager assets = context.getAssets();
-            InputStream inputStream=null;
+            InputStreamReader inputStreamReader=null;
             try {
-                inputStream = assets.open("data/family_name.txt");
+                InputStream inputStream = assets.open("data/family_last_name.properties");
                 Properties properties=new Properties();
-                properties.load(inputStream);
+                inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                properties.load(inputStreamReader);
                 maleNameLibrary=properties.getProperty("male");
                 femaleNameTextLibrary=properties.getProperty("female");
             } catch (IOException e) {
             } finally {
-                if (null != inputStream) {
+                if (null != inputStreamReader) {
                     try {
-                        inputStream.close();
+                        inputStreamReader.close();
                     } catch (IOException e) {
                     }
                 }
@@ -317,7 +311,6 @@ public class RandomData {
                 }
             } catch (IOException e) {
             } finally {
-                //记录缓存
                 imageArray =imageList;
                 if(null!=reader){
                     try {

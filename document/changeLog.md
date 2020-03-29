@@ -35,3 +35,24 @@ Fixed a few bugs
 
 * Fixed SampleSystemConsole's PipedInputStream write end dead
 * You could check this [how-can-i-fix-my-write-end-dead-and-read-end-dead-errors-for-objectinputstre](https://stackoverflow.com/questions/43640846/how-can-i-fix-my-write-end-dead-and-read-end-dead-errors-for-objectinputstre)
+
+### 1.0.4
+*时间:* 2020/2/20<br>
+*作者:* Jack chen
+
+* Fixed SampleSystemConsole's how to read input stream data
+
+### 1.0.5
+*时间:* 2020/3/28<br>
+*作者:* Jack chen
+
+* Fixed DataProvider
+* Fixed MarkdownView and SourceCodeView load failed
+* SourceCode file list support regex to filter the files.
+
+### 1.0.6
+*时间:* 2020/3/29<br>
+*作者:* Jack chen
+
+* SourceCodeView Add retry mechanism.
+* SourceCodeView wrap by NestedScrollView.

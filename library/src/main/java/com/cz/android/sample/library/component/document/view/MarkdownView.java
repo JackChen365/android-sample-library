@@ -156,7 +156,7 @@ public class MarkdownView extends WebView {
             post(new Runnable() {
                 @Override
                 public void run() {
-                    loadUrl("about:blank");
+                    loadDataWithBaseURL(BASE_URL, "about:blank", "text/html", "UTF-8", null);
                 }
             });
         } else {

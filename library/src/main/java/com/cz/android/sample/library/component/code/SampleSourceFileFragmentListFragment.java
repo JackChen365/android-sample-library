@@ -29,13 +29,15 @@ import java.util.List;
  */
 public class SampleSourceFileFragmentListFragment extends Fragment {
     private final static String SAMPLE_PACKAGE_NAME ="samplePackage";
+    private final static String SAMPLE_FILE_FILTER_NAME ="sampleFileFilter";
     private final static String SAMPLE_SOURCE_DIALOG="sample_source_dialog";
 
     private final SparseArray<BottomSheetDialogFragment> cachedDialogFragments=new SparseArray<>();
 
-    public static Fragment newInstance(String samplePackageName){
+    public static Fragment newInstance(String samplePackageName,String filterRegex){
         Bundle argument=new Bundle();
         argument.putString(SAMPLE_PACKAGE_NAME,samplePackageName);
+        argument.putString(SAMPLE_FILE_FILTER_NAME,filterRegex);
         Fragment fragment=new SampleSourceFileFragmentListFragment();
         fragment.setArguments(argument);
         return fragment;
@@ -56,9 +58,10 @@ public class SampleSourceFileFragmentListFragment extends Fragment {
         final Context context = getContext();
         Bundle arguments = getArguments();
         String packageName = arguments.getString(SAMPLE_PACKAGE_NAME);
+        String fileFilter = arguments.getString(SAMPLE_FILE_FILTER_NAME);
         ListView sampleSourceCodeList=view.findViewById(R.id.sampleSourceCodeList);
         SampleProjectFileSystemManager fileSystemManager = SampleProjectFileSystemManager.getInstance();
-        List<String> projectFileList = fileSystemManager.getProjectFileList(packageName);
+        List<String> projectFileList = fileSystemManager.getProjectFileList(packageName,fileFilter);
         final SampleSourceCodeAdapter sampleSourceCodeAdapter = new SampleSourceCodeAdapter(context, projectFileList);
         sampleSourceCodeList.setAdapter(sampleSourceCodeAdapter);
         sampleSourceCodeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
