@@ -10,12 +10,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -88,6 +90,11 @@ public class SampleFragmentContainerActivity extends AppCompatActivity{
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Resources resources = getResources();
                 toolBar.setElevation(resources.getDimension(R.dimen.sample_toolbar_elevation));
+            }
+            //This Activity already has an action bar supplied by the window decor. Do not request Window.FEATURE_SUPPORT_ACTION_BAR and set windowActionBar to false in your theme to use a Toolbar instead.
+            AppCompatDelegate delegate = getDelegate();
+            if(!delegate.hasWindowFeature(Window.FEATURE_NO_TITLE)){
+                delegate.requestWindowFeature(Window.FEATURE_NO_TITLE);
             }
             //initialize all the information
             setSupportActionBar(toolBar);

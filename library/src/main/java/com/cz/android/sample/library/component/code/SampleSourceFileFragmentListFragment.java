@@ -67,14 +67,14 @@ public class SampleSourceFileFragmentListFragment extends Fragment {
         sampleSourceCodeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String fileUrl = sampleSourceCodeAdapter.getItem(i);
+                String filePath = sampleSourceCodeAdapter.getItem(i);
                 FragmentActivity activity = getActivity();
                 FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
                 BottomSheetDialogFragment bottomSheetDialogFragment = cachedDialogFragments.get(i);
                 if(null!=bottomSheetDialogFragment){
                     bottomSheetDialogFragment.show(supportFragmentManager,SAMPLE_SOURCE_DIALOG);
                 } else{
-                    BottomSheetDialogFragment dialogFragment = SampleSourceCodeDialogFragment.newInstance(fileUrl);
+                    BottomSheetDialogFragment dialogFragment = SampleSourceCodeDialogFragment.newInstance(filePath);
                     cachedDialogFragments.put(i,dialogFragment);
                     dialogFragment.show(supportFragmentManager,SAMPLE_SOURCE_DIALOG);
                 }

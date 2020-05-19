@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">Library</string>
-
     <string name="sample_invalid_data">无效的数据</string>
     <string name="message_output">消息输出</string>
     <string name="sample_choice_test_case">选择一个示例</string>

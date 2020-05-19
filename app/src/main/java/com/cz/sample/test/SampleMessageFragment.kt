@@ -26,7 +26,7 @@ class SampleMessageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         outButton.setOnClickListener {
-            println("System.out from fragment!     .")
+            println("System.out from fragment.")
         }
     }
 }

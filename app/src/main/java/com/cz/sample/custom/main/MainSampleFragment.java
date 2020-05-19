@@ -16,11 +16,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -42,11 +44,24 @@ import java.util.List;
  * @date 2020-01-27 19:25
  * @email bingo110@126.com
  */
+@Keep
 @MainComponent
 public class MainSampleFragment extends Fragment implements MainSampleComponentFactory {
     @Override
     public Fragment getFragmentComponent() {
         return new MainSampleFragment();
+    }
+
+    /**
+     * If you want to have you own tool bar.
+     * @param context
+     */
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        AppCompatActivity activity = (AppCompatActivity)getActivity();
+        AppCompatDelegate delegate = activity.getDelegate();
+        delegate.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
     }
 
     @Nullable
@@ -74,7 +89,7 @@ public class MainSampleFragment extends Fragment implements MainSampleComponentF
         ListView sampleListView=view.findViewById(R.id.sampleListView);
         String category;
         if(null==title) {
-            category=AndroidSampleConstant.CATEGORY_ROOT;
+            category= AndroidSampleConstant.CATEGORY_ROOT;
             sampleToolBar.setTitle(R.string.app_name);
             fragmentActivity.setSupportActionBar(sampleToolBar);
 

@@ -25,10 +25,6 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
     private static final String TAG="SampleProjectFileSystem";
     private static final SampleProjectFileSystemManager fileSystemManager=new SampleProjectFileSystemManager();
     private Map<String,List<String>> fileSystemMap=new HashMap<>();
-    /**
-     * repository url
-     */
-    private String repositoryUrl;
 
     public static SampleProjectFileSystemManager getInstance(){
         return fileSystemManager;
@@ -52,10 +48,10 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
             Log.w(TAG,"Couldn't load class:"+AndroidSampleConstant.PROJECT_FILE_CLASS+"!");
         }
         if(null!=object){
-            List<File> projectFileList=getObjectValue(object,AndroidSampleConstant.PROJECT_FILE_LIST_FIELD_NAME);
+            List<String> projectFileList=getObjectValue(object,AndroidSampleConstant.PROJECT_FILE_LIST_FIELD_NAME);
             //Process all the project files
             try {
-                processProjectFileList(repositoryUrl,projectFileList);
+                processProjectFileList(projectFileList);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -65,11 +61,11 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
 
     /**
      *
-     * @param repositoryUrl
      * @param fileList
      */
-    private void processProjectFileList(String repositoryUrl, List<File> fileList) {
-        for(File file:fileList){
+    private void processProjectFileList(List<String> fileList) {
+        for(String filePath:fileList){
+            File file=new File(filePath);
             String parent = file.getParent();
             String packageName;
             if(null==parent){
@@ -83,14 +79,7 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
                 files=new ArrayList<>();
                 fileSystemMap.put(packageName,files);
             }
-            String filePath = file.getPath();
-            if(null!=repositoryUrl){
-                if(!repositoryUrl.endsWith("/")){
-                    files.add(repositoryUrl+"/"+filePath);
-                } else {
-                    files.add(repositoryUrl+filePath);
-                }
-            }
+            files.add(filePath);
         }
     }
 
@@ -115,19 +104,6 @@ public class SampleProjectFileSystemManager implements SampleConfiguration {
         return null;
     }
 
-    /**
-     * set up repository url in order to use relative path
-     * this url link to src/main/java
-     * e.g. https://github.com/momodae/SuperTextView/tree/master/app/src/main/java
-     * @param repositoryUrl
-     */
-    public void setRepositoryUrl(String repositoryUrl) {
-        this.repositoryUrl = repositoryUrl;
-    }
-
-    public String getRepositoryUrl() {
-        return repositoryUrl;
-    }
 
     /**
      * Return all repository file that in the same package name. Including all the sub directory

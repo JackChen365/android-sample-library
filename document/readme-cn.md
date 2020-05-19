@@ -22,18 +22,6 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 
 ### 如何使用
 
-* 如果你上传你的仓库到 Github,或者其他 Git 仓库,在主界面,或者任一 class 上配置:ProjectRepository 并设置仓库地址,一直到 src/main/java
-
-    ```
-    @ProjectRepository("https://raw.githubusercontent.com/momodae/AndroidSampleLibrary/master/app/src/main/java/")
-    class MainActivity : AppCompatActivity() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_main)
-        }
-    }
-    ```
-
 *  设置异常处理类,如果在启动示例时,发生一些未知异常,会回调到此处.
 
     ```

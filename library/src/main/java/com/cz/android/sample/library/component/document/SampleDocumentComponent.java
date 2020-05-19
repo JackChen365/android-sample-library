@@ -1,14 +1,10 @@
 package com.cz.android.sample.library.component.document;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -38,27 +34,8 @@ public class SampleDocumentComponent extends CompanionComponentContainer {
         return null!=sampleDocument&&null!=sampleDocument.value();
     }
 
-    /**
-     * If user want to have his own toolbar. we won't add the standard toolbar for sample
-     * @param view
-     * @return
-     */
-    private void checkAndRemoveToolBar(ViewGroup parent,View view){
-        if(androidx.appcompat.widget.Toolbar.class==view.getClass()){
-            parent.removeView(view);
-        } else if(view instanceof ViewGroup){
-            ViewGroup viewGroup = (ViewGroup) view;
-            for(int i=0;i<viewGroup.getChildCount();i++){
-                View childView = viewGroup.getChildAt(i);
-                checkAndRemoveToolBar(viewGroup,childView);
-            }
-        }
-    }
-
     @Override
     public View onCreateCompanionComponent(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view) {
-        //remove if parent view has toolbar
-        checkAndRemoveToolBar(null,view);
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View contentLayout = layoutInflater.inflate(R.layout.sample_fragment_tab, parentView, false);
         ViewPager sampleViewPager=contentLayout.findViewById(R.id.sampleViewPager);
@@ -108,20 +85,6 @@ public class SampleDocumentComponent extends CompanionComponentContainer {
 
     @Override
     public void onCreatedView(FragmentActivity context,Object object, View view) {
-        Toolbar sampleToolbar=view.findViewById(R.id.sampleToolBar);
-        final AppCompatActivity activity=(AppCompatActivity)context;
-        activity.setSupportActionBar(sampleToolbar);
-        final ActionBar supportActionBar = activity.getSupportActionBar();
-        Intent intent = activity.getIntent();
-        supportActionBar.setTitle(intent.getStringExtra("title"));
-        supportActionBar.setSubtitle(intent.getStringExtra("desc"));
-        supportActionBar.setDisplayHomeAsUpEnabled(true);
-        sampleToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.finish();
-            }
-        });
     }
 
     @Override

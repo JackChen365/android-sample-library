@@ -11,6 +11,7 @@ import com.cz.android.sample.api.item.Demonstrable;
 import com.cz.android.sample.api.item.RegisterItem;
 import com.cz.android.sample.library.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +21,13 @@ import java.util.List;
  */
 public class SampleTemplateAdapter extends BaseAdapter {
     private final LayoutInflater layoutInflater;
-    private List<Demonstrable> demonstrableList;
+    private List<Demonstrable> demonstrableList=new ArrayList<>();
 
     public SampleTemplateAdapter(Context context, List<Demonstrable> demonstrableList) {
         this.layoutInflater=LayoutInflater.from(context);
-        this.demonstrableList = demonstrableList;
+        if(null!=demonstrableList){
+            this.demonstrableList.addAll(demonstrableList);
+        }
     }
 
     @Override

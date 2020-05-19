@@ -5,6 +5,8 @@ import android.content.res.AssetManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.webkit.ConsoleMessage;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -44,6 +46,16 @@ public class MarkdownView extends WebView {
         //this markdown library needed javascript
         setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
         setHorizontalScrollBarEnabled(false);
+        setWebChromeClient(new WebChromeClient(){
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                int i = consoleMessage.lineNumber();
+                String message = consoleMessage.message();
+                System.out.println("line:"+i+" message:"+message);
+                return super.onConsoleMessage(consoleMessage);
+            }
+
+        });
         WebSettings settings = getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);

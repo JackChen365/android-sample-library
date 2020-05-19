@@ -2,8 +2,6 @@ package com.cz.android.sample.api.item;
 
 import com.cz.android.sample.api.AndroidSampleConstant;
 
-import static com.cz.android.sample.api.AndroidSampleConstant.NORMAL_TYPE;
-
 /**
  * @author Created by cz
  * @date 2019/4/18 下午4:13
@@ -17,6 +15,7 @@ public class RegisterItem implements Demonstrable {
     public int descRes;
     public int priority;//排序位置
     public Class<?> clazz;//当前注册的class
+    public String className;
     public String category;//关联的category对象
     public int categoryRes;
     public int type= AndroidSampleConstant.NORMAL_TYPE;

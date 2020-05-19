@@ -9,7 +9,6 @@
 | Component |  |
 | Function |  |
 | MainComponent |  |
-| ProjectRepository |  |
 | TestCase |  |
 
 
@@ -115,17 +114,6 @@ Make sure after you have your own ActionProcessor. mark as ActionProcessor
 
 
 Take a look at [MainSampleFragment](https://github.com/momodae/AndroidSampleLibrary/blob/master/app/src/main/java/com/cz/sample/custom/main/MainSampleFragment.java)
-
-
-* *ProjectRepository*
-
-> If you want me to show you all the source code and document located in your source code path.<br>
-First I should find your repository and related all the information to your repository.<br>
-Then from the annotation, I will get the file relative path and combine them together<br>
-You may curious about one thing. Why I just packing all the source code to asset and load file from asset<br>
-One thing I was concern about is This may cost extra space and It could be really hard for you to load the local images.<br>
-Anyway, I gave that solution up. I think this is better. However, sometimes I load the document from the Github was failed. That's really bothered me.
-
 
 * *TestCase*
 

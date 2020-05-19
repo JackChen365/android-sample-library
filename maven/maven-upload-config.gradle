@@ -15,7 +15,7 @@ maven {
             name="api"
             groupId "com.cz.android.sample.api"
             artifactId "sample-api"
-            version "1.0.0"
+            version "1.0.2"
             description "android sample library api"
         }
         module{
@@ -29,14 +29,14 @@ maven {
             name="core"
             groupId "com.cz.android.sample"
             artifactId "sample-core"
-            version "1.0.0"
+            version "1.0.1"
             description "android sample library core"
         }
         module{
             name="library"
             groupId "com.cz.android.sample.library"
             artifactId "sample-library"
-            version "1.0.6"
+            version "1.0.7"
             description "android sample library"
         }
     }

@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentActivity;
 import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.component.document.view.MarkdownView;
 import com.cz.android.sample.library.view.WebViewProgressBar;
-import com.cz.android.sample.library.file.SampleProjectFileSystemManager;
 
 /**
  * @author Created by cz
@@ -100,18 +99,9 @@ public class SampleDocumentFragment extends Fragment {
                 url=url.substring("assets://".length());
                 markdownView.loadMarkdownFromAssets(url,null);
             } else {
-                SampleProjectFileSystemManager projectFileSystemManager = SampleProjectFileSystemManager.getInstance();
-                String repositoryUrl = projectFileSystemManager.getRepositoryUrl();
-                if(null==repositoryUrl){
-                    //warning
-                } else {
-                    String fileUrl=packageName.replace('.','/')+"/"+url;
-                    if(repositoryUrl.endsWith("/")){
-                        markdownView.loadMarkdownFromUrl(repositoryUrl+fileUrl);
-                    } else {
-                        markdownView.loadMarkdownFromUrl(repositoryUrl+"/"+fileUrl);
-                    }
-                }
+                //File from assets source code.
+                String assetsPath = packageName.replace('.', '/') + "/" + url;
+                markdownView.loadMarkdownFromAssets(assetsPath,null);
             }
         }
     }

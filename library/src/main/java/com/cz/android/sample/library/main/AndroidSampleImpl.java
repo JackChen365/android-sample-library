@@ -19,7 +19,6 @@ import com.cz.android.sample.library.component.code.SampleSourceCodeComponent;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 import com.cz.android.sample.library.component.memory.SampleMemoryComponent;
 import com.cz.android.sample.library.component.message.SampleMessageComponent;
-import com.cz.android.sample.library.file.SampleProjectFileSystemManager;
 import com.cz.android.sample.library.function.permission.SamplePermissionFunction;
 import com.cz.android.sample.library.main.component.DefaultMainSampleFragment;
 import com.cz.android.sample.library.processor.FragmentClassActionProcessor;
@@ -76,10 +75,6 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
             List<String> actionProcessorList=getObjectValue(object,AndroidSampleConstant.PROCESSOR_FIELD_NAME);
             List<String> testCaseList=getObjectValue(object,AndroidSampleConstant.TEST_FIELD_NAME);
             String mainComponentClass=getObjectValue(object,AndroidSampleConstant.MAIN_COMPONENT_FIELD_NAME);
-            //Here if we have repository. related to this repository
-            String repositoryUrl=getObjectValue(object,AndroidSampleConstant.REPOSITORY_URL_FIELD_NAME);
-            SampleProjectFileSystemManager fileSystem=SampleProjectFileSystemManager.getInstance();
-            fileSystem.setRepositoryUrl(repositoryUrl);
             //process register and category translate string resources to string
             try {
                 processCategoryList(context,categoryList,registerList);
@@ -238,7 +233,11 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
      */
     @Override
     public void start(FragmentActivity context, RegisterItem demonstrable){
-        actionProcessManager.process(functionManager,context,demonstrable);
+        try {
+            actionProcessManager.process(functionManager,context,demonstrable);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

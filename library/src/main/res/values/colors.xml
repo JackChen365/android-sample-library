@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="sampleColorDivider">#EFEFEF</color>
-    <color name="sampleLightGray">#EFEFEF</color>
+    <color name="sampleLightGray">#E0E0E0</color>
     <color name="sampleCodeBackground">#292B2E</color>
 
     <!-- This colours below are based on Danielle Vass light_colors file :

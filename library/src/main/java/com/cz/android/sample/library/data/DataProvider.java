@@ -48,10 +48,8 @@ public class DataProvider {
     public static final int COLOR_blue=5;
     public static final int COLOR_light_Blue=6;
     public static final int COLOR_CYAN=7;
-    //青色色系
     public static final int COLOR_TEAL=8;
     public static final int COLOR_LIGHT_GREEN=9;
-    //绿黄色
     public static final int COLOR_LIME=10;
     public static final int COLOR_YELLOW=11;
 

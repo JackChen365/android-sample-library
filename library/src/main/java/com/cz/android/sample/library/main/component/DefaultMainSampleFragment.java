@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -46,6 +47,18 @@ public class DefaultMainSampleFragment extends Fragment implements MainSampleCom
     @Override
     public Fragment getFragmentComponent() {
         return new DefaultMainSampleFragment();
+    }
+
+    /**
+     * If you want to have you own tool bar.
+     * @param context
+     */
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        AppCompatActivity activity = (AppCompatActivity)getActivity();
+        AppCompatDelegate delegate = activity.getDelegate();
+        delegate.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
     }
 
     @Nullable

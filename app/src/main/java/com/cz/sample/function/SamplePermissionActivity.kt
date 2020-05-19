@@ -3,9 +3,9 @@ package com.cz.sample.function
 import android.Manifest
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.cz.android.sample.api.RefCategory
 import com.cz.android.sample.api.RefRegister
-import com.cz.android.sample.library.appcompat.SampleAppCompatActivity
 import com.cz.android.sample.library.function.permission.Permission
 import com.cz.android.sample.library.function.permission.PermissionObserver
 import com.cz.android.sample.library.function.permission.SamplePermission
@@ -22,7 +22,7 @@ import com.cz.sample.R
 @SamplePermission(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
 @RefCategory(title=R.string.sample_function,desc = R.string.sample_function_description,priority = 2)
 @RefRegister(title=R.string.function_permission_sample1,desc = R.string.function_permission_sample1_desc,category = R.string.sample_function)
-class SamplePermissionActivity : SampleAppCompatActivity(),PermissionObserver{
+class SamplePermissionActivity : AppCompatActivity(),PermissionObserver{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

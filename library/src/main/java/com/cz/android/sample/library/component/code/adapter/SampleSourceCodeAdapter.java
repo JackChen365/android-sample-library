@@ -25,8 +25,10 @@ public class SampleSourceCodeAdapter extends BaseAdapter {
 
     public SampleSourceCodeAdapter(@NonNull Context context,@NonNull List<String> fileList) {
         this.layoutInflater = LayoutInflater.from(context);
-        this.repositoryFileList=new ArrayList<>(fileList.size());
-        this.repositoryFileList.addAll(fileList);
+        this.repositoryFileList=new ArrayList<>();
+        if(null!=fileList){
+            this.repositoryFileList.addAll(fileList);
+        }
     }
 
     @Override

@@ -22,11 +22,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
  * @email bingo110@126.com
  */
 public class SampleSourceCodeDialogFragment extends BottomSheetDialogFragment {
-    private final static String SAMPLE_FILE_URL ="fileUrl";
+    private final static String SAMPLE_FILE_PATH ="filePath";
 
-    public static BottomSheetDialogFragment newInstance(String url){
+    public static BottomSheetDialogFragment newInstance(String filePath){
         Bundle argument=new Bundle();
-        argument.putString(SAMPLE_FILE_URL,url);
+        argument.putString(SAMPLE_FILE_PATH,filePath);
         BottomSheetDialogFragment fragment=new SampleSourceCodeDialogFragment();
         fragment.setArguments(argument);
         return fragment;
@@ -49,9 +49,9 @@ public class SampleSourceCodeDialogFragment extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle arguments = getArguments();
-        String fileUrl = arguments.getString(SAMPLE_FILE_URL);
+        String filePath = arguments.getString(SAMPLE_FILE_PATH);
         SourceCodeView sampleSourceCodeView=view.findViewById(R.id.sampleSourceCodeView);
-        sampleSourceCodeView.loadSourceCodeFromUrl(fileUrl);
+        sampleSourceCodeView.loadSourceCodeFromUrl(filePath);
     }
 
     @Override

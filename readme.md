@@ -63,18 +63,6 @@ dependencies {
 
 ### How to use
 
-* Initialize your repository if you have. This will allow you demonstrate all the source code and document in this project
-
-    ```
-    @ProjectRepository("https://raw.githubusercontent.com/momodae/AndroidSampleLibrary/master/app/src/main/java/")
-    class MainActivity : AppCompatActivity() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_main)
-        }
-    }
-    ```
-
 * Setup an exception handler. If your sample does not works properly. Here you could trace the exception and check it out
 
     ```

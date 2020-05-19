@@ -1,5 +1,7 @@
 package com.cz.android.sample.library.component.message;
 
+import android.util.Log;
+
 import com.cz.android.sample.library.thread.WorkThread;
 
 import java.io.IOException;
@@ -8,18 +10,40 @@ import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 
 public class SampleSystemConsole{
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private static final String TAG="SampleSystemConsole";
+    private static final int MAX_RETRY_COUNT=Integer.MAX_VALUE;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor(new ThreadFactory() {
+        @Override
+        public Thread newThread(Runnable r) {
+            return new Thread(r,"system-console-thread");
+        }
+    });
     private ReadStreamRunnable readStreamRunnable=null;
 
-    public void setup(WorkThread<String> workThread){
+    public void setup(final WorkThread<String> workThread){
+        setupInternal(workThread,0,MAX_RETRY_COUNT);
+    }
+
+    private void setupInternal(final WorkThread<String> workThread, final int retryCount, final int maxRetryCount) {
         PipedOutputStream pout = new PipedOutputStream();
         // set up System.out
         System.setOut(new PrintStream(pout, true));
         readStreamRunnable=new ReadStreamRunnable(workThread,pout);
-        executorService.execute(readStreamRunnable);
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                readStreamRunnable.run();
+                if(retryCount<maxRetryCount){
+                    //Here the thread was stopped. We try to restart the thread.
+                    Log.i(TAG,"Try to re-start the thread:"+(retryCount+1));
+                    setupInternal(workThread,retryCount+1,maxRetryCount);
+                }
+            }
+        });
     }
 
     public void stop(){
@@ -52,6 +76,7 @@ public class SampleSystemConsole{
         public void run() {
             final byte[] buf = new byte[1024];
             try(PipedInputStream is = new PipedInputStream(outputStream)){
+                Log.i(TAG,"Connected to the pip.");
                 while (isRunning) {
                     int len = is.read(buf);
                     if (len == -1) {
@@ -62,7 +87,6 @@ public class SampleSystemConsole{
                 }
             } catch (IOException e){
                 isRunning=false;
-                e.printStackTrace();
             }
         }
     }

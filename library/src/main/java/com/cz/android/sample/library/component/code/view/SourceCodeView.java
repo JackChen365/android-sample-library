@@ -2,23 +2,18 @@ package com.cz.android.sample.library.component.code.view;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.AsyncTask;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 
-import androidx.annotation.WorkerThread;
-
-import com.cz.android.sample.library.analysis.HtmlSource;
 import com.cz.android.sample.library.utils.IOUtils;
+import com.cz.android.sample.library.view.NestedWebView;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.concurrent.Executor;
 
 /**
  * @author Created by cz
@@ -27,9 +22,8 @@ import java.util.concurrent.Executor;
  * A web view that support display source code
  * Check resources: asset/highlight
  */
-public class SourceCodeView extends WebView {
+public class SourceCodeView extends NestedWebView {
     public static final String BASE_URL="file:///android_asset/";
-    private static final Executor threadExecutor = AsyncTask.THREAD_POOL_EXECUTOR;
 
     public SourceCodeView(Context context) {
         this(context,null,0);
@@ -54,33 +48,21 @@ public class SourceCodeView extends WebView {
      * - input in markdown format
      */
     public void loadSourceCodeFromUrl(final String url){
-        loadSourceCodeFromUrlInternal(url,1);
-    }
-
-    private void loadSourceCodeFromUrlInternal(final String url,final int retryCount){
-        if(0 <= retryCount){
-            final Context context = getContext().getApplicationContext();
-            threadExecutor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    final HtmlSource htmlSource=new HtmlSource();
-                    String source = htmlSource.getSource(context,url);
-                    if(null==htmlSource){
-                        loadSourceCodeFromUrlInternal(url,retryCount-1);
-                    } else {
-                        loadSourceCode(context,source,url);
-                    }
-                }
-            });
+        try {
+            Context context = getContext();
+            AssetManager assets = context.getAssets();
+            InputStream inputStream = assets.open(url);
+            String source = IOUtils.toString(inputStream, "utf-8");
+            loadSourceCode(context,source,url);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     /**
      * Load source code by text,Here we will use highlight.js to display source code
      * see assets/highlight
-     *
      */
-    @WorkerThread
     private void loadSourceCode(Context context, String text, final String url) {
         if(TextUtils.isEmpty(text)){
             post(new Runnable() {

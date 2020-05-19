@@ -43,7 +43,6 @@ public class AndroidSampleConstant {
     public static final String REGISTER_FIELD_NAME="registerList";
     public static final String CATEGORY_FIELD_NAME="categoryList";
     public static final String MAIN_COMPONENT_FIELD_NAME="mainComponent";
-    public static final String REPOSITORY_URL_FIELD_NAME="repositoryUrl";
     public static final String FUNCTION_FIELD_NAME="functionList";
     public static final String COMPONENT_FIELD_NAME="componentList";
     public static final String PROCESSOR_FIELD_NAME="processorList";

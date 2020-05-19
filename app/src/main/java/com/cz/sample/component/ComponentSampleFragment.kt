@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_component_sample.*
 @SampleMemory
 @SampleMessage
 @SampleDocument("documentSample.md")
-@SampleSourceCode("(.*Fragment\\.kt)|(.*\\.md)")
+@SampleSourceCode
 @RefRegister(title=R.string.component_sample5,desc = R.string.component_sample5_desc,category = R.string.component_category)
 class ComponentSampleFragment : Fragment() {
     private var index=0
