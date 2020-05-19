@@ -132,16 +132,17 @@ public class BorderComponent implements ComponentContainer {
 ##### Here are few pictures
 * A sample with memory and message
 
-    ![](image/component_memory1.png)<br>
+    ![](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/component_memory1.png?raw=true)<br>
 
 * A sample with document
 
-    ![](image/component_document1.png)<br>
+    ![](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/component_document1.png?raw=true)<br>
+
+    ![](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/component_document2.png?raw=true)<br>
 
 * The original sample1
 
-    ![](image/component_memory2.png)<br>
-    ![](image/component_memory2.png)<br>
+    ![](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/component_memory2.png?raw=true)<br>
 
 
 #### Usage

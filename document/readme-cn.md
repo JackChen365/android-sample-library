@@ -14,8 +14,8 @@
 
 ### 演示图片
 
-![Image1](../image/image1.gif)<br>
-![Image2](../image/image2.gif)<br>
+![Image1](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/image1.gif?raw=true)<br>
+![Image2](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/image2.gif?raw=true)<br>
 
 ### 所有常用注解
 The [Annotations](document/annotations/sampleAnnotation.md)

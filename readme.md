@@ -16,7 +16,7 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 
 
 ### Sample
-[APK FILE](https://github.com/momodae/AndroidSampleLibrary/raw/master/apk/app-debug.apk)
+[APK FILE](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/file/app-debug.apk?raw=true)
 
 
 ### Gradle
@@ -58,8 +58,8 @@ dependencies {
 
 ### Pictures
 
-![Image1](https://github.com/momodae/AndroidSampleLibrary/blob/master/image/image1.gif?raw=true)<br>
-![Image2](https://github.com/momodae/AndroidSampleLibrary/blob/master/image/image2.gif?raw=true)<br>
+![Image1](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/image1.gif?raw=true)<br>
+![Image2](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/image2.gif?raw=true)<br>
 
 ### How to use
 

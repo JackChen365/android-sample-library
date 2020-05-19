@@ -121,4 +121,4 @@ Take a look at [MainSampleFragment](https://github.com/momodae/AndroidSampleLibr
     You can mark your sample as @TestCase. Then I will start your sample at home page.
     However, if you have more than one @TestCase, I will alert a dialog for you to choose which one you want to demonstrate.
 
-![](image/test_case_image.png)
+![](image/https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/test_case_image.png?raw=true)
