@@ -38,5 +38,17 @@ jitpack{
         name "api"
         group "com.cz.android.sample"
     }
+    module{
+        name "core"
+        group "com.cz.android.sample"
+    }
+    module{
+        name "plugin"
+        group "com.cz.android.sample"
+    }
+    module{
+        name "library"
+        group "com.cz.android.sample"
+    }
 }
 
