@@ -1,5 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'groovy'
+apply plugin: 'maven'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -11,6 +12,6 @@ dependencies {
     implementation 'org.jdom:jdom2:2.0.5'
     implementation 'jaxen:jaxen:1.1.6'
     implementation 'com.squareup:javapoet:1.11.1'
-    implementation 'com.cz.android.sample.api:sample-api:1.0.2'
+    implementation project(path: ':api')
     implementation 'com.android.tools.build:gradle:3.0.1'
 }

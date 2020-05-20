@@ -25,5 +25,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0-alpha02'
-    implementation 'com.cz.android.sample.api:sample-api:1.0.2'
+    implementation project(path: ':api')
 }

@@ -20,7 +20,8 @@ buildscript {
 
 allprojects {
     repositories {
-        maven{ url "http://www.momoda.pro:8081/repository/maven/"}
+        maven { url "http://www.momoda.pro:8081/repository/maven/"}
+        maven { url 'https://jitpack.io' }
         google()
         jcenter()
     }
