@@ -44,7 +44,7 @@ allprojects {
 apply plugin: 'sample'
 dependencies {
     ...
-    implementation "com.cz.android.sample.library:sample-library:1.0.4"
+    implementation "com.github.momodae.AndroidSampleLibrary:library:1.0.6"
 }
 
 ```

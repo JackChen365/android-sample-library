@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'sample'
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -30,8 +30,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    implementation project(path: ':library')
+    implementation 'com.github.momodae.AndroidSampleLibrary:library:1.0.6'
 //    implementation "com.cz.android.sample.library:sample-library:1.0.1"
 //    kapt "com.cz.android.sample.processor:sample-processor:1.0.3"
 }
