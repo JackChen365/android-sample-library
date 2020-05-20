@@ -29,10 +29,9 @@ buildscript {
         maven{ url "http://www.momoda.pro:8081/repository/maven/"}
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
         ...
         //Here is our plugin.
-        classpath 'com.cz.android.sample:plugin:1.0.0'
+        classpath 'com.github.momodae.AndroidSampleLibrary:plugin:1.0.5'
 }
 
 allprojects {
