@@ -23,6 +23,18 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 
 ```
 //Project:build.gradle ---------------
+buildscript {
+    repositories {
+        ...
+        maven{ url "http://www.momoda.pro:8081/repository/maven/"}
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+        ...
+        //Here is our plugin.
+        classpath 'com.cz.android.sample:plugin:1.0.0'
+}
+
 allprojects {
     repositories {
         maven{ url "http://www.momoda.pro:8081/repository/maven/"}
@@ -30,29 +42,11 @@ allprojects {
 }
 
 //Project:app -------------
-
-//For a kotlin project
-apply plugin: 'kotlin-kapt'
+apply plugin: 'sample'
 dependencies {
     ...
     implementation "com.cz.android.sample.library:sample-library:1.0.4"
-    kapt "com.cz.android.sample.processor:sample-processor:1.0.3"
 }
-
-//For a java andorid project
-dependencies {
-    ...
-    implementation "com.cz.android.sample.library:sample-library:1.0.4"
-    annotationProcessor "com.cz.android.sample.processor:sample-processor:1.0.3"
-}
-
-
-//Use my sample style.
-<!-- Extend from my style. -->
-<style name="AppTheme" parent="SampleAppCompat">
-    <!-- Customize your theme here. -->
-    ...
-</style>
 
 ```
 
@@ -77,11 +71,10 @@ dependencies {
 * For an activity sample
 
     You could use either @Register or @RefRegister to set this sample up<br>
-    !Most importantly you should extend from SampleAppCompatActivity.
 
     ```
     @RefRegister(title=R.string.component_sample3,desc=R.string.component_sample3_desc,category = R.string.component_category,priority = 2)
-    class ComponentSourceSampleActivity : SampleAppCompatActivity() {
+    class ComponentSourceSampleActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_component_source_code_sample)

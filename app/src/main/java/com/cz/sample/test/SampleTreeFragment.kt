@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.cz.android.sample.api.RefRegister
 import com.cz.android.sample.library.component.code.SampleSourceCode
 import com.cz.android.sample.library.component.code.adapter.SampleTreeAdapter
 import com.cz.sample.R
@@ -20,7 +19,8 @@ import kotlin.concurrent.thread
  * This sample demonstrated how to output message and show it to your sample
  * @see SampleSourceCode add additional panel that show all the source code
  */
-@RefRegister(title=R.string.other_sample4,desc = R.string.other_sample4_desc,category = R.string.other)
+//@SamplePermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+//@RefRegister(title=R.string.other_sample4,desc = R.string.other_sample4_desc,category = R.string.other)
 class SampleTreeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sample_tree, container, false)
@@ -35,8 +35,10 @@ class SampleTreeFragment : Fragment() {
         thread {
             val file = Environment.getExternalStorageDirectory()
             val rootNode = SampleTreeAdapter.TreeNode<File>(file)
-            for(f in file.listFiles()){
-                fileTreeTraversal(f,rootNode)
+            if(null!=file.listFiles()){
+                for(f in file.listFiles()){
+                    fileTreeTraversal(f,rootNode)
+                }
             }
             view?.post {
                 progressDialog.dismiss()

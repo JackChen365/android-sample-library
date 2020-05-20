@@ -157,7 +157,7 @@ public class BorderComponent implements ComponentContainer {
 @SampleSourceCode
 @SampleDocument("documentSample.md")
 @RefRegister(title=R.string.component_sample4,desc=R.string.component_sample4_desc,category = R.string.component_category,priority = 3)
-class ComponentListSampleActivity : SampleAppCompatActivity() {
+class ComponentListSampleActivity : AppCompatActivity() {
     private var index=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

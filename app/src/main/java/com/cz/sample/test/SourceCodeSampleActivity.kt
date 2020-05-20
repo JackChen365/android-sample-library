@@ -3,8 +3,8 @@ package com.cz.sample.test
 import android.os.Bundle
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import androidx.appcompat.app.AppCompatActivity
 import com.cz.android.sample.api.RefRegister
-import com.cz.android.sample.library.appcompat.SampleAppCompatActivity
 import com.cz.sample.R
 import kotlinx.android.synthetic.main.activity_source_code_sample.*
 
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_source_code_sample.*
  * @see com.cz.android.sample.library.component.code.view.SourceCodeView A webView that responsible for demonstrate source code.
  */
 @RefRegister(title = R.string.other_sample2,desc=R.string.other_sample2_desc,category = R.string.other)
-class SourceCodeSampleActivity : SampleAppCompatActivity() {
+class SourceCodeSampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

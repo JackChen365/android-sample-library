@@ -87,7 +87,7 @@ public class SamplePermissionFunction implements SampleFunction {
 
 @SamplePermission(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
 @RefRegister(title=R.string.function_permission_sample1,desc = R.string.function_permission_sample1_desc,category = R.string.sample_function)
-class SamplePermissionActivity : SampleAppCompatActivity(),PermissionObserver{
+class SamplePermissionActivity : AppCompatActivity(),PermissionObserver{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

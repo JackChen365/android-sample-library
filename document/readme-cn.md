@@ -36,11 +36,10 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 *  Activity 演示
 
     可以使用 @Register 或者 @RefRegister标志一个类为演示对象<br>
-    !请记住 Activity 一定要继承自 SampleAppCompatActivity,不继承部分组件可能会失效
 
     ```
     @RefRegister(title=R.string.component_sample3,desc=R.string.component_sample3_desc,category = R.string.component_category,priority = 2)
-    class ComponentSourceSampleActivity : SampleAppCompatActivity() {
+    class ComponentSourceSampleActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_component_source_code_sample)
