@@ -11,7 +11,6 @@ import com.android.build.api.transform.TransformOutputProvider;
 import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.RegisterItem;
-import com.cz.android.sample.library.checker.AnnotationChecker;
 import com.cz.android.sample.library.confiuration.AndroidManifest;
 import com.cz.android.sample.library.create.AndroidProjectFileCreator;
 import com.cz.android.sample.library.create.AndroidSampleTemplateCreator;
@@ -215,17 +214,17 @@ public class SampleTransform extends Transform {
         AnnotationCheckerVisitor configurationVisitor = new AnnotationCheckerVisitor(classWriter);
         classReader.accept(configurationVisitor, ClassReader.EXPAND_FRAMES);
 
-        AnnotationChecker matchAnnotationChecker = configurationVisitor.getAnnotationChecker();
-        if(null!=matchAnnotationChecker){
-            String annotation = matchAnnotationChecker.getAnnotation();
-            List<String> configurationList = configurationMap.get(annotation);
-            if(null==configurationList){
-                configurationList=new ArrayList<>();
-                configurationMap.put(annotation,configurationList);
+        List<String> annotationList = configurationVisitor.getAnnotationList();
+        if(null!=annotationList&&!annotationList.isEmpty()){
+            for(String annotation:annotationList){
+                List<String> configurationList = configurationMap.get(annotation);
+                if(null==configurationList){
+                    configurationList=new ArrayList<>();
+                    configurationMap.put(annotation,configurationList);
+                }
+                String className = configurationVisitor.getClassName();
+                configurationList.add(className);
             }
-            String className = configurationVisitor.getClassName();
-            configurationList.add(className);
-
             CategoryItem categoryItem = configurationVisitor.getCategoryItem();
             if(null!=categoryItem){
                 categoryList.add(categoryItem);

@@ -2,6 +2,7 @@ package com.cz.android.sample.library.main;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
@@ -15,6 +16,7 @@ import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.component.ComponentManager;
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.function.SampleFunction;
+import com.cz.android.sample.library.BuildConfig;
 import com.cz.android.sample.library.component.code.SampleSourceCodeComponent;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 import com.cz.android.sample.library.component.memory.SampleMemoryComponent;
@@ -84,6 +86,15 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            //Print all the samples.
+            if(BuildConfig.DEBUG){
+                StringBuilder output=new StringBuilder();
+                List<String> categoryTextList=new ArrayList<>();
+                output.append("=================================================================================\n");
+                printlnAndroidSamples(context,output,categoryTextList,AndroidSampleConstant.CATEGORY_ROOT,1);
+                Log.i(TAG,output.toString());
+                Log.i(TAG,"=================================================================================\n");
+            }
             //process main component
             try {
                 processMainComponentClass(mainComponentClass);
@@ -92,6 +103,82 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
                 Log.w(TAG,e.getMessage());
             }
         }
+    }
+
+    /**
+     * Print all the android samples. only call this method in debug mode.
+     */
+    private void printlnAndroidSamples(Context context,StringBuilder output,List<String> categoryTextList,String category,int depth) {
+        List<Demonstrable> sampleList = getDemonstrableList(category);
+        Resources resources = context.getResources();
+        if(null!=sampleList){
+            CharSequence depthFormatText = padEnd("", '-', depth*4);
+            for(Demonstrable demonstrable:sampleList){
+                String titleResourceEntryName=null;
+                String descResourceEntryName=null;
+                String categoryResourceEntryName=null;
+                String title = demonstrable.getTitle();
+                if(demonstrable instanceof CategoryItem){
+                    CategoryItem categoryItem = (CategoryItem) demonstrable;
+                    if(AndroidSampleConstant.REF_TYPE==categoryItem.type){
+                        if(0!=categoryItem.titleRes){
+                            titleResourceEntryName=resources.getResourceEntryName(categoryItem.titleRes);
+                        }
+                        if(0!=categoryItem.descRes){
+                            descResourceEntryName=resources.getResourceEntryName(categoryItem.descRes);
+                        }
+                        if(0!=categoryItem.categoryRes){
+                            categoryResourceEntryName=resources.getResourceEntryName(categoryItem.categoryRes);
+                        }
+                    }
+                    if(categoryTextList.contains(categoryItem.title)){
+                        //The category already exist.
+                        throw new IllegalStateException("The category:"+categoryItem.title+" "+
+                                " title:"+(null==titleResourceEntryName? "0" : "R.string."+titleResourceEntryName)+" existed! Please check your string XML file!");
+                    }
+                    categoryTextList.add(categoryItem.title);
+                    output.append(depthFormatText+"| Title:"+title+
+                            " titleRef:"+(null==titleResourceEntryName? "0" : "R.string."+titleResourceEntryName)+
+                            " descRef:"+(null==descResourceEntryName? "0" : "R.string."+descResourceEntryName)+
+                            " categoryRef:"+(null==categoryResourceEntryName? "0" : "R.string."+categoryResourceEntryName));
+                    output.append("\n");
+                    printlnAndroidSamples(context,output,categoryTextList,categoryItem.title,depth+1);
+                } else if(demonstrable instanceof RegisterItem){
+                    RegisterItem registerItem = (RegisterItem) demonstrable;
+                    if(AndroidSampleConstant.REF_TYPE==registerItem.type){
+                        if(0!=registerItem.titleRes){
+                            titleResourceEntryName=resources.getResourceEntryName(registerItem.titleRes);
+                        }
+                        if(0!=registerItem.descRes){
+                            descResourceEntryName=resources.getResourceEntryName(registerItem.descRes);
+                        }
+                        if(0!=registerItem.categoryRes){
+                            categoryResourceEntryName=resources.getResourceEntryName(registerItem.categoryRes);
+                        }
+                    }
+                    output.append(depthFormatText+"| Title:"+title+
+                            " object:"+registerItem.clazz.getSimpleName()+
+                            " titleRef:"+(null==titleResourceEntryName? "0" : "R.string."+titleResourceEntryName)+
+                            " descRef:"+(null==descResourceEntryName? "0" : "R.string."+descResourceEntryName)+
+                            " categoryRef:"+(null==categoryResourceEntryName? "0" : "R.string."+categoryResourceEntryName));
+                    output.append("\n");
+                }
+
+            }
+        }
+    }
+
+    private CharSequence padEnd(CharSequence text,char padChar,int length){
+        if (length < 0)
+            throw new IllegalArgumentException("Desired length $length is less than zero.");
+        if (length <= text.length())
+            return text.subSequence(0, text.length());
+
+        StringBuilder sb = new StringBuilder(length);
+        sb.append(text);
+        for (int i=1;i<=(length - text.length());i++)
+            sb.append(padChar);
+        return sb;
     }
 
     /**

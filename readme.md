@@ -26,7 +26,7 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 buildscript {
     repositories {
         ...
-        maven{ url "http://www.momoda.pro:8081/repository/maven/"}
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         ...
@@ -36,7 +36,7 @@ buildscript {
 
 allprojects {
     repositories {
-        maven{ url "http://www.momoda.pro:8081/repository/maven/"}
+        maven { url 'https://jitpack.io' }
     }
 }
 

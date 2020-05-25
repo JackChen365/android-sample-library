@@ -40,7 +40,7 @@ public class AnnotationCheckerVisitor extends ClassVisitor {
 
 
     private static final List<AnnotationChecker> ANNOTATION_CHECKER_LIST =new ArrayList<>();
-    private AnnotationChecker annotationChecker=null;
+    private List<String> annotationList=null;
     private CategoryItem categoryItem;
     private RegisterItem registerItem;
     private String className;
@@ -79,7 +79,10 @@ public class AnnotationCheckerVisitor extends ClassVisitor {
     public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
         for(AnnotationChecker checker:ANNOTATION_CHECKER_LIST){
             if(checker.isAnnotation(desc)){
-                annotationChecker=checker;
+                if(null==annotationList){
+                    annotationList=new ArrayList<>();
+                }
+                annotationList.add(checker.getAnnotation());
                 break;
             }
         }
@@ -163,8 +166,8 @@ public class AnnotationCheckerVisitor extends ClassVisitor {
         return annotationVisitor;
     }
 
-    public AnnotationChecker getAnnotationChecker() {
-        return annotationChecker;
+    public List<String> getAnnotationList() {
+        return annotationList;
     }
 
     public CategoryItem getCategoryItem() {

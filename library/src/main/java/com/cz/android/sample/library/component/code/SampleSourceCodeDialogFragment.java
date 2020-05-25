@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.component.code.view.SourceCodeView;
 import com.cz.android.sample.library.view.WebViewProgressBar;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 /**
@@ -23,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
  */
 public class SampleSourceCodeDialogFragment extends BottomSheetDialogFragment {
     private final static String SAMPLE_FILE_PATH ="filePath";
+    private BottomSheetBehavior bottomSheetBehavior;
 
     public static BottomSheetDialogFragment newInstance(String filePath){
         Bundle argument=new Bundle();
@@ -58,7 +60,7 @@ public class SampleSourceCodeDialogFragment extends BottomSheetDialogFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         View view = getView();
-        SourceCodeView sampleSourceCodeView=view.findViewById(R.id.sampleSourceCodeView);
+        final SourceCodeView sampleSourceCodeView=view.findViewById(R.id.sampleSourceCodeView);
         final WebViewProgressBar sampleProgressBar=view.findViewById(R.id.sampleProgressBar);
         sampleProgressBar.startProgressAnim();
         sampleProgressBar.setOnProgressListener(new WebViewProgressBar.OnProgressListener() {
@@ -76,6 +78,32 @@ public class SampleSourceCodeDialogFragment extends BottomSheetDialogFragment {
                 }
             }
         });
+
+        bottomSheetBehavior = BottomSheetBehavior.from((View) (view.getParent()));
+        bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.PEEK_HEIGHT_AUTO);
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                if (BottomSheetBehavior.STATE_EXPANDED == i) {
+                    sampleSourceCodeView.setNestedScrollingEnabled(false);
+                }
+                if (BottomSheetBehavior.STATE_COLLAPSED == i) {
+                }
+                if (BottomSheetBehavior.STATE_HIDDEN == i) {
+                    dismiss();
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
 }

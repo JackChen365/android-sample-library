@@ -124,7 +124,7 @@ public class DefaultMainSampleFragment extends Fragment implements MainSampleCom
                     //move to the subcategories
                     String category = demonstrable.getTitle();
                     List<Demonstrable> demonstrableList = androidSample.getDemonstrableList(category);
-                    if(demonstrableList.isEmpty()){
+                    if(null!=demonstrableList&&demonstrableList.isEmpty()){
                         Toast.makeText(context.getApplicationContext(),"Couldn't found more sample items!", Toast.LENGTH_SHORT).show();
                     } else {
                         ComponentName activityComponent = getLauncherActivityComponent(context);

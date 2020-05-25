@@ -147,7 +147,7 @@ public class WorkThread<E> extends Thread {
     }
 
     /**
-     * if you somehow want to notify the thread, you could call this function
+     * if you want to notify the thread somehow, you could call this function
      */
     @AnyThread
     public void notifyService(){
