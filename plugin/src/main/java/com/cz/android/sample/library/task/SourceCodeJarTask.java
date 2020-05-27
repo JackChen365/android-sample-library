@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * @author Created by cz
  * @date 2020-05-19 14:17
- * @email chenzhen@okay.cn
+ * @email bingo110@126.com
  */
 public class SourceCodeJarTask extends Jar {
 
