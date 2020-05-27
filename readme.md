@@ -31,7 +31,7 @@ buildscript {
     dependencies {
         ...
         //Here is our plugin.
-        classpath 'com.github.momodae.AndroidSampleLibrary:plugin:1.0.7'
+        classpath 'com.github.momodae.AndroidSampleLibrary:plugin:1.0.8'
 }
 
 allprojects {
@@ -44,7 +44,7 @@ allprojects {
 apply plugin: 'sample'
 dependencies {
     ...
-    implementation "com.github.momodae.AndroidSampleLibrary:library:1.0.7"
+    implementation "com.github.momodae.AndroidSampleLibrary:library:1.0.8"
 }
 
 ```
@@ -119,6 +119,8 @@ dependencies {
     }
     ```
 
+* The different between RefCategory and Category.
+> We use R.string to support i18n. If you want to support that. The Category is more convenient.
 
 ### Problems
 

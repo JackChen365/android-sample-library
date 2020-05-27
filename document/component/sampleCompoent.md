@@ -171,17 +171,15 @@ class ComponentListSampleActivity : AppCompatActivity() {
 ```
 
 ##### Tips
-1. @SampleMessage we don't receive log message but instead of System.out/System.err
+1. @SampleMessage we don't receive android log message but instead of System.out/System.err
 2. @SampleDocument
 
 ```
-
-1. @SampleDocument("DocumentSample.md") It will plus your repository path and your class's package
+//It will search the document from the whole project by the name: DocumentSample.md
+1. @SampleDocument("DocumentSample.md")
 For example:
-    If your setup your repository url below:
-    @ProjectRepository("https://raw.githubusercontent.com/momodae/AndroidSampleLibrary/master/app/src/main/java/")
-    and your class package was:com.cz.sample.component
-    As a result your document's url will be:https://raw.githubusercontent.com/momodae/AndroidSampleLibrary/master/app/src/main/java/com/cz/sample/component/xxx.md
+    If you have a document named: DocumentSample.md in somewhere. We will use it. No matter it in app/DocumentSample.md or library/DocumentSample.md
+    But if you want the specific file. You should use app/DocumentSample.md
 
 Tips:
     Make sure when you open this sample your code was committed to the repository

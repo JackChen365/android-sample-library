@@ -56,3 +56,17 @@ Fixed a few bugs
 
 * SourceCodeView Add retry mechanism.
 * SourceCodeView wrap by NestedScrollView.
+
+
+
+## All the changes from now was on Jitpack.
+
+### 1.0.8
+*时间:* 2020/5/27<br>
+*作者:* Jack chen
+
+* Fixed the SystemConsoleService.
+* Turn the AnnotationProcessor to a Gradle Plugin
+* Packing all the source codes to the assets.
+* Packing all the documents to the assets.
+* Add a sample hierarchy page.
