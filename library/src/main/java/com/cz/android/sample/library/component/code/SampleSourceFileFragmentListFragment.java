@@ -1,26 +1,29 @@
 package com.cz.android.sample.library.component.code;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.component.code.adapter.SampleSourceCodeAdapter;
-import com.cz.android.sample.library.file.SampleProjectFileSystemManager;
+import com.cz.widget.recyclerview.adapter.listener.OnTreeNodeClickListener;
+import com.cz.widget.recyclerview.adapter.support.tree.TreeNode;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
  * @author Created by cz
@@ -34,10 +37,10 @@ public class SampleSourceFileFragmentListFragment extends Fragment {
 
     private final SparseArray<BottomSheetDialogFragment> cachedDialogFragments=new SparseArray<>();
 
-    public static Fragment newInstance(String samplePackageName,String filterRegex){
+    public static Fragment newInstance(String samplePackageName,String filter){
         Bundle argument=new Bundle();
         argument.putString(SAMPLE_PACKAGE_NAME,samplePackageName);
-        argument.putString(SAMPLE_FILE_FILTER_NAME,filterRegex);
+        argument.putString(SAMPLE_FILE_FILTER_NAME,filter);
         Fragment fragment=new SampleSourceFileFragmentListFragment();
         fragment.setArguments(argument);
         return fragment;
@@ -58,15 +61,25 @@ public class SampleSourceFileFragmentListFragment extends Fragment {
         final Context context = getContext();
         Bundle arguments = getArguments();
         String packageName = arguments.getString(SAMPLE_PACKAGE_NAME);
-        String fileFilter = arguments.getString(SAMPLE_FILE_FILTER_NAME);
-        ListView sampleSourceCodeList=view.findViewById(R.id.sampleSourceCodeList);
-        SampleProjectFileSystemManager fileSystemManager = SampleProjectFileSystemManager.getInstance();
-        List<String> projectFileList = fileSystemManager.getProjectFileList(packageName,fileFilter);
-        final SampleSourceCodeAdapter sampleSourceCodeAdapter = new SampleSourceCodeAdapter(context, projectFileList);
+        String filter = arguments.getString(SAMPLE_FILE_FILTER_NAME);
+        RecyclerView sampleSourceCodeList=view.findViewById(R.id.sampleSourceCodeList);
+
+        TreeNode<String> rootNode=new TreeNode<>(null);
+        AssetManager assets = context.getAssets();
+        String[] filterFileArray=null;
+        if(!TextUtils.isEmpty(filter)){
+            filterFileArray=filter.split("\\|");
+        }
+        buildFileTree(assets,rootNode,packageName.replace('.','/'),filterFileArray);
+        final SampleSourceCodeAdapter sampleSourceCodeAdapter = new SampleSourceCodeAdapter(context, rootNode);
+
+        sampleSourceCodeList.setLayoutManager(new LinearLayoutManager(context));
+        sampleSourceCodeList.addItemDecoration(new SampleFileItemDecoration(context));
         sampleSourceCodeList.setAdapter(sampleSourceCodeAdapter);
-        sampleSourceCodeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        sampleSourceCodeAdapter.expandAll();
+        sampleSourceCodeAdapter.setOnTreeNodeClickListener(new OnTreeNodeClickListener<String>() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onNodeItemClick(@Nullable TreeNode<String> node, @Nullable String item, @Nullable View v, int i) {
                 String filePath = sampleSourceCodeAdapter.getItem(i);
                 FragmentActivity activity = getActivity();
                 FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
@@ -80,6 +93,37 @@ public class SampleSourceFileFragmentListFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void buildFileTree(AssetManager assets,TreeNode<String> parentNode,String path,@Nullable String[] filterFileArray) {
+        try {
+            String[] fileList = assets.list(path);
+            if(null!=fileList){
+                for(String filePath:fileList){
+                    String classFilePath = path + "/" + filePath;
+                    if(null==filterFileArray){
+                        TreeNode<String> childNode=new TreeNode<>(parentNode,classFilePath);
+                        parentNode.children.add(childNode);
+                        buildFileTree(assets,childNode,classFilePath, null);
+                    } else {
+                        boolean filterFile=false;
+                        for(String filterPath:filterFileArray){
+                            if(filePath.contains(filterPath)){
+                                filterFile=true;
+                                break;
+                            }
+                        }
+                        if(!filterFile){
+                            TreeNode<String> childNode=new TreeNode<>(parentNode,classFilePath);
+                            parentNode.children.add(childNode);
+                            buildFileTree(assets,childNode,classFilePath,filterFileArray);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

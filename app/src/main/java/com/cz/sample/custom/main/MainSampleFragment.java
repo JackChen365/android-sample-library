@@ -29,7 +29,6 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.AndroidSample;
 import com.cz.android.sample.api.AndroidSampleConstant;
-import com.cz.android.sample.api.MainComponent;
 import com.cz.android.sample.api.item.Demonstrable;
 import com.cz.android.sample.api.item.RegisterItem;
 import com.cz.android.sample.library.R;
@@ -45,7 +44,6 @@ import java.util.List;
  * @email bingo110@126.com
  */
 @Keep
-@MainComponent
 public class MainSampleFragment extends Fragment implements MainSampleComponentFactory {
     @Override
     public Fragment getFragmentComponent() {

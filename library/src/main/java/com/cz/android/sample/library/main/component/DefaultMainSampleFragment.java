@@ -33,6 +33,7 @@ import com.cz.android.sample.api.item.RegisterItem;
 import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.main.SampleApplication;
 import com.cz.android.sample.library.main.adapter.SampleTemplateAdapter;
+import com.cz.android.sample.library.main.hierarchy.SampleHierarchyActivity;
 import com.cz.android.sample.main.MainSampleComponentFactory;
 
 import java.util.List;
@@ -84,6 +85,7 @@ public class DefaultMainSampleFragment extends Fragment implements MainSampleCom
         View view = getView();
         Toolbar sampleToolBar=view.findViewById(R.id.sampleToolBar);
         ListView sampleListView=view.findViewById(R.id.sampleListView);
+        View hierarchyButton=view.findViewById(R.id.hierarchyButton);
         String category;
         if(null==title) {
             category=AndroidSampleConstant.CATEGORY_ROOT;
@@ -95,6 +97,13 @@ public class DefaultMainSampleFragment extends Fragment implements MainSampleCom
             if(null!=testCases&&!testCases.isEmpty()){
                 alertTestCaseDialog(androidSample,context,testCases);
             }
+            hierarchyButton.setVisibility(View.VISIBLE);
+            hierarchyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(context, SampleHierarchyActivity.class));
+                }
+            });
         } else {
             category = title;
             sampleToolBar.setTitle(title);

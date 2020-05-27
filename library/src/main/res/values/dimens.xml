@@ -4,4 +4,6 @@
     <dimen name="sample_activity_vertical_margin">16dp</dimen>
     <dimen name="sample_toolbar_elevation">4dp</dimen>
     <dimen name="sample_tree_level_padding">16dp</dimen>
+    <dimen name="sample_hierarchy_stroke_width">3dp</dimen>
+    <dimen name="sample_hierarchy_depth_offset">8dp</dimen>
 </resources>

@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_message_layout.*
  * @see SampleSourceCode add additional panel that show all the source code
  */
 @SampleMessage
-@SampleSourceCode(".*Message.*")
+@SampleSourceCode
 @RefRegister(title=R.string.other_sample3,desc = R.string.other_sample3_desc,category = R.string.other)
 class SampleMessageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

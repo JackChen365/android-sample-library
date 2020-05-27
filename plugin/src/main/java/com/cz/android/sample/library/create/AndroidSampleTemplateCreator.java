@@ -247,8 +247,6 @@ public class AndroidSampleTemplateCreator implements Opcodes {
         classWriter.visitEnd();
 
         File classFile=new File(outputFile, classPath+".class");
-
-        System.out.println("Generate class:"+classFile.getPath());
         try(FileOutputStream fos = new FileOutputStream(classFile)){
             fos.write(classWriter.toByteArray());
         }

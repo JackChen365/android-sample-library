@@ -12,7 +12,6 @@ import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.RegisterItem;
 import com.cz.android.sample.library.confiuration.AndroidManifest;
-import com.cz.android.sample.library.create.AndroidProjectFileCreator;
 import com.cz.android.sample.library.create.AndroidSampleTemplateCreator;
 import com.cz.android.sample.library.visitor.ActivityClassVisitor;
 import com.cz.android.sample.library.visitor.AnnotationCheckerVisitor;
@@ -120,7 +119,6 @@ public class SampleTransform extends Transform {
         Map<String, List<String>> configurationClassMap=new HashMap<>();
         List<CategoryItem> categoryList=new ArrayList<>();
         List<RegisterItem> registerList=new ArrayList<>();
-        List<String> projectFiles=new ArrayList<>();
         for (TransformInput input : inputs) {
             Collection<DirectoryInput> directoryInputs = input.getDirectoryInputs();
             if (null==outputFile && null != directoryInputs && !directoryInputs.isEmpty()) {
@@ -131,24 +129,12 @@ public class SampleTransform extends Transform {
                 try {
                     final File file = dir.getFile();
                     if (file.isDirectory()) {
-                        final String filePath = file.getPath();
                         Files.walk(file.toPath()).filter(path -> {
                             String name = path.toFile().getName();
                             return name.endsWith(".class") && !name.startsWith("R$") &&
                                     !"R.class".equals(name) && !"BuildConfig.class".equals(name);
                         }).forEach(path -> {
                             File classFile = path.toFile();
-                            String classFilePath = classFile.getPath();
-                            String packageClassName = classFilePath.substring(filePath.length()+1);
-                            String classPath;
-                            if(filePath.contains("kotlin-classes")){
-                                classPath = packageClassName.replace(".class",".kt");
-                            } else {
-                                classPath = packageClassName.replace(".class",".java");
-                            }
-                            if(!classPath.contains("$")){
-                                projectFiles.add(classPath);
-                            }
                             try {
                                 processJavaClassFile(file,classFile, manifestInformation,configurationClassMap,categoryList,registerList);
                             } catch (IOException e) {
@@ -168,13 +154,22 @@ public class SampleTransform extends Transform {
             });
         }
         try {
-            generateProjectFileClass(outputFile,projectFiles);
             generateConfigurationClassFile(outputFile,configurationClassMap,categoryList,registerList);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //Copy source file to application's assets folder.
+        //The debug log.
+        System.out.println("The sample plugin >");
+        for(Map.Entry<String,List<String>> entry: configurationClassMap.entrySet()){
+            String annotation = entry.getKey();
+            List<String> classList = entry.getValue();
+            System.out.println("----| annotation:"+annotation);
+            classList.forEach(className-> System.out.println("--------| class:"+className));
+        }
+        String classPath=AndroidSampleConstant.CLASS_PACKAGE.replace(".","/")+
+                "/"+AndroidSampleConstant.ANDROID_SIMPLE_CLASS_NAME+".class";
+        File classPathFile=new File(outputFile,classPath);
+        System.out.println("Generated class file:"+classPathFile.getPath());
     }
 
     private void processJavaClassFile(File classFolder,File file,
@@ -236,13 +231,6 @@ public class SampleTransform extends Transform {
         }
     }
 
-    private void generateProjectFileClass(File outputFile, List<String> projectFiles) throws Exception {
-        String classPath=AndroidSampleConstant.CLASS_PACKAGE.replace(".","/")+
-                "/"+AndroidSampleConstant.PROJECT_FILE_CLASS_NAME;
-
-        AndroidProjectFileCreator.create(outputFile,classPath,projectFiles);
-    }
-
     private void generateConfigurationClassFile(File outputFile, Map<String, List<String>> configurationMap,
                                                 List<CategoryItem> categoryList,List<RegisterItem> registerList) throws Exception {
         List<String> functionList = configurationMap.get(AnnotationCheckerVisitor.ANNOTATION_FUNCTION);
@@ -255,11 +243,12 @@ public class SampleTransform extends Transform {
         if(null!=mainComponentList&&!mainComponentList.isEmpty()){
             mainComponent=mainComponentList.get(0);
         }
-
-        String classPath=AndroidSampleConstant.CLASS_PACKAGE.replace(".","/")+
-                "/"+AndroidSampleConstant.ANDROID_SIMPLE_CLASS_NAME;
-        AndroidSampleTemplateCreator.create(outputFile,classPath,
-                categoryList,registerList,functionList,
-                componentList,processorList,testCaseList,mainComponent);
+        String classPath=AndroidSampleConstant.CLASS_PACKAGE.replace(".","/");
+        File classPathFile=new File(outputFile,classPath);
+        if(!classPathFile.exists()){
+            classPathFile.mkdirs();
+        }
+        AndroidSampleTemplateCreator.create(outputFile,classPath+"/"+AndroidSampleConstant.ANDROID_SIMPLE_CLASS_NAME,
+                categoryList,registerList,functionList, componentList,processorList,testCaseList,mainComponent);
     }
 }

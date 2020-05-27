@@ -3,7 +3,7 @@ package com.cz.android.sample.library.main;
 import android.content.Context;
 
 import com.cz.android.sample.AndroidSample;
-import com.cz.android.sample.library.file.SampleProjectFileSystemManager;
+import com.cz.android.sample.library.component.document.DocumentAssetsManager;
 import com.cz.android.sample.library.provider.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class SampleApplication{
     public SampleApplication() {
         registerConfiguration(DatabaseHelper.getInstance());
         registerConfiguration(AndroidSampleImpl.getInstance());
-        registerConfiguration(SampleProjectFileSystemManager.getInstance());
+        registerConfiguration(DocumentAssetsManager.getInstance());
         androidSampleImpl=AndroidSampleImpl.getInstance();
     }
 

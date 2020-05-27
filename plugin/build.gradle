@@ -15,3 +15,5 @@ dependencies {
     implementation 'com.android.tools.build:gradle:3.0.1'
     implementation 'com.github.momodae.AndroidSampleLibrary:api:1.0.4'
 }
+
+apply from: "../maven/local-library-maven.gradle"

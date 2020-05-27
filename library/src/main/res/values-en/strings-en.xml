@@ -7,4 +7,7 @@
     <string name="sample_document">Document</string>
     <string name="sample_source_code">Source Code</string>
 
+    <string name="sample_hierarchy">Hierarchy</string>
+    <string name="sample_hierarchy_desc">Display all the samples as a tree.</string>
+
 </resources>

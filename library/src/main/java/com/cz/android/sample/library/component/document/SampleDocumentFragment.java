@@ -84,9 +84,6 @@ public class SampleDocumentFragment extends Fragment {
         });
     }
 
-    /**
-     * 初始化markdown
-     */
     private void initMarkdown(String url,String packageName) {
         FragmentActivity activity = getActivity();
         MarkdownView markdownView=activity.findViewById(R.id.sampleMarkdownView);
@@ -99,9 +96,13 @@ public class SampleDocumentFragment extends Fragment {
                 url=url.substring("assets://".length());
                 markdownView.loadMarkdownFromAssets(url,null);
             } else {
-                //File from assets source code.
-                String assetsPath = packageName.replace('.', '/') + "/" + url;
-                markdownView.loadMarkdownFromAssets(assetsPath,null);
+                DocumentAssetsManager documentAssetsManager = DocumentAssetsManager.getInstance();
+                String assetsPath = documentAssetsManager.findDocument(url);
+                if(null==assetsPath){
+                    markdownView.loadUrl("about:blank");
+                } else {
+                    markdownView.loadMarkdownFromAssets(assetsPath,null);
+                }
             }
         }
     }

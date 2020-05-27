@@ -1,0 +1,22 @@
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = "com.github.momodae.AndroidSampleLibrary"
+            pom.artifactId = "plugin"
+            pom.version = "1.0.6"
+            repository(url: uri('../repo'))
+        }
+    }
+}
+task localSourcesJar(type: Jar) {
+    from project.sourceSets.main.groovy.srcDirs
+    classifier = 'sources'
+}
+task localJavadocJar(type: Jar, dependsOn: groovydoc) {
+    classifier = 'javadoc'
+    from groovydoc.destinationDir
+}
+artifacts {
+    archives localSourcesJar
+    archives localJavadocJar
+}
