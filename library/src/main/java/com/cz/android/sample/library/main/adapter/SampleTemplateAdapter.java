@@ -1,6 +1,7 @@
 package com.cz.android.sample.library.main.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,9 @@ public class SampleTemplateAdapter extends BaseAdapter {
         View sampleArrowView=view.findViewById(R.id.sampleArrowView);
         Demonstrable demonstrable = getItem(i);
         sampleTitle.setText(demonstrable.getTitle());
-        sampleDescription.setText(demonstrable.getDescription());
+        String description = demonstrable.getDescription();
+        sampleDescription.setVisibility(!TextUtils.isEmpty(description)?View.VISIBLE:View.GONE);
+        sampleDescription.setText(description);
         sampleArrowView.setVisibility(demonstrable instanceof RegisterItem?View.GONE:View.VISIBLE);
         return view;
     }

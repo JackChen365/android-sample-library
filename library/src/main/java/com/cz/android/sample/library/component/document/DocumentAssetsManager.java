@@ -33,7 +33,7 @@ public class DocumentAssetsManager implements SampleConfiguration {
 
     private void collectDocumentFiles(AssetManager assets,List<String> documentFileList,String filePath) {
         try {
-            if(filePath.endsWith(".md")) {
+            if(filePath.endsWith(".md")||filePath.endsWith(".MD")) {
                 documentFileList.add(filePath);
             } else {
                 //Folder

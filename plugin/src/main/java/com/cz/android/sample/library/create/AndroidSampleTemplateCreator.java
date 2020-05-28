@@ -142,9 +142,13 @@ public class AndroidSampleTemplateCreator implements Opcodes {
                     methodVisitor.visitLdcInsn(new Integer(categoryItem.type));
                     methodVisitor.visitMethodInsn(INVOKESPECIAL, "com/cz/android/sample/api/item/CategoryItem", "<init>", "(IIIII)V", false);
                 } else {
-                    methodVisitor.visitLdcInsn(categoryItem.title);
-                    methodVisitor.visitLdcInsn(categoryItem.desc);
-                    methodVisitor.visitLdcInsn(categoryItem.category);
+                    methodVisitor.visitLdcInsn(null==categoryItem.title?"":categoryItem.title);
+                    methodVisitor.visitLdcInsn(null==categoryItem.desc?"":categoryItem.desc);
+                    if(null==categoryItem.category){
+                        methodVisitor.visitLdcInsn(AndroidSampleConstant.CATEGORY_ROOT);
+                    } else {
+                        methodVisitor.visitLdcInsn(categoryItem.category);
+                    }
                     methodVisitor.visitLdcInsn(new Integer(categoryItem.priority));
                     methodVisitor.visitMethodInsn(INVOKESPECIAL, "com/cz/android/sample/api/item/CategoryItem", "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V", false);
                 }
@@ -171,10 +175,14 @@ public class AndroidSampleTemplateCreator implements Opcodes {
                     methodVisitor.visitLdcInsn(registerItem.type);
                     methodVisitor.visitMethodInsn(INVOKESPECIAL, "com/cz/android/sample/api/item/RegisterItem", "<init>", "(IILjava/lang/Class;III)V", false);
                 } else {
-                    methodVisitor.visitLdcInsn(registerItem.title);
-                    methodVisitor.visitLdcInsn(registerItem.desc);
+                    methodVisitor.visitLdcInsn(null==registerItem.title?"":registerItem.title);
+                    methodVisitor.visitLdcInsn(null==registerItem.desc?"":registerItem.desc);
                     methodVisitor.visitLdcInsn(Type.getType(classDesc));
-                    methodVisitor.visitLdcInsn(registerItem.category);
+                    if(null==registerItem.category) {
+                        methodVisitor.visitLdcInsn(AndroidSampleConstant.CATEGORY_ROOT);
+                    } else {
+                        methodVisitor.visitLdcInsn(registerItem.category);
+                    }
                     methodVisitor.visitLdcInsn(new Integer(registerItem.priority));
                     methodVisitor.visitMethodInsn(INVOKESPECIAL, "com/cz/android/sample/api/item/RegisterItem", "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Class;Ljava/lang/String;I)V", false);
                 }

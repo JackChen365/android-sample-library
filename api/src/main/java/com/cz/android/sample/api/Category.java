@@ -15,7 +15,7 @@ public @interface Category {
     /**
      * description for this category
      */
-    String desc();
+    String desc() default "";
     /**
      * parent category's title
      */

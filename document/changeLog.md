@@ -70,3 +70,9 @@ Fixed a few bugs
 * Packing all the source codes to the assets.
 * Packing all the documents to the assets.
 * Add a sample hierarchy page.
+
+### 1.0.9
+*时间:* 2020/5/28<br>
+*作者:* Jack chen
+
+* Fixed the problem when the annotation is default value causes the crash in the Plugin.

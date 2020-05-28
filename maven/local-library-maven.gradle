@@ -3,7 +3,7 @@ uploadArchives {
         mavenDeployer {
             pom.groupId = "com.github.momodae.AndroidSampleLibrary"
             pom.artifactId = "plugin"
-            pom.version = "1.0.6"
+            pom.version = "1.0.9"
             repository(url: uri('../repo'))
         }
     }

@@ -11,7 +11,7 @@ public @interface Register {
     /**
      * description for this sample
      */
-    String desc();
+    String desc() default "";
     /**
      * sorting priority
      */

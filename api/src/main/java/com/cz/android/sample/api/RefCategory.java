@@ -15,7 +15,7 @@ public @interface RefCategory {
     /**
      * description for this category
      */
-    int desc();
+    int desc() default 0;
     /**
      * parent category's title
      */

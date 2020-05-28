@@ -11,7 +11,7 @@ public @interface RefRegister {
     /**
      * description for this sample
      */
-    int desc();
+    int desc() default 0;
     /**
      * sorting priority
      */
