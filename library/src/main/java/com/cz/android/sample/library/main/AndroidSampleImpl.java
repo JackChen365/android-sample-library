@@ -15,6 +15,8 @@ import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.component.ComponentManager;
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.function.SampleFunction;
+import com.cz.android.sample.library.category.CategoryGenerator;
+import com.cz.android.sample.library.category.PackageCategoryGenerator;
 import com.cz.android.sample.library.component.code.SampleSourceCodeComponent;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 import com.cz.android.sample.library.component.memory.SampleMemoryComponent;
@@ -50,6 +52,11 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
     private final ComponentManager componentManager=ComponentManager.getInstance();
     private final FunctionManager functionManager=new FunctionManager();
     private MainSampleComponentFactory mainComponentContainer=new DefaultMainSampleFragment();
+    /**
+     * The default category generator was {@link PackageCategoryGenerator}
+     * It generate the category by the class package path.
+     */
+    private CategoryGenerator categoryGenerator=new PackageCategoryGenerator();
 
     public AndroidSampleImpl() {
     }
