@@ -17,7 +17,10 @@ public class ActivityClassVisitor extends ClassVisitor {
     @Override
     public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
         //Here we change the super class name to our appcompat class.
-        if("androidx/appcompat/app/AppCompatActivity".equals(superName)|| "androidx/fragment/app/FragmentActivity".equals(superName))
-        super.visit(version, access, name, signature, SUPER_CLASS_NAME, interfaces);
+        if("androidx/appcompat/app/AppCompatActivity".equals(superName)|| "androidx/fragment/app/FragmentActivity".equals(superName)){
+            super.visit(version, access, name, signature, SUPER_CLASS_NAME, interfaces);
+        } else {
+            super.visit(version, access, name, signature, superName, interfaces);
+        }
     }
 }

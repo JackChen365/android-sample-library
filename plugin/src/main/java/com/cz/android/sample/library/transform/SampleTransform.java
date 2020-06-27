@@ -158,9 +158,6 @@ public class SampleTransform extends Transform {
     private void processJavaClassFile(File classFolder,File file,
                                       Map<String,List<String>> configurationMap, List<CategoryItem> categoryList,List<RegisterItem> registerList) throws IOException {
         //The first step: We process context classes include the Application class file.
-        String absolutePath = file.getAbsolutePath();
-        int classNameLength = classFolder.getAbsolutePath().length();
-        String classPath = absolutePath.substring(classNameLength+1,absolutePath.length()-".class".length()).replace('/','.');
         byte[] bytes = Files.readAllBytes(file.toPath());
         try {
             //Change the super activity class of this sample.
