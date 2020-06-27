@@ -82,3 +82,10 @@ Fixed a few bugs
 *作者:* Jack chen
 
 * Fixed the problem in different build tool version we can not find the merged manifest file.
+
+### 1.1.0~1.1.5
+*时间:* 2020/6/27<br>
+*作者:* Jack chen
+
+* Add category generator in order to generate the category by the class package.
+* Update the annotation: Register and Category that allow you only configure the title without the description.

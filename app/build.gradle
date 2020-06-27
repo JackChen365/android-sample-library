@@ -31,7 +31,7 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.github.momodae.AndroidSampleLibrary:api:1.1.2'
-//    implementation 'com.github.momodae.AndroidSampleLibrary:library:1.0.8'
+//    implementation 'com.github.momodae.AndroidSampleLibrary:library:1.1.5'
     implementation project(path: ':library')
 }
 repositories {

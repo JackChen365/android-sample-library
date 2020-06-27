@@ -31,7 +31,7 @@ buildscript {
     dependencies {
         ...
         //Here is our plugin.
-        classpath 'com.github.momodae.AndroidSampleLibrary:plugin:1.1.0'
+        classpath 'com.github.momodae.AndroidSampleLibrary:plugin:1.1.5'
 }
 
 allprojects {
@@ -44,7 +44,7 @@ allprojects {
 apply plugin: 'sample'
 dependencies {
     ...
-    implementation "com.github.momodae.AndroidSampleLibrary:library:1.1.0"
+    implementation "com.github.momodae.AndroidSampleLibrary:library:1.1.5"
 }
 
 ```
