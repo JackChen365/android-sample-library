@@ -214,8 +214,13 @@ public class SampleTransform extends Transform {
         List<String> componentList = configurationMap.get(AnnotationCheckerVisitor.ANNOTATION_COMPONENT);
         List<String> processorList = configurationMap.get(AnnotationCheckerVisitor.ANNOTATION_ACTION_PROCESSOR);
         List<String> testCaseList = configurationMap.get(AnnotationCheckerVisitor.ANNOTATION_TEST_CASE);
+        List<String> categoryGeneratorList = configurationMap.get(AnnotationCheckerVisitor.ANNOTATION_CATEGORY_GENERATOR);
         List<String> mainComponentList = configurationMap.get(AnnotationCheckerVisitor.ANNOTATION_MAIN_COMPONENT);
 
+        String categoryGenerator=null;
+        if(null!=categoryGeneratorList&&!categoryGeneratorList.isEmpty()){
+            categoryGenerator=categoryGeneratorList.get(0);
+        }
         String mainComponent=null;
         if(null!=mainComponentList&&!mainComponentList.isEmpty()){
             mainComponent=mainComponentList.get(0);
@@ -226,6 +231,6 @@ public class SampleTransform extends Transform {
             classPathFile.mkdirs();
         }
         AndroidSampleTemplateCreator.create(outputFile,classPath+"/"+AndroidSampleConstant.ANDROID_SIMPLE_CLASS_NAME,
-                categoryList,registerList,functionList, componentList,processorList,testCaseList,mainComponent);
+                categoryList,registerList,functionList, componentList,processorList,testCaseList,categoryGenerator,mainComponent);
     }
 }

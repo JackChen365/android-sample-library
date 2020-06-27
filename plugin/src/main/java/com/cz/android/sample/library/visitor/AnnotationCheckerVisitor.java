@@ -4,6 +4,7 @@ package com.cz.android.sample.library.visitor;
 import com.cz.android.sample.api.ActionProcessor;
 import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.Category;
+import com.cz.android.sample.api.CategoryGenerator;
 import com.cz.android.sample.api.Component;
 import com.cz.android.sample.api.Function;
 import com.cz.android.sample.api.MainComponent;
@@ -36,6 +37,7 @@ public class AnnotationCheckerVisitor extends ClassVisitor {
     public static final String ANNOTATION_FUNCTION= Function.class.getName();
     public static final String ANNOTATION_MAIN_COMPONENT= MainComponent.class.getName();
     public static final String ANNOTATION_ACTION_PROCESSOR= ActionProcessor.class.getName();
+    public static final String ANNOTATION_CATEGORY_GENERATOR= CategoryGenerator.class.getName();
     public static final String ANNOTATION_TEST_CASE= TestCase.class.getName();
 
 
@@ -55,6 +57,7 @@ public class AnnotationCheckerVisitor extends ClassVisitor {
         annotationList.add(ANNOTATION_FUNCTION);
         annotationList.add(ANNOTATION_MAIN_COMPONENT);
         annotationList.add(ANNOTATION_ACTION_PROCESSOR);
+        annotationList.add(ANNOTATION_CATEGORY_GENERATOR);
         annotationList.add(ANNOTATION_TEST_CASE);
 
         annotationList.forEach(className-> ANNOTATION_CHECKER_LIST.add(new AnnotationChecker() {

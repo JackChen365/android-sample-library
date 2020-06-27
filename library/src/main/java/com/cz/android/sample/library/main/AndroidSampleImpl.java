@@ -15,7 +15,7 @@ import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.component.ComponentManager;
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.function.SampleFunction;
-import com.cz.android.sample.library.category.CategoryGenerator;
+import com.cz.android.sample.library.category.SampleCategoryGenerator;
 import com.cz.android.sample.library.category.PackageCategoryGenerator;
 import com.cz.android.sample.library.component.code.SampleSourceCodeComponent;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
@@ -56,7 +56,7 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
      * The default category generator was {@link PackageCategoryGenerator}
      * It generate the category by the class package path.
      */
-    private CategoryGenerator categoryGenerator=new PackageCategoryGenerator();
+    private SampleCategoryGenerator sampleCategoryGenerator=new PackageCategoryGenerator();
 
     public AndroidSampleImpl() {
     }
@@ -81,10 +81,23 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
             List<String> componentList=getObjectValue(object,AndroidSampleConstant.COMPONENT_FIELD_NAME);
             List<String> actionProcessorList=getObjectValue(object,AndroidSampleConstant.PROCESSOR_FIELD_NAME);
             List<String> testCaseList=getObjectValue(object,AndroidSampleConstant.TEST_FIELD_NAME);
+            String categoryGeneratorClass=getObjectValue(object,"categoryGenerator");
             String mainComponentClass=getObjectValue(object,AndroidSampleConstant.MAIN_COMPONENT_FIELD_NAME);
             //process register and category translate string resources to string
             try {
-                processCategoryList(context,categoryList,registerList);
+                SampleCategoryGenerator categoryGenerator = processCategoryGenerator(categoryGeneratorClass);
+                if(null!=categoryGenerator){
+                    sampleCategoryGenerator=categoryGenerator;
+                }
+            } catch (Exception e) {
+                Log.w(TAG,e.getMessage());
+            }
+            try {
+                List<CategoryItem> newCategoryList = sampleCategoryGenerator.generate(registerList);
+                if(null!=newCategoryList){
+                    categoryList.addAll(newCategoryList);
+                }
+                processCategoryList(context,categoryList,newCategoryList,registerList);
                 registerActionProcessor(actionProcessorList);
                 registerComponentList(componentList);
                 registerFunctionList(functionList);
@@ -122,7 +135,20 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
         return null;
     }
 
-    private void processCategoryList(Context context,List<CategoryItem> categoryItemList,List<RegisterItem> registerItems) {
+    private SampleCategoryGenerator processCategoryGenerator(String categoryGeneratorClass) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        SampleCategoryGenerator categoryGenerator=null;
+        if (null != categoryGeneratorClass) {
+            Class<?> clazz = Class.forName(categoryGeneratorClass);
+            Object object = clazz.newInstance();
+            if (null == object || !(object instanceof SampleCategoryGenerator)) {
+                throw new IllegalArgumentException("Class:" + categoryGeneratorClass + " should implement from SampleCategoryGenerator!");
+            }
+            categoryGenerator=(SampleCategoryGenerator) object;
+        }
+        return categoryGenerator;
+    }
+
+    private void processCategoryList(Context context,List<CategoryItem> categoryItemList,List<CategoryItem> newCategoryItemList,List<RegisterItem> registerItems) {
         for(CategoryItem categoryItem:categoryItemList){
             if(AndroidSampleConstant.REF_TYPE==categoryItem.type){
                 categoryItem.title=context.getString(categoryItem.titleRes);

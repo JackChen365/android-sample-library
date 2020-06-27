@@ -1,37 +1,23 @@
-package com.cz.android.sample.library.category;
+package com.cz.sample.custom.category;
 
 import android.util.ArrayMap;
 
 import androidx.annotation.NonNull;
 
 import com.cz.android.sample.api.AndroidSampleConstant;
+import com.cz.android.sample.api.CategoryGenerator;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.RegisterItem;
+import com.cz.android.sample.library.category.SampleCategoryGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Generate category by its package name.
- * For example, Here are our register sample list.
- * --------| class:com.cz.sample.dialog.DialogSample$DialogSample1
- * --------| class:com.cz.sample.dialog.DialogSample$DialogSample2
- * --------| class:com.cz.sample.component.ComponentDocumentSampleActivity
- * --------| class:com.cz.sample.component.ComponentListSampleActivity
- * --------| class:com.cz.sample.component.ComponentSampleFragment
- * --------| class:com.cz.sample.component.ComponentSourceSampleActivity
- * --------| class:com.cz.sample.custom.SampleFileTestFragment
- * --------| class:com.cz.sample.function.SamplePermissionActivity
- * --------| class:com.cz.sample.function.SamplePermissionFragment
- * --------| class:com.cz.sample.test.SampleDocumentFragment
- * --------| class:com.cz.sample.test.SampleMessageFragment
- * --------| class:com.cz.sample.test.SourceCodeSampleActivity
- *
- * The common package was：com.cz.sample
- * We use easily use the path of the class package to generate its category if necessary.
- * That will save us a lot of time organizing the sample structure ourselves.
- */
-public class PackageCategoryGenerator implements SampleCategoryGenerator {
+ **/
+@CategoryGenerator
+public class MyPackageCategoryGenerator implements SampleCategoryGenerator {
 
     @Override
     public List<CategoryItem> generate(@NonNull List<RegisterItem> registerItemList) {
@@ -51,7 +37,6 @@ public class PackageCategoryGenerator implements SampleCategoryGenerator {
                     }
                 }
             }
-
             //Step2: generate all the categories by the class's package automatically
             ArrayMap<String,CategoryItem> packageCategoryList=new ArrayMap<>();
             for(RegisterItem registerItem:registerItemList){

@@ -26,6 +26,7 @@ public class AndroidSampleTemplateCreator implements Opcodes {
                               List<String> componentList,
                               List<String> processorList,
                               List<String> testCaseList,
+                              String categoryGenerator,
                               String mainComponent) throws Exception {
         ClassWriter classWriter = new ClassWriter(0);
         FieldVisitor fieldVisitor;
@@ -54,6 +55,10 @@ public class AndroidSampleTemplateCreator implements Opcodes {
         }
         {
             fieldVisitor = classWriter.visitField(ACC_FINAL, "testCaseList", "Ljava/util/List;", "Ljava/util/List<Ljava/lang/String;>;", null);
+            fieldVisitor.visitEnd();
+        }
+        {
+            fieldVisitor = classWriter.visitField(ACC_FINAL, "categoryGenerator", "Ljava/lang/String;", null, categoryGenerator);
             fieldVisitor.visitEnd();
         }
         {
@@ -117,6 +122,14 @@ public class AndroidSampleTemplateCreator implements Opcodes {
             methodVisitor.visitMethodInsn(INVOKESPECIAL, "java/util/ArrayList", "<init>", "()V", false);
             methodVisitor.visitFieldInsn(PUTFIELD, classPath, "testCaseList", "Ljava/util/List;");
 
+            if(null!=categoryGenerator){
+                Label label71 = new Label();
+                methodVisitor.visitLabel(label71);
+                methodVisitor.visitLineNumber(27, label71);
+                methodVisitor.visitVarInsn(ALOAD, 0);
+                methodVisitor.visitLdcInsn(categoryGenerator);
+                methodVisitor.visitFieldInsn(PUTFIELD, classPath, "categoryGenerator", "Ljava/lang/String;");
+            }
             if(null!=mainComponent){
                 Label label7 = new Label();
                 methodVisitor.visitLabel(label7);

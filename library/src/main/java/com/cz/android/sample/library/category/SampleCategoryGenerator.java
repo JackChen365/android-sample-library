@@ -7,6 +7,6 @@ import com.cz.android.sample.api.item.RegisterItem;
 
 import java.util.List;
 
-public interface CategoryGenerator {
+public interface SampleCategoryGenerator {
     List<CategoryItem> generate(@NonNull List<RegisterItem> registerItemList);
 }
