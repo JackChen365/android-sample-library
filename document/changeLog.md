@@ -76,3 +76,9 @@ Fixed a few bugs
 *作者:* Jack chen
 
 * Fixed the problem when the annotation is default value causes the crash in the Plugin.
+
+### 1.1.0
+*时间:* 2020/6/27<br>
+*作者:* Jack chen
+
+* Fixed the problem in different build tool version we can not find the merged manifest file.

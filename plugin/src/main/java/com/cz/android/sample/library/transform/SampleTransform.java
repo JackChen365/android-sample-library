@@ -79,23 +79,6 @@ public class SampleTransform extends Transform {
         if (transformInvocation.isIncremental()) {
             throw new UnsupportedOperationException("Unsupported incremental build!");
         }
-        //Parse the manifest file
-        AndroidManifest androidManifest = new AndroidManifest();
-        File manifestFile;
-        Context context = transformInvocation.getContext();
-        String variantName = context.getVariantName();
-        if("release".equals(variantName)){
-            manifestFile=new File(project.getBuildDir(),"intermediates/manifests/full/release/AndroidManifest.xml");
-            if(!manifestFile.exists()){
-                manifestFile=new File(project.getBuildDir(),"intermediates/merged_manifests/release/AndroidManifest.xml");
-            }
-        } else {
-            manifestFile=new File(project.getBuildDir(),"intermediates/manifests/full/debug/AndroidManifest.xml");
-            if(!manifestFile.exists()){
-                manifestFile=new File(project.getBuildDir(),"intermediates/merged_manifests/debug/AndroidManifest.xml");
-            }
-        }
-        AndroidManifest.ManifestInformation manifestInformation = androidManifest.parseManifestFile(manifestFile);
         TransformOutputProvider outputProvider = transformInvocation.getOutputProvider();
         outputProvider.deleteAll();
         Collection<TransformInput> inputs = transformInvocation.getInputs();
@@ -136,7 +119,7 @@ public class SampleTransform extends Transform {
                         }).forEach(path -> {
                             File classFile = path.toFile();
                             try {
-                                processJavaClassFile(file,classFile, manifestInformation,configurationClassMap,categoryList,registerList);
+                                processJavaClassFile(file,classFile,configurationClassMap,categoryList,registerList);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -173,20 +156,17 @@ public class SampleTransform extends Transform {
     }
 
     private void processJavaClassFile(File classFolder,File file,
-                                      AndroidManifest.ManifestInformation manifestInformation, Map<String,List<String>> configurationMap,
-                                      List<CategoryItem> categoryList,List<RegisterItem> registerList) throws IOException {
+                                      Map<String,List<String>> configurationMap, List<CategoryItem> categoryList,List<RegisterItem> registerList) throws IOException {
         //The first step: We process context classes include the Application class file.
         String absolutePath = file.getAbsolutePath();
         int classNameLength = classFolder.getAbsolutePath().length();
         String classPath = absolutePath.substring(classNameLength+1,absolutePath.length()-".class".length()).replace('/','.');
         byte[] bytes = Files.readAllBytes(file.toPath());
-        if(manifestInformation.isActivityClassFile(classPath)){
-            try {
-                //Change the super activity class of this sample.
-                changeActivitySuperClass(file,bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            //Change the super activity class of this sample.
+            changeActivitySuperClass(file,bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         //Check if the class is the configured class.
         collectConfigurationFile(bytes,configurationMap,categoryList,registerList);
