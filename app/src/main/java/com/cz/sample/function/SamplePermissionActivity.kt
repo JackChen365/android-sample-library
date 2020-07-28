@@ -4,10 +4,11 @@ import android.Manifest
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.cz.android.sample.api.RefCategory
 import com.cz.android.sample.api.RefRegister
-import com.cz.android.sample.library.function.permission.Permission
-import com.cz.android.sample.library.function.permission.PermissionObserver
+import com.cz.android.sample.library.function.permission.PermissionViewModel
+import com.cz.android.sample.library.function.permission.PermissionViewModelProviders
 import com.cz.android.sample.library.function.permission.SamplePermission
 import com.cz.sample.R
 
@@ -22,20 +23,19 @@ import com.cz.sample.R
 @SamplePermission(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
 @RefCategory(title=R.string.sample_function,desc = R.string.sample_function_description,priority = 2)
 @RefRegister(title=R.string.function_permission_sample1,desc = R.string.function_permission_sample1_desc,category = R.string.sample_function)
-class SamplePermissionActivity : AppCompatActivity(),PermissionObserver{
+class SamplePermissionActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function_permission_sample)
-    }
-
-    override fun onGranted(permission: Permission) {
-        val text = getString(R.string.permission_granted, permission.name)
-        Toast.makeText(applicationContext,text,Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onDenied(permission: Permission) {
-        val text = getString(R.string.permission_denied, permission.name)
-        Toast.makeText(applicationContext,text,Toast.LENGTH_SHORT).show()
+        PermissionViewModelProviders.getViewModel(this).addObserver { result->
+            if(result.granted){
+                val text = getString(R.string.permission_granted, result.name)
+                Toast.makeText(applicationContext,text, Toast.LENGTH_SHORT).show()
+            } else {
+                val text = getString(R.string.permission_denied, result.name)
+                Toast.makeText(applicationContext,text, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

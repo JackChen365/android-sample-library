@@ -1,11 +1,10 @@
 package com.cz.android.sample.library.function.permission;
 
-import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -18,6 +17,8 @@ public class SamplePermissionsFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_CODE = 42;
 
     private static final String BIND_SAMPLE_PERMISSION_FRAGMENT_TAG = "cz.sample.permission.bind_fragment_tag";
+
+    private Runnable pendingRequestRunnable=null;
 
     public static void injectIfNeededIn(FragmentActivity activity) {
         FragmentManager supportFragmentManager = activity.getSupportFragmentManager();
@@ -49,12 +50,27 @@ public class SamplePermissionsFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    void requestPermissions(@NonNull String[] permissions) {
-        requestPermissions(permissions, PERMISSIONS_REQUEST_CODE);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(null!=pendingRequestRunnable){
+            pendingRequestRunnable.run();
+        }
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
+    void requestPermissions(@NonNull final String[] permissions) {
+        if(isAdded()){
+            requestPermissions(permissions, PERMISSIONS_REQUEST_CODE);
+        } else {
+            pendingRequestRunnable=new Runnable() {
+                @Override
+                public void run() {
+                    requestPermissions(permissions, PERMISSIONS_REQUEST_CODE);
+                }
+            };
+        }
+    }
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode != PERMISSIONS_REQUEST_CODE) return;
@@ -73,12 +89,12 @@ public class SamplePermissionsFragment extends Fragment {
                 // No subject found
                 return;
             }
-            boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-            Permission permission = new Permission(permissions[i], granted, shouldShowRequestPermissionRationale[i]);
-            if(granted){
-                permissionObserver.onGranted(permission);
+            boolean isGranted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+            PermissionResult permission = new PermissionResult(permissions[i], isGranted, shouldShowRequestPermissionRationale[i]);
+            if(isGranted){
+                permissionObserver.onAccepted(permission);
             } else {
-                permissionObserver.onDenied(permission);
+                permissionObserver.onAccepted(permission);
             }
         }
     }
@@ -90,4 +106,5 @@ public class SamplePermissionsFragment extends Fragment {
             }
         }
     }
+
 }

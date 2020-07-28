@@ -1,7 +1,6 @@
 package com.cz.android.sample.library.main;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,7 +27,7 @@ import java.util.List;
  * @date 2020-01-27 19:47
  * @email bingo110@126.com
  */
-public class SampleActivityLifeCycleCallback implements Application.ActivityLifecycleCallbacks {
+public class SampleActivityLifeCycleCallback extends SampleActivityLifeCycleCallbackAdapter {
     private static final String BIND_MAIN_SAMPLE_FRAGMENT_TAG="android_sample_main_fragment";
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
@@ -36,6 +35,18 @@ public class SampleActivityLifeCycleCallback implements Application.ActivityLife
         initializeFunction(activity);
         //check and inject main component
         injectMainComponent(activity);
+    }
+
+    private void initializeFunction(@NonNull Activity activity) {
+        AndroidSampleImpl androidSample = AndroidSampleImpl.getInstance();
+        FunctionManager functionManager = androidSample.getFunctionManager();
+        List<SampleFunction> functionList = functionManager.getFunctionList();
+        for(SampleFunction function:functionList){
+            if(activity instanceof FragmentActivity){
+                FragmentActivity fragmentActivity=(FragmentActivity)activity;
+                function.init(fragmentActivity);
+            }
+        }
     }
 
     /**
@@ -81,18 +92,6 @@ public class SampleActivityLifeCycleCallback implements Application.ActivityLife
         checkMainComponent(activity);
     }
 
-    private void initializeFunction(@NonNull Activity activity) {
-        AndroidSampleImpl androidSample = AndroidSampleImpl.getInstance();
-        FunctionManager functionManager = androidSample.getFunctionManager();
-        List<SampleFunction> functionList = functionManager.getFunctionList();
-        for(SampleFunction function:functionList){
-            if(activity instanceof FragmentActivity){
-                FragmentActivity fragmentActivity=(FragmentActivity)activity;
-                function.init(fragmentActivity);
-            }
-        }
-    }
-
     /**
      * check main activity if user has its own layout we should remove it
      * @param activity
@@ -122,25 +121,5 @@ public class SampleActivityLifeCycleCallback implements Application.ActivityLife
                 }
             }
         }
-    }
-
-    @Override
-    public void onActivityResumed(@NonNull Activity activity) {
-    }
-
-    @Override
-    public void onActivityPaused(@NonNull Activity activity) {
-    }
-
-    @Override
-    public void onActivityStopped(@NonNull Activity activity) {
-    }
-
-    @Override
-    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle bundle) {
-    }
-
-    @Override
-    public void onActivityDestroyed(@NonNull Activity activity) {
     }
 }

@@ -2,7 +2,6 @@ package com.cz.android.sample.library.main;
 
 import android.content.Context;
 
-import com.cz.android.sample.AndroidSample;
 import com.cz.android.sample.library.component.document.DocumentAssetsManager;
 import com.cz.android.sample.library.provider.DatabaseHelper;
 
@@ -45,7 +44,7 @@ public class SampleApplication{
     /**
      * Android sample object
      */
-    private AndroidSample androidSampleImpl;
+    private AndroidSampleSupport androidSampleImpl;
     /**
      * When this project attach to context. We will notify all the configurations
      * @param context
@@ -58,7 +57,7 @@ public class SampleApplication{
         }
     }
 
-    public AndroidSample getAndroidSample() {
+    public AndroidSampleSupport getAndroidSample() {
         return androidSampleImpl;
     }
 

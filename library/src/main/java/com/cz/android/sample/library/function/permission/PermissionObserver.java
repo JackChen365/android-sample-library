@@ -9,14 +9,8 @@ import androidx.annotation.NonNull;
  */
 public interface PermissionObserver {
     /**
-     * when user granted this permission
-     * @param permission
-     */
-    void onGranted(@NonNull Permission permission);
-
-    /**
      * When user denied you have this permission
      * @param permission
      */
-    void onDenied(@NonNull Permission permission);
+    void onAccepted(@NonNull PermissionResult permission);
 }

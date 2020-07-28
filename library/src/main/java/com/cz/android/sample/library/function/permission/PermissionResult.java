@@ -2,22 +2,22 @@ package com.cz.android.sample.library.function.permission;
 
 import java.util.List;
 
-public class Permission {
+public class PermissionResult {
     public final String name;
     public final boolean granted;
     public final boolean shouldShowRequestPermissionRationale;
 
-    public Permission(String name, boolean granted) {
+    public PermissionResult(String name, boolean granted) {
         this(name, granted, false);
     }
 
-    public Permission(String name, boolean granted, boolean shouldShowRequestPermissionRationale) {
+    public PermissionResult(String name, boolean granted, boolean shouldShowRequestPermissionRationale) {
         this.name = name;
         this.granted = granted;
         this.shouldShowRequestPermissionRationale = shouldShowRequestPermissionRationale;
     }
 
-    public Permission(List<Permission> permissions) {
+    public PermissionResult(List<PermissionResult> permissions) {
         name = combineName(permissions);
         granted = combineGranted(permissions);
         shouldShowRequestPermissionRationale = combineShouldShowRequestPermissionRationale(permissions);
@@ -29,7 +29,7 @@ public class Permission {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        final Permission that = (Permission) o;
+        final PermissionResult that = (PermissionResult) o;
 
         if (granted != that.granted) return false;
         if (shouldShowRequestPermissionRationale != that.shouldShowRequestPermissionRationale)
@@ -54,9 +54,9 @@ public class Permission {
                 '}';
     }
 
-    private String combineName(List<Permission> permissions) {
+    private String combineName(List<PermissionResult> permissions) {
         StringBuilder output=new StringBuilder();
-        for(Permission permission:permissions){
+        for(PermissionResult permission:permissions){
             String name=permission.name;
             if (name.length() == 0) {
                 output.append(name);
@@ -67,8 +67,8 @@ public class Permission {
         return output.toString();
     }
 
-    private Boolean combineGranted(List<Permission> permissions) {
-        for(Permission permission:permissions){
+    private Boolean combineGranted(List<PermissionResult> permissions) {
+        for(PermissionResult permission:permissions){
             if(permission.granted){
                 return true;
             }
@@ -76,8 +76,8 @@ public class Permission {
         return false;
     }
 
-    private Boolean combineShouldShowRequestPermissionRationale(List<Permission> permissions) {
-        for(Permission permission:permissions){
+    private Boolean combineShouldShowRequestPermissionRationale(List<PermissionResult> permissions) {
+        for(PermissionResult permission:permissions){
             if(permission.shouldShowRequestPermissionRationale){
                 return true;
             }

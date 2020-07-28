@@ -7,7 +7,7 @@ public @interface RefRegister {
     /**
      * title for this sample
      */
-    int title();
+    int title() default 0;
     /**
      * description for this sample
      */

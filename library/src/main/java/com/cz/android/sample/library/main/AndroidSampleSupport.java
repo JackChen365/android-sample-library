@@ -1,0 +1,15 @@
+package com.cz.android.sample.library.main;
+
+import com.cz.android.sample.AndroidSample;
+import com.cz.android.sample.function.FunctionManager;
+
+/**
+ * @author Created by cz
+ * @date 2020/7/28 3:46 PM
+ * @email bingo110@126.com
+ */
+public interface AndroidSampleSupport extends AndroidSample {
+    String TAG="AndroidSampleSupport";
+
+    FunctionManager getFunctionManager();
+}

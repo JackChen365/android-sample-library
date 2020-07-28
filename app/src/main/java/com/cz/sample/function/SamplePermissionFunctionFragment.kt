@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.cz.android.sample.api.RefRegister
-import com.cz.android.sample.library.function.permission.Permission
-import com.cz.android.sample.library.function.permission.PermissionObserver
-import com.cz.android.sample.library.function.permission.SamplePermission
+import com.cz.android.sample.library.function.permission.*
 import com.cz.sample.R
 
 
@@ -24,20 +23,22 @@ import com.cz.sample.R
  */
 @SamplePermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 @RefRegister(title=R.string.function_permission_sample2,desc = R.string.function_permission_sample2_desc,category = R.string.sample_function)
-class SamplePermissionFragment : Fragment(),PermissionObserver {
+class SamplePermissionFunctionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_function_permission_sample, container, false);
     }
 
-    override fun onGranted(permission: Permission) {
-        val text = getString(R.string.permission_granted, permission.name)
-        Toast.makeText(context,text, Toast.LENGTH_SHORT).show()
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        PermissionViewModelProviders.getViewModel(this).addObserver { result->
+            if(result.granted){
+                val text = getString(R.string.permission_granted, result.name)
+                Toast.makeText(context,text, Toast.LENGTH_SHORT).show()
+            } else {
+                val text = getString(R.string.permission_denied, result.name)
+                Toast.makeText(context,text, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
-
-    override fun onDenied(permission: Permission) {
-        val text = getString(R.string.permission_denied, permission.name)
-        Toast.makeText(context,text, Toast.LENGTH_SHORT).show()
-    }
-
 
 }

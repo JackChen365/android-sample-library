@@ -3,9 +3,11 @@ package com.cz.android.sample.library;
 import com.android.build.gradle.AppExtension;
 import com.android.build.gradle.api.AndroidSourceDirectorySet;
 import com.android.build.gradle.api.AndroidSourceSet;
+import com.android.build.gradle.api.ApplicationVariant;
 import com.cz.android.sample.library.transform.SampleTransform;
 
 import org.apache.commons.io.FileUtils;
+import org.gradle.api.DomainObjectSet;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -39,6 +41,10 @@ public class SamplePlugin implements Plugin<Project> {
 
             //We copy all the source file into the assets folder.
             AppExtension appExtension = project.getExtensions().getByType(AppExtension.class);
+            DomainObjectSet<ApplicationVariant> applicationVariants = appExtension.getApplicationVariants();
+            applicationVariants.forEach(variant->{
+                variant.getApplicationId();
+            });
             NamedDomainObjectContainer<AndroidSourceSet> sourceSets = appExtension.getSourceSets();
             sourceSets.forEach(sourceSet->{
                 AndroidSourceDirectorySet java = sourceSet.getJava();

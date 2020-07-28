@@ -7,7 +7,7 @@ public @interface Register {
     /**
      * title for this sample
      */
-    String title();
+    String title() default "";
     /**
      * description for this sample
      */

@@ -6,7 +6,6 @@ import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.cz.android.sample.AndroidSample;
 import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.Demonstrable;
@@ -42,7 +41,7 @@ import java.util.TreeSet;
  * @date 2020-01-27 20:31
  * @email bingo110@126.com
  */
-class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
+class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
     private static final String TAG="SampleConfiguration";
     private final static AndroidSampleImpl androidSampleImpl =new AndroidSampleImpl();
 
@@ -346,6 +345,7 @@ class AndroidSampleImpl implements AndroidSample, SampleConfiguration {
         return this.mainComponentContainer;
     }
 
+    @Override
     public FunctionManager getFunctionManager() {
         return functionManager;
     }
