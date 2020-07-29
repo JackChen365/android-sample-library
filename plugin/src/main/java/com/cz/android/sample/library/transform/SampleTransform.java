@@ -1,6 +1,5 @@
 package com.cz.android.sample.library.transform;
 
-import com.android.build.api.transform.Context;
 import com.android.build.api.transform.DirectoryInput;
 import com.android.build.api.transform.Format;
 import com.android.build.api.transform.QualifiedContent;
@@ -11,10 +10,9 @@ import com.android.build.api.transform.TransformOutputProvider;
 import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.RegisterItem;
-import com.cz.android.sample.library.confiuration.AndroidManifest;
 import com.cz.android.sample.library.create.AndroidSampleTemplateCreator;
-import com.cz.android.sample.library.visitor.ActivityClassVisitor;
 import com.cz.android.sample.library.visitor.AnnotationCheckerVisitor;
+import com.cz.android.sample.library.visitor.SampleClassVisitor;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
@@ -102,6 +100,7 @@ public class SampleTransform extends Transform {
         Map<String, List<String>> configurationClassMap=new HashMap<>();
         List<CategoryItem> categoryList=new ArrayList<>();
         List<RegisterItem> registerList=new ArrayList<>();
+        List<String> sampleClassList=new ArrayList<>();
         for (TransformInput input : inputs) {
             Collection<DirectoryInput> directoryInputs = input.getDirectoryInputs();
             if (null==outputFile && null != directoryInputs && !directoryInputs.isEmpty()) {
@@ -119,7 +118,7 @@ public class SampleTransform extends Transform {
                         }).forEach(path -> {
                             File classFile = path.toFile();
                             try {
-                                processJavaClassFile(file,classFile,configurationClassMap,categoryList,registerList);
+                                processJavaClassFile(file,classFile,configurationClassMap,categoryList,registerList,sampleClassList);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -137,7 +136,7 @@ public class SampleTransform extends Transform {
             });
         }
         try {
-            generateConfigurationClassFile(outputFile,configurationClassMap,categoryList,registerList);
+            generateConfigurationClassFile(outputFile,configurationClassMap,categoryList,registerList,sampleClassList);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,13 +154,13 @@ public class SampleTransform extends Transform {
         System.out.println("Generated class file:"+classPathFile.getPath());
     }
 
-    private void processJavaClassFile(File classFolder,File file,
-                                      Map<String,List<String>> configurationMap, List<CategoryItem> categoryList,List<RegisterItem> registerList) throws IOException {
+    private void processJavaClassFile(File classFolder,File file, Map<String,List<String>> configurationMap,
+                                      List<CategoryItem> categoryList,List<RegisterItem> registerList,List<String> sampleClassList) throws IOException {
         //The first step: We process context classes include the Application class file.
         byte[] bytes = Files.readAllBytes(file.toPath());
         try {
             //Change the super activity class of this sample.
-            changeActivitySuperClass(file,bytes);
+            processSampleClass(sampleClassList,file,bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -169,15 +168,21 @@ public class SampleTransform extends Transform {
         collectConfigurationFile(bytes,configurationMap,categoryList,registerList);
     }
 
-    private void changeActivitySuperClass(File file, byte[] bytes) throws IOException {
+    private void processSampleClass(List<String> sampleClassList, File file, byte[] bytes) throws IOException {
         ClassReader classReader = new ClassReader(bytes);
         ClassWriter classWriter = new ClassWriter(classReader,ClassWriter.COMPUTE_MAXS);
-        classReader.accept(new ActivityClassVisitor(classWriter), ClassReader.EXPAND_FRAMES);
+        SampleClassVisitor sampleClassVisitor = new SampleClassVisitor(classWriter);
+        classReader.accept(sampleClassVisitor, ClassReader.EXPAND_FRAMES);
+        if(sampleClassVisitor.isDemonstrable()){
+            String className = sampleClassVisitor.getClassName();
+            sampleClassList.add(className);
+        }
         byte[] code = classWriter.toByteArray();
         FileOutputStream fos = new FileOutputStream(file.getParentFile().getAbsoluteFile() + File.separator + file.getName());
         fos.write(code);
         fos.close();
     }
+
 
     private void collectConfigurationFile(byte[] bytes, Map<String,List<String>> configurationMap,
                                           List<CategoryItem> categoryList,List<RegisterItem> registerList) {
@@ -209,7 +214,8 @@ public class SampleTransform extends Transform {
     }
 
     private void generateConfigurationClassFile(File outputFile, Map<String, List<String>> configurationMap,
-                                                List<CategoryItem> categoryList,List<RegisterItem> registerList) throws Exception {
+                                                List<CategoryItem> categoryList,List<RegisterItem> registerList,
+                                                List<String> sampleClassList) throws Exception {
         List<String> functionList = configurationMap.get(AnnotationCheckerVisitor.ANNOTATION_FUNCTION);
         List<String> componentList = configurationMap.get(AnnotationCheckerVisitor.ANNOTATION_COMPONENT);
         List<String> processorList = configurationMap.get(AnnotationCheckerVisitor.ANNOTATION_ACTION_PROCESSOR);
@@ -231,6 +237,6 @@ public class SampleTransform extends Transform {
             classPathFile.mkdirs();
         }
         AndroidSampleTemplateCreator.create(outputFile,classPath+"/"+AndroidSampleConstant.ANDROID_SIMPLE_CLASS_NAME,
-                categoryList,registerList,functionList, componentList,processorList,testCaseList,categoryGenerator,mainComponent);
+                categoryList,registerList,sampleClassList,functionList, componentList,processorList,testCaseList,categoryGenerator,mainComponent);
     }
 }

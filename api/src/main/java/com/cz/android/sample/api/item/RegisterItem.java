@@ -2,6 +2,8 @@ package com.cz.android.sample.api.item;
 
 import com.cz.android.sample.api.AndroidSampleConstant;
 
+import java.util.Objects;
+
 /**
  * @author Created by cz
  * @date 2019/4/18 下午4:13
@@ -69,5 +71,18 @@ public class RegisterItem implements Demonstrable {
     public int compareTo(Demonstrable demonstrable) {
         int i = demonstrable.getPriority() - this.getPriority();
         return 0==i ? -1 : 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CategoryItem that = (CategoryItem) o;
+        return Objects.equals(title, that.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, desc);
     }
 }

@@ -22,6 +22,7 @@ public class AndroidSampleTemplateCreator implements Opcodes {
     public static void create(File outputFile, String classPath,
                               List<CategoryItem> categoryList,
                               List<RegisterItem> registerList,
+                              List<String> sampleClassList,
                               List<String> functionList,
                               List<String> componentList,
                               List<String> processorList,
@@ -35,6 +36,10 @@ public class AndroidSampleTemplateCreator implements Opcodes {
         classWriter.visit(V1_8, ACC_PUBLIC | ACC_FINAL | ACC_SUPER, classPath, null, "java/lang/Object", null);
         {
             fieldVisitor = classWriter.visitField(ACC_FINAL, "registerList", "Ljava/util/List;", "Ljava/util/List<Lcom/cz/android/sample/api/item/RegisterItem;>;", null);
+            fieldVisitor.visitEnd();
+        }
+        {
+            fieldVisitor = classWriter.visitField(ACC_FINAL, "sampleClassList", "Ljava/util/List;", "Ljava/util/List<Ljava/lang/String;>;", null);
             fieldVisitor.visitEnd();
         }
         {
@@ -76,6 +81,14 @@ public class AndroidSampleTemplateCreator implements Opcodes {
             Label label1 = new Label();
             methodVisitor.visitLabel(label1);
             methodVisitor.visitLineNumber(16, label1);
+            methodVisitor.visitVarInsn(ALOAD, 0);
+            methodVisitor.visitTypeInsn(NEW, "java/util/ArrayList");
+            methodVisitor.visitInsn(DUP);
+            methodVisitor.visitMethodInsn(INVOKESPECIAL, "java/util/ArrayList", "<init>", "()V", false);
+            methodVisitor.visitFieldInsn(PUTFIELD, classPath, "sampleClassList", "Ljava/util/List;");
+            Label label11 = new Label();
+            methodVisitor.visitLabel(label11);
+            methodVisitor.visitLineNumber(16, label11);
             methodVisitor.visitVarInsn(ALOAD, 0);
             methodVisitor.visitTypeInsn(NEW, "java/util/ArrayList");
             methodVisitor.visitInsn(DUP);
@@ -201,6 +214,19 @@ public class AndroidSampleTemplateCreator implements Opcodes {
                 }
                 methodVisitor.visitMethodInsn(INVOKEINTERFACE, "java/util/List", "add", "(Ljava/lang/Object;)Z", true);
                 methodVisitor.visitInsn(POP);
+            }
+
+            if(null!=sampleClassList){
+                for(String className:sampleClassList){
+                    Label label12 = new Label();
+                    methodVisitor.visitLabel(label12);
+                    methodVisitor.visitLineNumber(39, label12);
+                    methodVisitor.visitVarInsn(ALOAD, 0);
+                    methodVisitor.visitFieldInsn(GETFIELD, classPath, "sampleClassList", "Ljava/util/List;");
+                    methodVisitor.visitLdcInsn(className);
+                    methodVisitor.visitMethodInsn(INVOKEINTERFACE, "java/util/List", "add", "(Ljava/lang/Object;)Z", true);
+                    methodVisitor.visitInsn(POP);
+                }
             }
 
             if(null!=functionList){

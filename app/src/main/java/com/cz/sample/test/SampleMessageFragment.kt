@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_message_layout.*
  */
 @SampleMessage
 @SampleSourceCode
-@RefRegister(title=R.string.other_sample3,desc = R.string.other_sample3_desc,category = R.string.other)
+//@RefRegister(title=R.string.other_sample3,desc = R.string.other_sample3_desc,category = R.string.other)
 class SampleMessageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_message_layout, container, false);

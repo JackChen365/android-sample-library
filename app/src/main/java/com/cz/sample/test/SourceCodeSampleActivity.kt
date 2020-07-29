@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_source_code_sample.*
  * @email bingo110@126.com
  * @see com.cz.android.sample.library.component.code.view.SourceCodeView A webView that responsible for demonstrate source code.
  */
-@RefRegister(title = R.string.other_sample2,desc=R.string.other_sample2_desc,category = R.string.other)
+//@RefRegister(title = R.string.other_sample2,desc=R.string.other_sample2_desc,category = R.string.other)
 class SourceCodeSampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

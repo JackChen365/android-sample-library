@@ -62,21 +62,6 @@ public class CategoryItem implements Demonstrable{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CategoryItem that = (CategoryItem) o;
-        return Objects.equals(title, that.title) &&
-                Objects.equals(desc, that.desc) &&
-                Objects.equals(category, that.category);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, desc, category);
-    }
-
-    @Override
     public String toString() {
         return title;
     }
@@ -87,4 +72,16 @@ public class CategoryItem implements Demonstrable{
         return 0==i ? -1 : 0;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CategoryItem that = (CategoryItem) o;
+        return Objects.equals(title, that.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, desc);
+    }
 }

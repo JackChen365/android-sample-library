@@ -22,7 +22,7 @@ import com.cz.sample.R
  * @see com.cz.android.sample.library.function.permission.PermissionObserver This observer responsible for receiving permission request result
  */
 @SamplePermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-@RefRegister(title=R.string.function_permission_sample2,desc = R.string.function_permission_sample2_desc,category = R.string.sample_function)
+//@RefRegister(title=R.string.function_permission_sample2,desc = R.string.function_permission_sample2_desc,category = R.string.sample_function)
 class SamplePermissionFunctionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_function_permission_sample, container, false);

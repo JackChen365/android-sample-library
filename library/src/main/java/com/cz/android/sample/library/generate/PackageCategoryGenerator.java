@@ -1,5 +1,6 @@
-package com.cz.android.sample.library.category;
+package com.cz.android.sample.library.generate;
 
+import android.content.Context;
 import android.util.ArrayMap;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,7 @@ import java.util.List;
 public class PackageCategoryGenerator implements SampleCategoryGenerator {
 
     @Override
-    public List<CategoryItem> generate(@NonNull List<RegisterItem> registerItemList) {
+    public List<CategoryItem> generate(@NonNull Context context, @NonNull List<RegisterItem> registerItemList) {
         List<CategoryItem> categoryItemList=new ArrayList<>();
         if(null!=registerItemList){
             //Step1: Analysis of the package name from all the registered sample classes.

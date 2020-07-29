@@ -225,6 +225,7 @@ public class SampleHierarchyActivity extends AppCompatActivity {
             sampleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    dismiss();
                     FragmentActivity activity = getActivity();
                     if(null!=activity){
                         SampleApplication projectApplication = SampleApplication.getProjectApplication();

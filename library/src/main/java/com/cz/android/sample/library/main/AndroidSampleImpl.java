@@ -2,6 +2,8 @@ package com.cz.android.sample.library.main;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
@@ -14,13 +16,15 @@ import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.component.ComponentManager;
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.function.SampleFunction;
-import com.cz.android.sample.library.category.SampleCategoryGenerator;
-import com.cz.android.sample.library.category.PackageCategoryGenerator;
 import com.cz.android.sample.library.component.code.SampleSourceCodeComponent;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 import com.cz.android.sample.library.component.memory.SampleMemoryComponent;
 import com.cz.android.sample.library.component.message.SampleMessageComponent;
 import com.cz.android.sample.library.function.permission.SamplePermissionFunction;
+import com.cz.android.sample.library.generate.DefaultSampleItemGenerator;
+import com.cz.android.sample.library.generate.PackageCategoryGenerator;
+import com.cz.android.sample.library.generate.SampleCategoryGenerator;
+import com.cz.android.sample.library.generate.SampleItemGenerator;
 import com.cz.android.sample.library.main.component.DefaultMainSampleFragment;
 import com.cz.android.sample.library.processor.FragmentClassActionProcessor;
 import com.cz.android.sample.main.MainSampleComponentFactory;
@@ -57,6 +61,14 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
      */
     private SampleCategoryGenerator sampleCategoryGenerator=new PackageCategoryGenerator();
 
+    /**
+     * The default samples item generator. {@link SampleItemGenerator}
+     * Generate all the sample by its class name. Also noticed it just generate the sample use the sub-class {@link androidx.appcompat.app.AppCompatActivity}
+     * and {@link androidx.fragment.app.Fragment} without use annotation to indicate that is a sample.
+     *
+     */
+    private SampleItemGenerator sampleItemGenerator=new DefaultSampleItemGenerator();
+
     public AndroidSampleImpl() {
     }
 
@@ -76,6 +88,7 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
         if(null!=object){
             List<CategoryItem> categoryList=getObjectValue(object,AndroidSampleConstant.CATEGORY_FIELD_NAME);
             List<RegisterItem> registerList=getObjectValue(object,AndroidSampleConstant.REGISTER_FIELD_NAME);
+            List<String> sampleClassList=getObjectValue(object,"sampleClassList");
             List<String> functionList=getObjectValue(object,AndroidSampleConstant.FUNCTION_FIELD_NAME);
             List<String> componentList=getObjectValue(object,AndroidSampleConstant.COMPONENT_FIELD_NAME);
             List<String> actionProcessorList=getObjectValue(object,AndroidSampleConstant.PROCESSOR_FIELD_NAME);
@@ -92,16 +105,15 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
                 Log.w(TAG,e.getMessage());
             }
             try {
-                List<CategoryItem> newCategoryList = sampleCategoryGenerator.generate(registerList);
-                if(null!=newCategoryList){
-                    categoryList.addAll(newCategoryList);
-                }
-                processCategoryList(context,categoryList,newCategoryList,registerList);
+                processDemonstrateList(context,categoryList,registerList);
+                processSampleGenerator(context, categoryList, registerList, sampleClassList);
                 registerActionProcessor(actionProcessorList);
                 registerComponentList(componentList);
                 registerFunctionList(functionList);
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                addDemonstrateList(categoryList,registerList);
             }
             //process main component
             try {
@@ -111,6 +123,45 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
                 Log.w(TAG,e.getMessage());
             }
         }
+    }
+
+    private void processSampleGenerator(Context context, List<CategoryItem> categoryList, List<RegisterItem> registerList, List<String> sampleClassList) {
+        //Filter the launch activity.
+        if(null!=sampleClassList){
+            String launchActivityName = getLaunchActivityName(context);
+            sampleClassList.remove(launchActivityName);
+        }
+        List<RegisterItem> newRegisterList = sampleItemGenerator.generate(context,sampleClassList);
+        if(null!=newRegisterList){
+            registerList.addAll(newRegisterList);
+        }
+        List<CategoryItem> newCategoryList = sampleCategoryGenerator.generate(context,registerList);
+        if(null!=newCategoryList){
+            //Filter the exist category.
+            for(CategoryItem newCategoryItem:newCategoryList){
+                boolean categoryExist=false;
+                for(CategoryItem categoryItem:categoryList){
+                    if(newCategoryItem.title.equals(categoryItem.title)){
+                        categoryExist=true;
+                        break;
+                    }
+                }
+                if(!categoryExist){
+                    categoryList.add(newCategoryItem);
+                }
+            }
+        }
+    }
+
+    /**
+     * Get android.intent.action.MAIN activity class name
+     * @param context
+     * @return
+     */
+    private String getLaunchActivityName(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+        return intent.getComponent().getClassName();
     }
 
     /**
@@ -147,7 +198,7 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
         return categoryGenerator;
     }
 
-    private void processCategoryList(Context context,List<CategoryItem> categoryItemList,List<CategoryItem> newCategoryItemList,List<RegisterItem> registerItems) {
+    private void processDemonstrateList(Context context, List<CategoryItem> categoryItemList, List<RegisterItem> registerItems) {
         for(CategoryItem categoryItem:categoryItemList){
             if(AndroidSampleConstant.REF_TYPE==categoryItem.type){
                 categoryItem.title=context.getString(categoryItem.titleRes);
@@ -158,7 +209,6 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
                     categoryItem.category=context.getString(categoryItem.categoryRes);
                 }
             }
-            demonstrableList.add(categoryItem);
         }
         for(RegisterItem registerItem:registerItems){
             if(AndroidSampleConstant.REF_TYPE==registerItem.type){
@@ -170,7 +220,6 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
                     registerItem.category=context.getString(registerItem.categoryRes);
                 }
             }
-            demonstrableList.add(registerItem);
         }
     }
 
@@ -227,6 +276,15 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
                     }
                 }
             }
+        }
+    }
+
+    private void addDemonstrateList(List<CategoryItem> categoryList, List<RegisterItem> registerList) {
+        if(null!=categoryList){
+            demonstrableList.addAll(categoryList);
+        }
+        if(null!=registerList){
+            demonstrableList.addAll(registerList);
         }
     }
 
