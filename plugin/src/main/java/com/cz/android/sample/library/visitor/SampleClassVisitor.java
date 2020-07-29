@@ -1,5 +1,10 @@
 package com.cz.android.sample.library.visitor;
 
+import com.cz.android.sample.api.Exclude;
+import com.cz.android.sample.api.MainComponent;
+import com.cz.android.sample.api.RefRegister;
+import com.cz.android.sample.api.Register;
+
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
@@ -28,10 +33,10 @@ public class SampleClassVisitor extends ClassVisitor {
         SAMPLE_CLASS_LIST.add(SUPER_FRAGMENT_CLASS_NAME);
 
         EXCLUDE_ANNOTATION_LIST.add("com/cz/android/sample/main/MainSampleComponentFactory");
-        EXCLUDE_ANNOTATION_LIST.add("Lcom/cz/android/sample/api/Exclude;");
-        EXCLUDE_ANNOTATION_LIST.add("Lcom/cz/android/sample/api/MainComponent;");
-        EXCLUDE_ANNOTATION_LIST.add("Lcom/cz/android/sample/api/RefRegister;");
-        EXCLUDE_ANNOTATION_LIST.add("Lcom/cz/android/sample/api/Register;");
+        EXCLUDE_ANNOTATION_LIST.add("L"+ Exclude.class.getName().replace('.','/') +";");
+        EXCLUDE_ANNOTATION_LIST.add("L"+ MainComponent.class.getName().replace('.','/') +";");
+        EXCLUDE_ANNOTATION_LIST.add("L"+ RefRegister.class.getName().replace('.','/') +";");
+        EXCLUDE_ANNOTATION_LIST.add("L"+ Register.class.getName().replace('.','/') +";");
     }
 
     private String className;

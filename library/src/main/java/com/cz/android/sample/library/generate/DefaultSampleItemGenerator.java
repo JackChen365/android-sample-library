@@ -24,6 +24,7 @@ public class DefaultSampleItemGenerator implements SampleItemGenerator {
                 String classSimpleName;
                 int i = className.lastIndexOf(".");
                 if(0 > i){
+                    //With out package.
                     classSimpleName=className;
                 } else {
                     classSimpleName=className.substring(i+1);

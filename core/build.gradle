@@ -25,5 +25,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0-alpha02'
-    api 'com.github.momodae.AndroidSampleLibrary:api:1.1.6'
+    api 'com.github.momodae.AndroidSampleLibrary:api:1.1.8'
 }
