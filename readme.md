@@ -17,6 +17,8 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 ### Sample
 [APK FILE](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/file/app-debug.apk?raw=true)
 
+### Better ways for you to simplify your samples.
+[Usage](document/usage.md)
 
 ### Gradle
 
@@ -72,7 +74,6 @@ For example
 
 From the package and class. I will help you generate all the demonstrate structure. Noticed that this is only for Activity and Fragment.
 Because we collect all the Activity/Fragment, If you have other classes that you use them for special purposes. Use the annotation class:@Exclude.
-
 
 * The other way, configure the category and sample by yourself.
 
@@ -141,16 +142,6 @@ you do not have an exception handler. When the exception occurred. The applicati
 
 * The different between RefCategory and Category.
 > We use R.string to support i18n. If you want to support that. The Category is more convenient.
-
-### Problems
-
-> Sorry, I do know a lot of problems with this project. I just do all of this by myself during the Spring festival. I was working on this project for one week.<br>
-It's just the early version of this project. So issue me when you find a bug.
-
-The problems that I knew was:
-
-* The permission function not work properly.
-* The source code list is not a tree, I should organize all the file as a tree.
 
 
 ### About me

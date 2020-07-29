@@ -89,3 +89,10 @@ Fixed a few bugs
 
 * Add category generator in order to generate the category by the class package.
 * Update the annotation: Register and Category that allow you only configure the title without the description.
+
+### 1.1.6~1.2.0
+*时间:* 2020/7/26<br>
+*作者:* Jack chen
+
+* Add category generator in order to generate the category by the class package.
+* Update the annotation: Register and Category that allow you only configure the title without the description.
