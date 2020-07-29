@@ -48,27 +48,15 @@ public class SamplePermissionFunction implements SampleFunction {
 
     @Override
     public void run(FragmentActivity context, final Object object, RegisterItem item) {
-        SamplePermission samplePermission = item.clazz.getAnnotation(SamplePermission.class);
-        String[] permissions = samplePermission.value();
-        //Here add permission observer
-        SamplePermissionsFragment permissionsFragment=SamplePermissionsFragment.get(context);
-        PermissionObserver permissionObserver=null;
-        if(object instanceof PermissionObserver){
-            permissionObserver = (PermissionObserver) object;
-        }
-        final PermissionObserver observer=permissionObserver;
+        [...]
+        final SamplePermissionsFragment permissionsFragment=SamplePermissionsFragment.get(activity);
         PermissionObserver permissionObserverWrapper = new PermissionObserver() {
             @Override
-            public void onGranted(Permission permission) {
+            public void onAccepted(PermissionResult permission) {
+                PermissionViewModel viewModel = PermissionViewModelProviders.getViewModel(activity);
+                PermissionObserver observer = viewModel.getObserver();
                 if(null!=observer){
-                    observer.onGranted(permission);
-                }
-            }
-
-            @Override
-            public void onDenied(Permission permission) {
-                if(null!=observer){
-                    observer.onDenied(permission);
+                    observer.onAccepted(permission);
                 }
             }
         };
@@ -92,16 +80,15 @@ class SamplePermissionActivity : AppCompatActivity(),PermissionObserver{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_function_permission_sample)
-    }
-
-    override fun onGranted(permission: Permission) {
-        val text = getString(R.string.permission_granted, permission.name)
-        Toast.makeText(applicationContext,text,Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onDenied(permission: Permission) {
-        val text = getString(R.string.permission_denied, permission.name)
-        Toast.makeText(applicationContext,text,Toast.LENGTH_SHORT).show()
+        PermissionViewModelProviders.getViewModel(this).addObserver { result->
+            if(result.granted){
+                val text = getString(R.string.permission_granted, result.name)
+                Toast.makeText(applicationContext,text, Toast.LENGTH_SHORT).show()
+            } else {
+                val text = getString(R.string.permission_denied, result.name)
+                Toast.makeText(applicationContext,text, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
 ```

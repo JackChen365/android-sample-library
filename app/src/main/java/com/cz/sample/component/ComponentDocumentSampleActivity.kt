@@ -31,7 +31,7 @@ import com.cz.sample.R
  * @see SampleDocument This annotation will add a additional panel to your sample.
  */
 @SampleDocument("readme-cn.md")
-@RefCategory(title=R.string.component_category,desc = R.string.component_category_desc,priority = 1)
+@RefCategory(title=R.string.component_category,desc = R.string.component_category_desc)
 @RefRegister(title=R.string.component_sample2,desc=R.string.component_sample2_desc,category = R.string.component_category,priority = 1)
 class ComponentDocumentSampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

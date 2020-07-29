@@ -16,8 +16,7 @@ import kotlinx.android.synthetic.main.activity_component_sample.*
 @SampleMessage
 @SampleBorder
 @SampleSourceCode
-//@RefRegister(title=R.string.component_sample1,desc=R.string.component_sample1_desc,category = R.string.component_category)
-@Register(title="Test",desc="")
+@RefRegister(title=R.string.component_sample1,desc=R.string.component_sample1_desc,category = R.string.component_category)
 class ComponentSampleActivity : AppCompatActivity() {
     private var index=0
     override fun onCreate(savedInstanceState: Bundle?) {

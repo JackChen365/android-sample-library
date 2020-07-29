@@ -21,7 +21,7 @@ import com.cz.sample.R
  * @see com.cz.android.sample.library.function.permission.PermissionObserver This observer responsible for receiving permission request result
  */
 @SamplePermission(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-@RefCategory(title=R.string.sample_function,desc = R.string.sample_function_description,priority = 2)
+@RefCategory(title=R.string.sample_function,desc = R.string.sample_function_description)
 @RefRegister(title=R.string.function_permission_sample1,desc = R.string.function_permission_sample1_desc,category = R.string.sample_function)
 class SamplePermissionActivity : AppCompatActivity(){
 

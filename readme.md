@@ -7,13 +7,12 @@
 After one week of hard working. I've finished some functions:
 * [Sample component](document/component/sampleCompoent.md)
 * [Sample function](document/function/sampleFunction.md)
-* Action processor
+* [Action processor](document/actionprocessor/actionProcessor.md)
 
 ### Annotations
 The [Annotations](document/annotations/sampleAnnotation.md)
 
 #### [中文文档](document/readme-cn.md)
-
 
 ### Sample
 [APK FILE](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/file/app-debug.apk?raw=true)
@@ -24,6 +23,7 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 ```
 //Project:build.gradle ---------------
 buildscript {
+    ext.sample_version = '1.2.0'
     repositories {
         ...
         maven { url 'https://jitpack.io' }
@@ -31,7 +31,7 @@ buildscript {
     dependencies {
         ...
         //Here is our plugin.
-        classpath 'com.github.momodae.AndroidSampleLibrary:plugin:1.1.7'
+        classpath "com.github.momodae.AndroidSampleLibrary:plugin:$sample_version"
 }
 
 allprojects {
@@ -44,7 +44,7 @@ allprojects {
 apply plugin: 'sample'
 dependencies {
     ...
-    implementation "com.github.momodae.AndroidSampleLibrary:library:1.1.7"
+    implementation "com.github.momodae.AndroidSampleLibrary:library:$sample_version"
 }
 
 ```
@@ -54,18 +54,27 @@ dependencies {
 ![Image1](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/image1.gif?raw=true)<br>
 ![Image2](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/image2.gif?raw=true)<br>
 
-### How to use
+### How to use this library.
 
-* Setup an exception handler. If your sample does not works properly. Here you could trace the exception and check it out
+* The simplest way to use this library.
+If you want to use this library as simple as possible. The only thing you have to do is configure all the dependency and plugin. That's it.
+I will help you generate all the categories and the sample information.
+For example
 
-    ```
+```
+|--test1
+    |-- Sample1Activity
+    |-- Sample2Activity
+|--test2
+    |-- Sample1Activity
+    |-- Sample2Activity
+```
 
-    val projectApplication = SampleApplication.getProjectApplication()
-    projectApplication.androidSample.registerExceptionHandler { context, e, registerItem, item ->
-        Log.e(TAG, "Exception occurs:" + e.message)
-    }
-    ```
+From the package and class. I will help you generate all the demonstrate structure. Noticed that this is only for Activity and Fragment.
+Because we collect all the Activity/Fragment, If you have other classes that you use them for special purposes. Use the annotation class:@Exclude.
 
+
+* The other way, configure the category and sample by yourself.
 
 * For an activity sample
 
@@ -118,6 +127,17 @@ dependencies {
         ...
     }
     ```
+
+* Setup an exception handler. If your sample does not works properly. Here you could trace the exception and check it out
+you do not have an exception handler. When the exception occurred. The application will crash. For a demo, It not a problem.
+
+    ```
+    val projectApplication = SampleApplication.getProjectApplication()
+    projectApplication.androidSample.registerExceptionHandler { context, e, registerItem, item ->
+        Log.e(TAG, "Exception occurs:" + e.message)
+    }
+    ```
+
 
 * The different between RefCategory and Category.
 > We use R.string to support i18n. If you want to support that. The Category is more convenient.

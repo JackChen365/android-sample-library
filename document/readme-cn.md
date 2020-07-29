@@ -5,7 +5,7 @@
 * #### 已经完成的基本功能为:
 * [扩展组件](component/sampleCompoent.md)
 * [扩展功能](function/sampleFunction.md)
-* 演示处理器
+* [演示处理器](actionprocessor/actionProcessor.md)
 
 #### [英文文档](../readme.md)
 
@@ -21,17 +21,19 @@
 The [Annotations](document/annotations/sampleAnnotation.md)
 
 ### 如何使用
+最简单的使用是直接引入库与插件后，什么也不做。我会自动根据包信息，与Activity/Fragment的类名称等生成演示结果。<p>
+此处，因为会自动扫描所有的Activity/Fragment,所以如果有不是演示的Activity/Fragment,请自行加上注解@Exclude.
+另外发生冲突的，会自行合并。
+```
+|--test1
+    |-- Sample1Activity
+    |-- Sample2Activity
+|--test2
+    |-- Sample1Activity
+    |-- Sample2Activity
+```
 
-*  设置异常处理类,如果在启动示例时,发生一些未知异常,会回调到此处.
-
-    ```
-
-    val projectApplication = SampleApplication.getProjectApplication()
-    projectApplication.androidSample.registerExceptionHandler { context, e, registerItem, item ->
-        Log.e(TAG, "Exception occurs:" + e.message)
-    }
-    ```
-
+正常使用需要自己配置使用示例。以及层级结构。好处是，可以支持国际化，示例描述，以及层级展示优先级等等。具体可以根据需求自行选择。
 
 *  Activity 演示
 
@@ -71,6 +73,16 @@ The [Annotations](document/annotations/sampleAnnotation.md)
     ```
 
    一定要注意,如果此分类不存在了. 这个演示会丢失.
+
+*  设置异常处理类,如果在启动示例时,发生一些未知异常,会回调到此处.
+
+    ```
+
+    val projectApplication = SampleApplication.getProjectApplication()
+    projectApplication.androidSample.registerExceptionHandler { context, e, registerItem, item ->
+        Log.e(TAG, "Exception occurs:" + e.message)
+    }
+    ```
 
 * 使用不同的组件,扩展演示. 非常重要!默认实现了4个组件,通过上面Component 文档介绍.只需要在每一个演示处,使用注解标志即可.
 

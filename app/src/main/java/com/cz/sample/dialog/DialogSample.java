@@ -21,7 +21,7 @@ import java.util.List;
  * @email bingo110@126.com
  * @see AlertDialogActionProcessor Our own action processor
  */
-@RefCategory(title= R.string.dialog,desc=R.string.dialog_desc,priority = 3)
+@RefCategory(title= R.string.dialog,desc=R.string.dialog_desc)
 public class DialogSample{
 
     public DialogSample() {
