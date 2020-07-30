@@ -163,7 +163,8 @@ public class SampleHierarchyActivity extends AppCompatActivity {
                 titleRef.setText((null==titleResourceEntryName? "0" : "R.string."+titleResourceEntryName));
                 categoryRef.setText((null==categoryResourceEntryName? "0" : "R.string."+categoryResourceEntryName));
             } else if(TYPE_SAMPLE==viewType){
-                int index = node.parent.children.indexOf(node);
+                List<TreeNode<Demonstrable>> children = node.parent.children;
+                int index = indexOf(node.parent.children,node);
                 final RegisterItem registerItem = (RegisterItem) item;
                 TextView sampleNumber=holder.itemView.findViewById(R.id.sampleNumber);
                 TextView sampleClass=holder.itemView.findViewById(R.id.sampleClass);
@@ -172,8 +173,23 @@ public class SampleHierarchyActivity extends AppCompatActivity {
                 sampleClass.setText(registerItem.clazz.getSimpleName());
             }
         }
-    }
 
+        private int indexOf(List<TreeNode<Demonstrable>> children, TreeNode<Demonstrable> node){
+            int index=-1;
+            for(int i=0;i<children.size();i++){
+                TreeNode<Demonstrable> treeNode = children.get(i);
+                if(treeNode.item instanceof RegisterItem&&node.item instanceof RegisterItem){
+                    RegisterItem registerItem = (RegisterItem) treeNode.item;
+                    RegisterItem item = (RegisterItem) node.item;
+                    if(registerItem.title.equals(item.title)){
+                        index=i;
+                        break;
+                    }
+                }
+            }
+            return index;
+        }
+    }
 
     public static class SampleDetailDialog extends BottomSheetDialogFragment {
         private final RegisterItem registerItem;
