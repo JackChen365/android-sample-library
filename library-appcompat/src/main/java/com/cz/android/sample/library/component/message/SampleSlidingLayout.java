@@ -11,7 +11,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
+
 
 /**
  * @author Created by cz

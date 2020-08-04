@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 
 
 /**

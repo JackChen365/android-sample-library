@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.adapter.tree.TreeAdapter;
 import com.cz.android.sample.library.adapter.tree.TreeNode;
-import com.cz.android.sample.library.appcompat.R;
 
 /**
  * @author Created by cz

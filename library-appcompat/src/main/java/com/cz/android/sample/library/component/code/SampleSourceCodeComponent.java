@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cz.android.sample.component.CompanionComponentContainer;
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.adapter.SimpleFragmentPagerAdapter;
-import com.cz.android.sample.library.appcompat.R;
 import com.cz.android.sample.library.appcompat.SampleWrapperViewFragment;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 

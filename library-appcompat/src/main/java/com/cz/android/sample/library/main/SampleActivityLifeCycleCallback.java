@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.function.SampleFunction;
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.main.MainSampleComponentFactory;
 
 import java.util.List;

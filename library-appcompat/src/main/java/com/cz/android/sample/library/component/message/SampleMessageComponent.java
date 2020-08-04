@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 
 import com.cz.android.sample.component.ComponentContainer;
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.thread.WorkThread;
 
 import java.util.Observable;

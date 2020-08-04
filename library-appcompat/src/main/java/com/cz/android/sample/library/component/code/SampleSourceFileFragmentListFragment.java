@@ -17,9 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.adapter.tree.OnTreeNodeClickListener;
 import com.cz.android.sample.library.adapter.tree.TreeNode;
-import com.cz.android.sample.library.appcompat.R;
 import com.cz.android.sample.library.component.code.adapter.SampleSourceCodeAdapter;
 
 import java.io.IOException;

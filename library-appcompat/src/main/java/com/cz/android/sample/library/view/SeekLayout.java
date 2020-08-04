@@ -8,7 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
+
 
 /**
  * @author Created by cz

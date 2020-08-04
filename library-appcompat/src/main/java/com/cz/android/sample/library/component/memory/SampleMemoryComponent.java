@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 
 import com.cz.android.sample.component.ComponentContainer;
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 
 /**
  * @author Created by cz

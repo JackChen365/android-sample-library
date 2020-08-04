@@ -27,10 +27,10 @@ import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.Demonstrable;
 import com.cz.android.sample.api.item.RegisterItem;
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.adapter.tree.OnTreeNodeClickListener;
 import com.cz.android.sample.library.adapter.tree.TreeAdapter;
 import com.cz.android.sample.library.adapter.tree.TreeNode;
-import com.cz.android.sample.library.appcompat.R;
 import com.cz.android.sample.library.main.SampleApplication;
 
 import java.util.List;

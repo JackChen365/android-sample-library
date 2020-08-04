@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.cz.android.sample.api.item.Demonstrable;
 import com.cz.android.sample.api.item.RegisterItem;
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 
 import java.util.ArrayList;
 import java.util.List;

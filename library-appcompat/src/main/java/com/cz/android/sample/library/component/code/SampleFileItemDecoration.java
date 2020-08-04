@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 
 
 /**

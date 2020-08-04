@@ -16,7 +16,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
+
 
 /**
  * @author Created by cz

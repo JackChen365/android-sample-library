@@ -8,7 +8,7 @@ import android.support.annotation.IntRange;
 import android.util.SparseArray;
 
 
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;

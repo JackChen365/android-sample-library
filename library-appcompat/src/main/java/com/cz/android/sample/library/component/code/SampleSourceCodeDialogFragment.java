@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.component.code.view.SourceCodeView;
 import com.cz.android.sample.library.view.WebViewProgressBar;
 
@@ -33,7 +33,7 @@ public class SampleSourceCodeDialogFragment extends BottomSheetDialogFragment {
         return fragment;
     }
 
-    private SampleSourceCodeDialogFragment(){
+    public SampleSourceCodeDialogFragment(){
     }
 
     @Nullable

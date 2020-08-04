@@ -13,7 +13,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.component.document.view.MarkdownView;
 import com.cz.android.sample.library.view.WebViewProgressBar;
 

@@ -29,7 +29,7 @@ import com.cz.android.sample.AndroidSample;
 import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.Demonstrable;
 import com.cz.android.sample.api.item.RegisterItem;
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.main.SampleApplication;
 import com.cz.android.sample.library.main.adapter.SampleTemplateAdapter;
 import com.cz.android.sample.library.main.hierarchy.SampleHierarchyActivity;

@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 
-import com.cz.android.sample.library.appcompat.R;
+import com.cz.android.sample.library.R;
 
 import java.util.LinkedList;
 

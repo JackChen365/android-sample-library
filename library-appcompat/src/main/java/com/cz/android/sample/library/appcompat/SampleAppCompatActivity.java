@@ -19,6 +19,7 @@ import android.view.Window;
 import android.widget.LinearLayout;
 
 import com.cz.android.sample.component.SampleComponentContainer;
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.window.impl.ComponentWindowDelegate;
 
 /**
