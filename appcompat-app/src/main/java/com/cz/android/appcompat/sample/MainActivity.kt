@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.cz.android.sample.library.main.SampleApplication
 import com.cz.sample.R
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     companion object{

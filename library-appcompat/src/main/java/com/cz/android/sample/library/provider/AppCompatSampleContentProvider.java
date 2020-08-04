@@ -27,7 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SampleContentProvider extends ContentProvider {
+public class AppCompatSampleContentProvider extends ContentProvider {
     /**
      * Mutex lock object
      */
@@ -45,7 +45,7 @@ public class SampleContentProvider extends ContentProvider {
         selectionMaps = new SparseArray<>();
     }
 
-    public SampleContentProvider() {
+    public AppCompatSampleContentProvider() {
     }
 
     /**

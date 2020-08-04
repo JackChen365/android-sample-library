@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 
 
 import com.cz.android.sample.api.item.RegisterItem;
+import com.cz.android.sample.library.R;
 import com.cz.android.sample.window.impl.ComponentWindowDelegate;
 
 /**
