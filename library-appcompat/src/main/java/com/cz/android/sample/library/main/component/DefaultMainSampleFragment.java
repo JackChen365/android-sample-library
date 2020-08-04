@@ -171,7 +171,7 @@ public class DefaultMainSampleFragment extends Fragment implements MainSampleCom
                             RegisterItem registerItem = testCases.get(i);
                             androidSample.start(context,registerItem);
                         }
-                    }).setCancelable(false);
+                    }).setCancelable(true);
             builder.show();
         }
     }
