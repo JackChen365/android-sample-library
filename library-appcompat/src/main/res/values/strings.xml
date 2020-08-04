@@ -1,0 +1,10 @@
+<resources>
+    <string name="sample_invalid_data">无效的数据</string>
+    <string name="message_output">消息输出</string>
+    <string name="sample_choice_test_case">选择一个示例</string>
+    <string name="sample">示例</string>
+    <string name="sample_document">文档</string>
+    <string name="sample_source_code">示例源码</string>
+    <string name="sample_hierarchy">示例层级</string>
+    <string name="sample_hierarchy_desc">展示所有配置示例</string>
+</resources>

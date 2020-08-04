@@ -1,9 +1,10 @@
-package com.cz.android.sample.processor.clazz;
+package com.cz.android.sample.library.processor;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.api.item.RegisterItem;
+import com.cz.android.sample.processor.clazz.ClassActionProcessor;
 
 /**
  * @author Created by cz

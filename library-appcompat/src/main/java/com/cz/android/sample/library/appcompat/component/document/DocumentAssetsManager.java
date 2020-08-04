@@ -1,0 +1,63 @@
+package com.cz.android.sample.library.appcompat.component.document;
+
+import android.content.Context;
+import android.content.res.AssetManager;
+
+import androidx.annotation.Nullable;
+
+import com.cz.android.sample.library.main.SampleConfiguration;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author Created by cz
+ * @date 2020/5/27 8:02 PM
+ * @email bingo110@126.com
+ */
+public class DocumentAssetsManager implements SampleConfiguration {
+    private final static DocumentAssetsManager documentAssetsManager =new DocumentAssetsManager();
+
+    public static DocumentAssetsManager getInstance(){
+        return documentAssetsManager;
+    }
+
+    private List<String> documentFileList=new ArrayList<>();
+
+    @Override
+    public void onCreate(Context context) {
+        AssetManager assets = context.getAssets();
+        collectDocumentFiles(assets,documentFileList,"document");
+    }
+
+    private void collectDocumentFiles(AssetManager assets,List<String> documentFileList,String filePath) {
+        try {
+            if(filePath.endsWith(".md")||filePath.endsWith(".MD")) {
+                documentFileList.add(filePath);
+            } else {
+                //Folder
+                String[] fileList = assets.list(filePath);
+                if(null!=fileList){
+                    for(String fileName:fileList){
+                        collectDocumentFiles(assets,documentFileList,filePath+"/"+fileName);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Nullable
+    public String findDocument(String path){
+        String documentPath=null;
+        for (String documentFilePath : documentFileList) {
+            if(documentFilePath.endsWith(path)){
+                documentPath=documentFilePath;
+            }
+        }
+        return documentPath;
+
+    }
+}

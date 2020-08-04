@@ -1,6 +1,6 @@
 package com.cz.android.sample;
 
-import androidx.fragment.app.FragmentActivity;
+import android.app.Activity;
 
 import com.cz.android.sample.api.TestCase;
 import com.cz.android.sample.api.item.Demonstrable;
@@ -14,13 +14,13 @@ import java.util.List;
  * @date 2020-01-31 10:03
  * @email bingo110@126.com
  */
-public interface AndroidSample {
+public interface AndroidSample<C extends Activity> {
     /**
      * Start a sample.
      * @param context
      * @param demonstrable
      */
-    void start(FragmentActivity context, RegisterItem demonstrable);
+    void start(C context, RegisterItem demonstrable);
     
     /**
      * Register an exceptionHandler for action com.cz.android.sample.library.processor

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.cz.android.sample.api.RefRegister
+import com.cz.android.sample.api.TestCase
 import com.cz.android.sample.library.function.permission.*
 import com.cz.sample.R
 
@@ -21,6 +22,7 @@ import com.cz.sample.R
  * @see com.cz.android.sample.library.function.permission.SamplePermissionFunction This function implementation extend from SampleFunction
  * @see com.cz.android.sample.library.function.permission.PermissionObserver This observer responsible for receiving permission request result
  */
+@TestCase
 @SamplePermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 @RefRegister(title=R.string.function_permission_sample2,desc = R.string.function_permission_sample2_desc,category = R.string.sample_function)
 class SamplePermissionFunctionFragment : Fragment() {

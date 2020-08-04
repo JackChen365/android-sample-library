@@ -1,13 +1,12 @@
 package com.cz.android.sample.function;
 
-import androidx.fragment.app.FragmentActivity;
+
+import android.app.Activity;
 
 import com.cz.android.sample.api.item.RegisterItem;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * @author Created by cz
@@ -47,7 +46,7 @@ public class FunctionManager {
      * @param item
      * @param object
      */
-    public void execute(final FragmentActivity context, final RegisterItem item,final Object object) {
+    public<T extends Activity> void execute(final T context, final RegisterItem item, final Object object) {
         for(SampleFunction function:functionList){
             executeFunction(function,context,object,item);
         }
@@ -60,7 +59,7 @@ public class FunctionManager {
      * @param object
      * @param item
      */
-    private void executeFunction(SampleFunction function,final FragmentActivity context,final Object object,final RegisterItem item){
+    private<T extends Activity> void executeFunction(SampleFunction function,final T context,final Object object,final RegisterItem item){
         if(function.isAvailable(item.clazz)){
             function.run(context,object,item);
         }

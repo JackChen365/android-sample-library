@@ -1,6 +1,7 @@
 package com.cz.android.sample.processor;
 
-import androidx.fragment.app.FragmentActivity;
+import android.app.Activity;
+
 import com.cz.android.sample.api.item.RegisterItem;
 
 /**
@@ -10,7 +11,7 @@ import com.cz.android.sample.api.item.RegisterItem;
  *
  * An action com.cz.android.sample.library.processor, When you execute an action. For example try to start an activity. How it work.
  */
-public abstract class AbsActionProcessor<T> {
+public abstract class AbsActionProcessor<T,C extends Activity> {
     /**
      * consider if you want to process this item. usually is class object. HowEver It will be an custom object.
      */
@@ -22,7 +23,7 @@ public abstract class AbsActionProcessor<T> {
      * @param clazz
      * @return
      */
-    public abstract T getInstance(FragmentActivity context,RegisterItem item,Class clazz) throws Exception;
+    public abstract T getInstance(C context,RegisterItem item,Class clazz) throws Exception;
 
     /**
      * process the register configuration
@@ -30,5 +31,5 @@ public abstract class AbsActionProcessor<T> {
      * @param registerItem the one that you register which is all the information you could use
      * @throws Exception when you execute an action failed throw an exception
      */
-    public abstract void run(FragmentActivity context, RegisterItem registerItem,T item) throws Exception;
+    public abstract void run(C context, RegisterItem registerItem,T item) throws Exception;
 }

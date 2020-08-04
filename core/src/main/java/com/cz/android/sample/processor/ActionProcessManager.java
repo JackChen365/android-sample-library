@@ -1,12 +1,11 @@
 package com.cz.android.sample.processor;
 
-import androidx.fragment.app.FragmentActivity;
+import android.app.Activity;
 
 import com.cz.android.sample.api.item.RegisterItem;
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.processor.clazz.ActivityClassActionProcessor;
 import com.cz.android.sample.processor.clazz.DialogClassActionProcessor;
-import com.cz.android.sample.processor.clazz.DialogFragmentClassActionProcessor;
 import com.cz.android.sample.processor.exception.ActionExceptionHandler;
 
 import java.util.ArrayList;
@@ -33,7 +32,6 @@ public class ActionProcessManager {
     {
         //register default action com.cz.android.sample.library.processor
         register(new DialogClassActionProcessor());
-        register(new DialogFragmentClassActionProcessor());
         register(new ActivityClassActionProcessor());
     }
     /**
@@ -63,7 +61,7 @@ public class ActionProcessManager {
     /**
      * process the action when user execute an action
      */
-    public void process(FunctionManager functionManager, final FragmentActivity context, final RegisterItem item) throws Exception {
+    public<C extends Activity> void process(FunctionManager functionManager, final C context, final RegisterItem item) throws Exception {
         Class clazz=item.clazz;
         for (final AbsActionProcessor processor:processorList) {
             if (processor.isInstance(clazz)) {

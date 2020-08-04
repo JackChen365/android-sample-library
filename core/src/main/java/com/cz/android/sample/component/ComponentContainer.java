@@ -1,10 +1,8 @@
 package com.cz.android.sample.component;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.window.impl.ComponentWindowDelegate;
 
@@ -13,13 +11,13 @@ import com.cz.android.sample.window.impl.ComponentWindowDelegate;
  * @date 2020-01-27 17:36
  * @email bingo110@126.com
  */
-public interface ComponentContainer {
+public interface ComponentContainer<C extends Activity> {
     /**
      * We check if this object has Annotation:SampleBorder.
      * If this sample object doesn't have this annotation. It won't call the other functions
      * @return
      */
-    boolean isComponentAvailable(@NonNull Object object);
+    boolean isComponentAvailable(Object object);
 
     /**
      * This function is an critical function. It's move like a chain. Each component will call this function
@@ -34,7 +32,7 @@ public interface ComponentContainer {
      * @param view your fragment/activity content view
      * @return
      */
-    View getComponentView(@NonNull FragmentActivity context,@NonNull Object object,@NonNull ViewGroup parentView,@NonNull View view);
+    View getComponentView(C context, Object object, ViewGroup parentView, View view);
 
     /**
      * After this component created a new view. This function will call automatically.
@@ -43,7 +41,7 @@ public interface ComponentContainer {
      * @param object
      * @param view
      */
-    void onCreatedView(@NonNull FragmentActivity context,@NonNull Object object,@NonNull View view);
+    void onCreatedView(C context, Object object, View view);
 
     /**
      * The priority in the component queue. If you want your component run before others

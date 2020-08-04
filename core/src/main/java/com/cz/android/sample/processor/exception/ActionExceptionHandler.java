@@ -1,7 +1,6 @@
 package com.cz.android.sample.processor.exception;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
+import android.app.Activity;
 
 import com.cz.android.sample.api.item.RegisterItem;
 import com.cz.android.sample.processor.AbsActionProcessor;
@@ -15,12 +14,11 @@ import com.cz.android.sample.processor.AbsActionProcessor;
  * You could implement this exceptionHandler to do something.
  *
  * Here this process will throw Exception.
- * @see AbsActionProcessor#run(androidx.fragment.app.FragmentActivity, com.cz.android.sample.api.item.RegisterItem, java.lang.Object)
+ * @see AbsActionProcessor#run(Activity, RegisterItem, Object)
  */
 public interface ActionExceptionHandler {
-
     /**
      * handle exception
      */
-    void handleException(@NonNull FragmentActivity context,@NonNull Exception e,@NonNull RegisterItem registerItem,@NonNull Object item);
+    void handleException(Activity context,Exception e, RegisterItem registerItem, Object item);
 }

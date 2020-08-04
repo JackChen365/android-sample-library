@@ -10,6 +10,7 @@ import com.cz.android.sample.library.analysis.ImageAnalyzer
 import com.cz.android.sample.library.data.DataManager
 import com.cz.android.sample.library.data.DataProvider
 import com.cz.android.sample.library.main.SampleApplication
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
     companion object{

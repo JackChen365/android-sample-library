@@ -1,10 +1,8 @@
 package com.cz.android.sample.component;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.List;
  * Here are the solution. We implement component container as a CompanionComponentContainer
  * Once there has one create a component. The others don't have to do the same.
  */
-public abstract class CompanionComponentContainer implements ComponentContainer {
+public abstract class CompanionComponentContainer<T extends Activity> implements ComponentContainer<T> {
     /**
      * All the companion component
      */
@@ -38,7 +36,7 @@ public abstract class CompanionComponentContainer implements ComponentContainer 
      * @param view
      * @return
      */
-    public abstract View onCreateCompanionComponent(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view);
+    public abstract View onCreateCompanionComponent(T context, Object object, ViewGroup parentView, View view);
 
     /**
      * Return a class array. So that I could add all the companion to this object
@@ -52,7 +50,7 @@ public abstract class CompanionComponentContainer implements ComponentContainer 
      * @param view
      * @return
      */
-    public View getCompanionComponent(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view){
+    public View getCompanionComponent(T context, Object object, ViewGroup parentView, View view){
         View companionComponentView = onCreateCompanionComponent(context, object, parentView, view);
         return companionComponentView;
     }
