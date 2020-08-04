@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.cz.android.sample.api.Exclude
 import com.cz.android.sample.api.RefCategory
 import com.cz.android.sample.api.RefRegister
 import com.cz.android.sample.library.component.document.SampleDocument

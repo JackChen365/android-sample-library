@@ -77,7 +77,7 @@ public class RegisterItem implements Demonstrable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CategoryItem that = (CategoryItem) o;
+        RegisterItem that = (RegisterItem) o;
         return Objects.equals(title, that.title);
     }
 
