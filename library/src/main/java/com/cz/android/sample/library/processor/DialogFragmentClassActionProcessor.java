@@ -11,7 +11,7 @@ import com.cz.android.sample.processor.clazz.ClassActionProcessor;
  * @date 2020-01-27 15:41
  * @email bingo110@126.com
  */
-public class DialogFragmentClassActionProcessor extends ClassActionProcessor{
+public class DialogFragmentClassActionProcessor extends ClassActionProcessor<FragmentActivity>{
     @Override
     public boolean isInstance(Class item) {
         return super.isInstance(item)&& DialogFragment.class.isInstance(item);

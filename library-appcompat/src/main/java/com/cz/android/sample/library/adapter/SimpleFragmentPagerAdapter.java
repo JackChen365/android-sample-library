@@ -1,12 +1,11 @@
 package com.cz.android.sample.library.adapter;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +21,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments=new ArrayList<>();
     private List<CharSequence> titleList;
 
-    public static FragmentPagerAdapter create(@NonNull FragmentManager fm,@NonNull Fragment[] fragmentList){
+    public static FragmentPagerAdapter create(@NonNull FragmentManager fm, @NonNull Fragment[] fragmentList){
         return new SimpleFragmentPagerAdapter(fm, Arrays.asList(fragmentList),null);
     }
 
@@ -35,7 +34,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
     public SimpleFragmentPagerAdapter(@NonNull FragmentManager fm, List<Fragment> fragments, List<CharSequence> titleList) {
-        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        super(fm);
         this.fragments.addAll(fragments);
         if(null!=titleList){
             this.titleList=new ArrayList<>();

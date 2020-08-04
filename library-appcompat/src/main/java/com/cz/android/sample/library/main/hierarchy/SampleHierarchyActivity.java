@@ -4,6 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,27 +22,16 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.cz.android.sample.AndroidSample;
 import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.CategoryItem;
 import com.cz.android.sample.api.item.Demonstrable;
 import com.cz.android.sample.api.item.RegisterItem;
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.adapter.tree.OnTreeNodeClickListener;
+import com.cz.android.sample.library.adapter.tree.TreeAdapter;
+import com.cz.android.sample.library.adapter.tree.TreeNode;
+import com.cz.android.sample.library.appcompat.R;
 import com.cz.android.sample.library.main.SampleApplication;
-import com.cz.widget.recyclerview.adapter.listener.OnTreeNodeClickListener;
-import com.cz.widget.recyclerview.adapter.support.tree.TreeAdapter;
-import com.cz.widget.recyclerview.adapter.support.tree.TreeNode;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
 
@@ -63,7 +62,8 @@ public class SampleHierarchyActivity extends AppCompatActivity {
             @Override
             public void onNodeItemClick(@Nullable TreeNode<Demonstrable> node, @Nullable Demonstrable item, @Nullable View v, int position) {
                 RegisterItem registerItem = (RegisterItem) item;
-                SampleDetailDialog sampleDetailDialog = new SampleDetailDialog(registerItem);
+                SampleDetailDialog sampleDetailDialog = new SampleDetailDialog();
+                sampleDetailDialog.setRegisterItem(registerItem);
                 sampleDetailDialog.show(getSupportFragmentManager(),null);
             }
         });
@@ -176,9 +176,12 @@ public class SampleHierarchyActivity extends AppCompatActivity {
 
 
     public static class SampleDetailDialog extends BottomSheetDialogFragment {
-        private final RegisterItem registerItem;
+        private RegisterItem registerItem;
 
-        public SampleDetailDialog(@NonNull RegisterItem registerItem) {
+        public SampleDetailDialog() {
+        }
+
+        public void setRegisterItem(@NonNull RegisterItem registerItem){
             this.registerItem=registerItem;
         }
 

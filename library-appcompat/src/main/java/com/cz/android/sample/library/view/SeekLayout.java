@@ -2,14 +2,13 @@ package com.cz.android.sample.library.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.appcompat.R;
 
 /**
  * @author Created by cz
@@ -33,7 +32,7 @@ public class SeekLayout extends LinearLayout {
     public SeekLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(LinearLayout.VERTICAL);
-        inflate(context,R.layout.sample_seek_layout,this);
+        inflate(context, R.layout.sample_seek_layout,this);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SeekLayout);
         setSeekLayoutTitle(a.getString(R.styleable.SeekLayout_seek_title));
         setSeekLayoutMax(a.getInteger(R.styleable.SeekLayout_seek_max,100));

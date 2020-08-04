@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cz.sample">
+
+    <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.cz.android.appcompat.sample.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.cz.android.appcompat.sample.function.SamplePermissionActivity" />
+        <activity android:name=".test.SourceCodeSampleActivity" />
+
+        <!--all the components sample-->
+        <activity android:name=".component.ComponentSampleActivity"></activity>
+        <activity android:name=".component.ComponentDocumentSampleActivity"></activity>
+        <activity android:name=".component.ComponentSourceSampleActivity"></activity>
+        <activity android:name=".component.ComponentListSampleActivity"></activity>
+    </application>
+
+</manifest>

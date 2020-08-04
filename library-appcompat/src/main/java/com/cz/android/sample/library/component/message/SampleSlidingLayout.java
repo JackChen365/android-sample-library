@@ -4,15 +4,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.RectF;
+import android.support.annotation.IdRes;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
-import androidx.annotation.IdRes;
-
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.appcompat.R;
 
 /**
  * @author Created by cz
@@ -56,7 +55,7 @@ public class SampleSlidingLayout extends ViewGroup {
     }
 
     public SampleSlidingLayout(Context context, AttributeSet attrs) {
-        this(context, attrs,R.attr.sampleSlidingLayout);
+        this(context, attrs, R.attr.sampleSlidingLayout);
     }
 
     public SampleSlidingLayout(Context context, AttributeSet attrs, int defStyleAttr) {

@@ -2,10 +2,10 @@ package com.cz.android.sample.library.component.document;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.annotation.Nullable;
 
-import androidx.annotation.Nullable;
 
-import com.cz.android.sample.library.main.SampleConfiguration;
+import com.cz.android.sample.library.main.AppCompatSampleConfiguration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2020/5/27 8:02 PM
  * @email bingo110@126.com
  */
-public class DocumentAssetsManager implements SampleConfiguration {
+public class DocumentAssetsManager implements AppCompatSampleConfiguration {
     private final static DocumentAssetsManager documentAssetsManager =new DocumentAssetsManager();
 
     public static DocumentAssetsManager getInstance(){

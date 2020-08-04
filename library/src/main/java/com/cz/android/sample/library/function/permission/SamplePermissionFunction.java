@@ -23,7 +23,7 @@ import com.cz.android.sample.library.main.SampleActivityLifeCycleCallbackAdapter
  * @see PermissionObserver if a sample want to request permission and want to know the result then implement PermissionObserver
  */
 @Function
-public class SamplePermissionFunction implements SampleFunction {
+public class SamplePermissionFunction implements SampleFunction<FragmentActivity> {
     /**
      * If your function wants to do some initial work. Here we inject the fragment.
      * But if we don't we this function, call SamplePermissionsFragment.injectIfNeededIn(context);
@@ -31,7 +31,7 @@ public class SamplePermissionFunction implements SampleFunction {
      * @param context
      */
     @Override
-    public void init(FragmentActivity context) {
+    public void initialize(FragmentActivity context) {
         //inject permission fragment
         SamplePermissionsFragment.injectIfNeededIn(context);
     }

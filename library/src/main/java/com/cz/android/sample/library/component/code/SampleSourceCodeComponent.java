@@ -26,7 +26,7 @@ import java.util.List;
  * @date 2020-01-31 11:38
  * @email bingo110@126.com
  */
-public class SampleSourceCodeComponent extends CompanionComponentContainer {
+public class SampleSourceCodeComponent extends CompanionComponentContainer<FragmentActivity> {
 
     @Override
     public boolean isComponentAvailable(@NonNull Object object) {

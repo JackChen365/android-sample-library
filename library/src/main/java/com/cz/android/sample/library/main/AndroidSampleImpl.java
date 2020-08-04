@@ -26,6 +26,7 @@ import com.cz.android.sample.library.generate.PackageCategoryGenerator;
 import com.cz.android.sample.library.generate.SampleCategoryGenerator;
 import com.cz.android.sample.library.generate.SampleItemGenerator;
 import com.cz.android.sample.library.main.component.DefaultMainSampleFragment;
+import com.cz.android.sample.library.processor.DialogFragmentClassActionProcessor;
 import com.cz.android.sample.library.processor.FragmentClassActionProcessor;
 import com.cz.android.sample.main.MainSampleComponentFactory;
 import com.cz.android.sample.processor.AbsActionProcessor;
@@ -302,6 +303,7 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
         initAndroidSampleTemplate(context);
         //register fragment class processor
         actionProcessManager.register(new FragmentClassActionProcessor());
+        actionProcessManager.register(new DialogFragmentClassActionProcessor());
         //register component
         componentManager.addComponentContainer(new SampleDocumentComponent());
         componentManager.addComponentContainer(new SampleMessageComponent());

@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException;
  * @email bingo110@126.com
  */
 @ActionProcessor
-public class AlertDialogActionProcessor extends AbsActionProcessor<AlertDialog> {
+public class AlertDialogActionProcessor extends AbsActionProcessor<AlertDialog,FragmentActivity> {
     @Override
     public boolean isInstance(Class clazz) {
         return SampleObject.class.isAssignableFrom(clazz);

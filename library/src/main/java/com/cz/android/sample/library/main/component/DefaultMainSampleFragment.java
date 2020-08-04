@@ -43,7 +43,7 @@ import java.util.List;
  * @date 2020-01-27 19:25
  * @email bingo110@126.com
  */
-public class DefaultMainSampleFragment extends Fragment implements MainSampleComponentFactory {
+public class DefaultMainSampleFragment extends Fragment implements MainSampleComponentFactory<Fragment> {
 
     @Override
     public Fragment getFragmentComponent() {

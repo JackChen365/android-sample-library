@@ -1,22 +1,22 @@
 package com.cz.android.sample.library.component.memory;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.component.ComponentContainer;
-import com.cz.android.sample.library.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.cz.android.sample.library.appcompat.R;
 
 /**
  * @author Created by cz
  * @date 2020-01-29 19:06
  * @email bingo110@126.com
  */
-public class SampleMemoryComponent implements ComponentContainer {
+public class SampleMemoryComponent implements ComponentContainer<FragmentActivity> {
 
     @Override
     public boolean isComponentAvailable(@NonNull Object object) {

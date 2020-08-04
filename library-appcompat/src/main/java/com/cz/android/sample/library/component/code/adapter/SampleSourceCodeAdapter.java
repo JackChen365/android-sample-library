@@ -2,18 +2,17 @@ package com.cz.android.sample.library.component.code.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.cz.android.sample.library.R;
-import com.cz.widget.recyclerview.adapter.support.tree.TreeAdapter;
-import com.cz.widget.recyclerview.adapter.support.tree.TreeNode;
+import com.cz.android.sample.library.adapter.tree.TreeAdapter;
+import com.cz.android.sample.library.adapter.tree.TreeNode;
+import com.cz.android.sample.library.appcompat.R;
 
 /**
  * @author Created by cz
@@ -26,7 +25,7 @@ public class SampleSourceCodeAdapter extends TreeAdapter<String> {
     private final LayoutInflater layoutInflater;
     private final int padding;
 
-    public SampleSourceCodeAdapter(Context context,TreeNode<String> rootNode) {
+    public SampleSourceCodeAdapter(Context context, TreeNode<String> rootNode) {
         super(rootNode);
         Resources resources = context.getResources();
         this.layoutInflater = LayoutInflater.from(context);

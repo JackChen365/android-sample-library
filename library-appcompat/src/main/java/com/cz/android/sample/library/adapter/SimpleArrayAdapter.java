@@ -1,14 +1,14 @@
 package com.cz.android.sample.library.adapter;
 
 import android.content.Context;
+import android.support.annotation.ArrayRes;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.ArrayRes;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +25,8 @@ public class SimpleArrayAdapter<E> extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     private final LayoutInflater layoutInflater;
-    private @LayoutRes int layoutResources;
+    private @LayoutRes
+    int layoutResources;
     private List<E> items= new ArrayList<>();
 
     public SimpleArrayAdapter(Context context, E[] items){

@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">示例演示</string>
+    <string name="output">输出</string>
+    <string name="sample_source_code_description">展示示例源码</string>
+    <string name="sample_basic_component_description">展示基本的组件扩展</string>
+    <string name="sample_document_description">演示如何关联并加载示例文档</string>
+    <string name="sample_all_components_description">演示扩展组件</string>
+    '
+
+    <string name="component_category">组件示例</string>
+    <string name="component_category_desc">演示添加不同组件扩展示例功能</string>
+    <string name="component_sample1">基础组件演示</string>
+    <string name="component_sample1_desc">展示通过注解添加三种不同组件为示例添加不同的功能扩展</string>
+    <string name="component_sample2">文档组件</string>
+    <string name="component_sample2_desc">展示如何为演示关联文档</string>
+    <string name="component_sample3">源码组件</string>
+    <string name="component_sample3_desc">展示如何为示例添加源码查看组件</string>
+    <string name="component_sample4">组件集</string>
+    <string name="component_sample4_desc">展示当前己扩展的组件</string>
+    <string name="sample_fragment_component_desc">在Fragment中展示所有的组件</string>
+    <string name="component_sample5">Fragment显示组件</string>
+    <string name="component_sample5_desc">演示在 Fragment 中展示所有基础组件</string>
+
+    <string name="function_permission_sample1">权限功能</string>
+    <string name="function_permission_sample1_desc">演示动行时权限动态扩展功能</string>
+    <string name="function_permission_sample2">权限功能(Fragment)</string>
+    <string name="function_permission_sample2_desc">演示动行时权限动态扩展功能(Fragment)</string>
+    <string name="sample_function">功能扩展</string>
+    <string name="sample_function_description">展示如何为演示扩展额外的功能</string>
+    <string name="sample_function_permission_description">展示如何简单的打开示例时,申请运行时权限.</string>
+    <string name="permission_granted">权限申请成功:%s</string>
+    <string name="permission_denied">权限申请失败:%s</string>
+
+    <string name="dialog">Dialog</string>
+    <string name="dialog_desc">演示如何扩展自己的演示对象处理器</string>
+
+    <string name="dialog_sample1">登陆提示</string>
+    <string name="dialog_sample1_desc">一个简单的登陆提示Dialog示例</string>
+    <string name="dialog_sample2">选择颜色</string>
+    <string name="dialog_sample2_desc">一个简单的多选Dialog示例...</string>
+
+
+    <string name="other">Others</string>
+    <string name="other_desc">一些其他的测试示例</string>
+    <string name="other_sample1">演示文档</string>
+    <string name="other_sample1_desc">演示文档常规加载</string>
+    <string name="other_sample2">演示源码</string>
+    <string name="other_sample2_desc">演示源码加载,高度展示</string>
+    <string name="other_sample3">消息输出</string>
+    <string name="other_sample3_desc">演示加载系统System.out流操作</string>
+    <string name="other_sample4">树形文件</string>
+    <string name="other_sample4_desc">展示所有本地文本以树形展示</string>
+
+    <string name="other_sample5">源码查看</string>
+    <string name="other_sample5_desc">查看多层级的源码目录</string>
+    <string name="loading">加载中...</string>
+
+</resources>

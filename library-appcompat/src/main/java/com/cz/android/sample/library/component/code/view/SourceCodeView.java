@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.WebSettings;
 
-import com.cz.android.sample.library.utils.IOUtils;
+import com.cz.android.sample.library.utils.AppCompatIOUtils;
 import com.cz.android.sample.library.view.NestedWebView;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class SourceCodeView extends NestedWebView {
             Context context = getContext();
             AssetManager assets = context.getAssets();
             InputStream inputStream = assets.open(url);
-            String source = IOUtils.toString(inputStream, "utf-8");
+            String source = AppCompatIOUtils.toString(inputStream, "utf-8");
             loadSourceCode(context,source,url);
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,7 +77,7 @@ public class SourceCodeView extends NestedWebView {
             try {
                 AssetManager assets = context.getAssets();
                 InputStream inputStream = assets.open("highlight/highlight_template.html");
-                String templateSource = IOUtils.toString(inputStream, Charset.defaultCharset());
+                String templateSource = AppCompatIOUtils.toString(inputStream, Charset.defaultCharset());
                 int i = url.lastIndexOf(".");
                 String language = url.substring(i+1);
                 final String html=String.format(templateSource,language,Html.escapeHtml(text));

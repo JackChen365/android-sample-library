@@ -1,5 +1,7 @@
 package com.cz.android.sample.library.main;
 
+import android.support.v4.app.FragmentActivity;
+
 import com.cz.android.sample.AndroidSample;
 import com.cz.android.sample.function.FunctionManager;
 
@@ -8,7 +10,7 @@ import com.cz.android.sample.function.FunctionManager;
  * @date 2020/7/28 3:46 PM
  * @email bingo110@126.com
  */
-public interface AndroidSampleSupport extends AndroidSample {
+public interface AndroidSampleSupport extends AndroidSample<FragmentActivity> {
     String TAG="AndroidSampleSupport";
 
     FunctionManager getFunctionManager();

@@ -5,9 +5,8 @@ import android.net.http.HttpResponseCache;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
-
 import com.cz.android.sample.analysis.Source;
-
+import com.cz.android.sample.library.utils.AppCompatIOUtils;
 import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -19,7 +18,7 @@ import java.nio.charset.Charset;
  * @date 2020-01-27 14:34
  * @email bingo110@126.com
  * An image source that get html source text by url. Be careful It should work in the thread
- * @see ImageAnalyzer from html source code analysis image picture url
+ * ImageAnalyzer from html source code analysis image picture url
  */
 public class HtmlSource extends Source<String,String> {
     private static final int MAX_HTTP_CACHE_SIZE=10*1024*1024;
@@ -49,7 +48,7 @@ public class HtmlSource extends Source<String,String> {
 
             urlConnection.connect();
             if (HttpURLConnection.HTTP_OK==urlConnection.getResponseCode()) {
-                result = IOUtils.toString(urlConnection.getInputStream(), Charset.forName("utf-8"));
+                result = AppCompatIOUtils.toString(urlConnection.getInputStream(), Charset.forName("utf-8"));
             }
         } catch (Exception e) {
             Log.w(TAG,"Url:"+url+" load failed!");

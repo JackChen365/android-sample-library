@@ -4,9 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
-import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.CategoryItem;
@@ -20,12 +19,13 @@ import com.cz.android.sample.library.component.code.SampleSourceCodeComponent;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 import com.cz.android.sample.library.component.memory.SampleMemoryComponent;
 import com.cz.android.sample.library.component.message.SampleMessageComponent;
-import com.cz.android.sample.library.function.permission.SamplePermissionFunction;
 import com.cz.android.sample.library.generate.DefaultSampleItemGenerator;
 import com.cz.android.sample.library.generate.PackageCategoryGenerator;
 import com.cz.android.sample.library.generate.SampleCategoryGenerator;
 import com.cz.android.sample.library.generate.SampleItemGenerator;
 import com.cz.android.sample.library.main.component.DefaultMainSampleFragment;
+import com.cz.android.sample.library.permission.SamplePermissionFunction;
+import com.cz.android.sample.library.processor.DialogFragmentClassActionProcessor;
 import com.cz.android.sample.library.processor.FragmentClassActionProcessor;
 import com.cz.android.sample.main.MainSampleComponentFactory;
 import com.cz.android.sample.processor.AbsActionProcessor;
@@ -45,7 +45,7 @@ import java.util.TreeSet;
  * @date 2020-01-27 20:31
  * @email bingo110@126.com
  */
-class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
+class AndroidSampleImpl implements AndroidSampleSupport, AppCompatSampleConfiguration {
     private static final String TAG="SampleConfiguration";
     private final static AndroidSampleImpl androidSampleImpl =new AndroidSampleImpl();
 
@@ -63,8 +63,8 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
 
     /**
      * The default samples item generator. {@link SampleItemGenerator}
-     * Generate all the sample by its class name. Also noticed it just generate the sample use the sub-class {@link androidx.appcompat.app.AppCompatActivity}
-     * and {@link androidx.fragment.app.Fragment} without use annotation to indicate that is a sample.
+     * Generate all the sample by its class name. Also noticed it just generate the sample use the sub-class {@link android.support.v7.app.AppCompatActivity}
+     * and {@link android.support.v4.app.Fragment} without use annotation to indicate that is a sample.
      *
      */
     private SampleItemGenerator sampleItemGenerator=new DefaultSampleItemGenerator();
@@ -302,6 +302,7 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
         initAndroidSampleTemplate(context);
         //register fragment class processor
         actionProcessManager.register(new FragmentClassActionProcessor());
+        actionProcessManager.register(new DialogFragmentClassActionProcessor());
         //register component
         componentManager.addComponentContainer(new SampleDocumentComponent());
         componentManager.addComponentContainer(new SampleMessageComponent());

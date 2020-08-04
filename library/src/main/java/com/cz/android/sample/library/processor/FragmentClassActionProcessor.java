@@ -12,7 +12,7 @@ import com.cz.android.sample.processor.clazz.ClassActionProcessor;
  * @date 2020-01-28 20:48
  * @email bingo110@126.com
  */
-public class FragmentClassActionProcessor extends ClassActionProcessor {
+public class FragmentClassActionProcessor extends ClassActionProcessor<FragmentActivity> {
 
     @Override
     public boolean isInstance(Class item) {

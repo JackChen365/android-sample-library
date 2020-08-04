@@ -1,6 +1,10 @@
 package com.cz.android.sample.library.component.document;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +12,8 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.appcompat.R;
 import com.cz.android.sample.library.component.document.view.MarkdownView;
 import com.cz.android.sample.library.view.WebViewProgressBar;
 
@@ -35,7 +35,7 @@ public class SampleDocumentFragment extends Fragment {
         return fragment;
     }
 
-    private SampleDocumentFragment(){
+    public SampleDocumentFragment(){
     }
 
     @Nullable

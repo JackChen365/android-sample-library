@@ -11,13 +11,12 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
-import androidx.annotation.Nullable;
-
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.appcompat.R;
 
 /**
  * @author Created by cz
@@ -47,7 +46,7 @@ public class WebViewProgressBar extends View {
     private int min=0;
 
     public WebViewProgressBar(Context context) {
-        this(context,null,R.attr.webViewProgressBar);
+        this(context,null, R.attr.webViewProgressBar);
     }
 
     public WebViewProgressBar(Context context, @Nullable AttributeSet attrs) {

@@ -7,6 +7,6 @@ import android.content.Context;
  * @date 2020-01-31 10:38
  * @email bingo110@126.com
  */
-public interface SampleConfiguration {
+public interface AppCompatSampleConfiguration {
     void onCreate(Context context);
 }

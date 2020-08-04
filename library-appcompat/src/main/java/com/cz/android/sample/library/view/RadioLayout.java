@@ -7,7 +7,8 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.appcompat.R;
+
 
 /**
  * @author Created by cz

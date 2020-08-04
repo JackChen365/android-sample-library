@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import com.cz.android.sample.library.main.SampleConfiguration;
+import com.cz.android.sample.library.main.AppCompatSampleConfiguration;
 import com.cz.android.sample.library.provider.annotations.FieldFilter;
 import com.cz.android.sample.library.provider.annotations.Table;
 import com.cz.android.sample.library.provider.annotations.TableField;
@@ -27,7 +27,7 @@ import java.util.Map;
  * @email bingo110@126.com
  * 数据库操作对象
  */
-public class DatabaseHelper implements SampleConfiguration {
+public class DatabaseHelper implements AppCompatSampleConfiguration {
     /**
      * 保存字节码对象与uri路径
      */

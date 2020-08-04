@@ -1,8 +1,8 @@
 package com.cz.android.sample.library.generate;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
-import androidx.annotation.NonNull;
 
 import com.cz.android.sample.api.AndroidSampleConstant;
 import com.cz.android.sample.api.item.RegisterItem;

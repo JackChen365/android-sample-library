@@ -77,7 +77,7 @@ import java.util.List;
  * Origin of code: Excalibur.
  *
  */
-public class IOUtils {
+public class AppCompatIOUtils {
     // NOTE: This class is focused on InputStream, OutputStream, Reader and
     // Writer. Each method should take at least one of these as a parameter,
     // or return one of them.
@@ -152,7 +152,7 @@ public class IOUtils {
     /**
      * Instances should NOT be constructed in standard programming.
      */
-    public IOUtils() {
+    public AppCompatIOUtils() {
         super();
     }
 
@@ -682,7 +682,7 @@ public class IOUtils {
      * Use this method instead of <code>toByteArray(InputStream)</code>
      * when <code>InputStream</code> size is known.
      * <b>NOTE:</b> the method checks that the length can safely be cast to an int without truncation
-     * before using {@link IOUtils#toByteArray(InputStream, int)} to read into the byte array.
+     * before using {@link AppCompatIOUtils#toByteArray(InputStream, int)} to read into the byte array.
      * (Arrays can have no more than Integer.MAX_VALUE entries anyway)
      *
      * @param input the <code>InputStream</code> to read from
@@ -691,7 +691,7 @@ public class IOUtils {
      * @throws IOException              if an I/O error occurs or <code>InputStream</code> size differ from parameter
      * size
      * @throws IllegalArgumentException if size is less than zero or size is greater than Integer.MAX_VALUE
-     * @see IOUtils#toByteArray(InputStream, int)
+     * @see AppCompatIOUtils#toByteArray(InputStream, int)
      * @since 2.1
      */
     public static byte[] toByteArray(final InputStream input, final long size) throws IOException {
@@ -1131,7 +1131,7 @@ public class IOUtils {
     public static URL resourceToURL(final String name, final ClassLoader classLoader) throws IOException {
         // What about the thread context class loader?
         // What about the system class loader?
-        final URL resource = classLoader == null ? IOUtils.class.getResource(name) : classLoader.getResource(name);
+        final URL resource = classLoader == null ? AppCompatIOUtils.class.getResource(name) : classLoader.getResource(name);
 
         if (resource == null) {
             throw new IOException("Resource not found: " + name);

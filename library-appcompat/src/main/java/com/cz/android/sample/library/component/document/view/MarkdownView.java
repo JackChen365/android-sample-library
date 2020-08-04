@@ -2,6 +2,7 @@ package com.cz.android.sample.library.component.document.view;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -10,10 +11,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import androidx.annotation.WorkerThread;
 
 import com.cz.android.sample.library.analysis.HtmlSource;
-import com.cz.android.sample.library.utils.IOUtils;
+import com.cz.android.sample.library.utils.AppCompatIOUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -120,7 +120,7 @@ public class MarkdownView extends WebView {
             @Override
             public void run() {
                 try {
-                    String text = IOUtils.toString(file.toURI(), Charset.defaultCharset());
+                    String text = AppCompatIOUtils.toString(file.toURI(), Charset.defaultCharset());
                     // load markdown by text
                     loadMarkdown(context,text,cssUrl);
                 } catch (IOException e) {
@@ -147,7 +147,7 @@ public class MarkdownView extends WebView {
                 AssetManager assetManager = context.getApplicationContext().getAssets();
                 try {
                     InputStream inputStream = assetManager.open(filePath);
-                    String text=IOUtils.toString(inputStream,Charset.defaultCharset());
+                    String text=AppCompatIOUtils.toString(inputStream,Charset.defaultCharset());
                     // load markdown by text
                     loadMarkdown(context,text,cssUrl);
                 } catch (IOException e) {
@@ -176,7 +176,7 @@ public class MarkdownView extends WebView {
             try {
                 AssetManager assets = context.getAssets();
                 InputStream inputStream = assets.open("markdown/markdown.html");
-                String templateSource = IOUtils.toString(inputStream, Charset.defaultCharset());
+                String templateSource = AppCompatIOUtils.toString(inputStream, Charset.defaultCharset());
                 final String html=String.format(templateSource,text);
                 post(new Runnable() {
                     @Override

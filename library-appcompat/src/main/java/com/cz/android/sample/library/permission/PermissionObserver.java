@@ -1,6 +1,7 @@
 package com.cz.android.sample.library.permission;
 
-import androidx.annotation.NonNull;
+
+import android.support.annotation.NonNull;
 
 /**
  * @author Created by cz

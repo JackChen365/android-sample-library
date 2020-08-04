@@ -16,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * @date 2020-01-29 19:06
  * @email bingo110@126.com
  */
-public class SampleMemoryComponent implements ComponentContainer {
+public class SampleMemoryComponent implements ComponentContainer<FragmentActivity> {
 
     @Override
     public boolean isComponentAvailable(@NonNull Object object) {

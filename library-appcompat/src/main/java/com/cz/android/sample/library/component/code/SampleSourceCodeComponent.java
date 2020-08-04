@@ -1,22 +1,21 @@
 package com.cz.android.sample.library.component.code;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import com.cz.android.sample.component.CompanionComponentContainer;
-import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.adapter.SimpleFragmentPagerAdapter;
+import com.cz.android.sample.library.appcompat.R;
 import com.cz.android.sample.library.appcompat.SampleWrapperViewFragment;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ import java.util.List;
  * @date 2020-01-31 11:38
  * @email bingo110@126.com
  */
-public class SampleSourceCodeComponent extends CompanionComponentContainer {
+public class SampleSourceCodeComponent extends CompanionComponentContainer<FragmentActivity> {
 
     @Override
     public boolean isComponentAvailable(@NonNull Object object) {

@@ -16,11 +16,11 @@ import com.cz.android.sample.function.SampleFunction;
  */
 @Keep
 @Function
-public class VisitRecordFunction implements SampleFunction {
+public class VisitRecordFunction implements SampleFunction<FragmentActivity> {
     private static final String TAG="VisitRecordFunction";
 
     @Override
-    public void init(FragmentActivity context) {
+    public void initialize(FragmentActivity context) {
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.cz.sample
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.cz.android.sample.analysis.AbsAnalyzer
 import com.cz.android.sample.library.adapter.SimpleArrayAdapter
 import com.cz.android.sample.library.analysis.HtmlSource
 import com.cz.android.sample.library.analysis.ImageAnalyzer

@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.annotation.IntRange;
 import android.util.SparseArray;
 
-import androidx.annotation.IntRange;
-import androidx.annotation.Keep;
 
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.appcompat.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +25,6 @@ import java.util.Random;
  * @date 2020-01-30 18:20
  * @email bingo110@126.com
  */
-@Keep
 public class DataProvider {
     /**
      * an random object

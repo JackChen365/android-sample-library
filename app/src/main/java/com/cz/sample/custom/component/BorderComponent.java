@@ -16,7 +16,7 @@ import com.cz.android.sample.window.impl.ComponentWindowDelegate;
  * @email bingo110@126.com
  */
 @Component
-public class BorderComponent implements ComponentContainer {
+public class BorderComponent implements ComponentContainer<FragmentActivity> {
 
     /**
      * We check if this object has Annotation:SampleBorder.

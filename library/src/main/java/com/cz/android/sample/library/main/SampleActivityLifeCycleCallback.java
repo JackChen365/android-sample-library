@@ -44,7 +44,7 @@ public class SampleActivityLifeCycleCallback extends SampleActivityLifeCycleCall
         for(SampleFunction function:functionList){
             if(activity instanceof FragmentActivity){
                 FragmentActivity fragmentActivity=(FragmentActivity)activity;
-                function.init(fragmentActivity);
+                function.initialize(fragmentActivity);
             }
         }
     }
@@ -68,7 +68,7 @@ public class SampleActivityLifeCycleCallback extends SampleActivityLifeCycleCall
                 FragmentManager supportFragmentManager = appCompatActivity.getSupportFragmentManager();
                 if (supportFragmentManager.findFragmentByTag(BIND_MAIN_SAMPLE_FRAGMENT_TAG) == null) {
                     AndroidSampleImpl androidSample = AndroidSampleImpl.getInstance();
-                    MainSampleComponentFactory componentContainer = androidSample.getMainComponentContainer();
+                    MainSampleComponentFactory<Fragment> componentContainer = androidSample.getMainComponentContainer();
                     Fragment fragment = componentContainer.getFragmentComponent();
                     supportFragmentManager.beginTransaction().add(android.R.id.content,fragment, BIND_MAIN_SAMPLE_FRAGMENT_TAG).commit();
                 }

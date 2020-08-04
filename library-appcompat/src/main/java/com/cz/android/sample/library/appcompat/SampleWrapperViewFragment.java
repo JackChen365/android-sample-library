@@ -1,13 +1,12 @@
 package com.cz.android.sample.library.appcompat;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 /**
  * @author Created by cz
@@ -17,15 +16,20 @@ import androidx.fragment.app.Fragment;
 public class SampleWrapperViewFragment extends Fragment {
 
     public static Fragment newFragment(View view){
-        return new SampleWrapperViewFragment(view);
+        SampleWrapperViewFragment sampleWrapperViewFragment = new SampleWrapperViewFragment();
+        sampleWrapperViewFragment.setContentView(view);
+        return sampleWrapperViewFragment;
     }
     /**
      * view that need display
      */
     public View view;
 
-    public SampleWrapperViewFragment(View view) {
-        this.view = view;
+    public SampleWrapperViewFragment() {
+    }
+
+    public void setContentView(View view){
+        this.view=view;
     }
 
     @Nullable

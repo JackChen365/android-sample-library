@@ -1,7 +1,7 @@
 package com.cz.android.sample.library.thread;
 
-import androidx.annotation.AnyThread;
-import androidx.annotation.NonNull;
+import android.support.annotation.AnyThread;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayDeque;
 import java.util.Observable;

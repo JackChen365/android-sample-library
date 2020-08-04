@@ -1,5 +1,8 @@
 package com.cz.android.sample.library.component.message;
 
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.NestedScrollView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -9,12 +12,9 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.component.ComponentContainer;
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.appcompat.R;
 import com.cz.android.sample.library.thread.WorkThread;
 
 import java.util.Observable;
@@ -25,7 +25,7 @@ import java.util.Observer;
  * @date 2020-01-29 16:28
  * @email bingo110@126.com
  */
-public class SampleMessageComponent implements ComponentContainer {
+public class SampleMessageComponent implements ComponentContainer<FragmentActivity> {
     private final WorkThread<String> workThread=new WorkThread("sample_work_thread");
     private final SampleSystemConsole sampleSystemConsole=new SampleSystemConsole();
 

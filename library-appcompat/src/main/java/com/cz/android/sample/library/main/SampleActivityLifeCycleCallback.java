@@ -5,19 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.function.SampleFunction;
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.appcompat.R;
 import com.cz.android.sample.main.MainSampleComponentFactory;
 
 import java.util.List;
@@ -44,7 +44,7 @@ public class SampleActivityLifeCycleCallback extends SampleActivityLifeCycleCall
         for(SampleFunction function:functionList){
             if(activity instanceof FragmentActivity){
                 FragmentActivity fragmentActivity=(FragmentActivity)activity;
-                function.init(fragmentActivity);
+                function.initialize(fragmentActivity);
             }
         }
     }
@@ -68,7 +68,7 @@ public class SampleActivityLifeCycleCallback extends SampleActivityLifeCycleCall
                 FragmentManager supportFragmentManager = appCompatActivity.getSupportFragmentManager();
                 if (supportFragmentManager.findFragmentByTag(BIND_MAIN_SAMPLE_FRAGMENT_TAG) == null) {
                     AndroidSampleImpl androidSample = AndroidSampleImpl.getInstance();
-                    MainSampleComponentFactory componentContainer = androidSample.getMainComponentContainer();
+                    MainSampleComponentFactory<Fragment> componentContainer = androidSample.getMainComponentContainer();
                     Fragment fragment = componentContainer.getFragmentComponent();
                     supportFragmentManager.beginTransaction().add(android.R.id.content,fragment, BIND_MAIN_SAMPLE_FRAGMENT_TAG).commit();
                 }

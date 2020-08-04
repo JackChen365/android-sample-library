@@ -39,7 +39,7 @@ public class SampleApplication{
      * The list of configurations.  An configuration can be in the list at most
      * once and will never be null.
      */
-    protected final ArrayList<SampleConfiguration> configurations = new ArrayList<>();
+    protected final ArrayList<AppCompatSampleConfiguration> configurations = new ArrayList<>();
 
     /**
      * Android sample object
@@ -51,7 +51,7 @@ public class SampleApplication{
      */
     public void attachToContext(Context context){
         synchronized(configurations) {
-            for(SampleConfiguration configuration:configurations){
+            for(AppCompatSampleConfiguration configuration:configurations){
                 configuration.onCreate(context);
             }
         }
@@ -68,7 +68,7 @@ public class SampleApplication{
      * @throws IllegalArgumentException the configuration is null
      * @throws IllegalStateException the configuration is already registered
      */
-    public void registerConfiguration(SampleConfiguration configuration) {
+    public void registerConfiguration(AppCompatSampleConfiguration configuration) {
         if (configuration == null) {
             throw new IllegalArgumentException("The configuration is null.");
         }
@@ -86,7 +86,7 @@ public class SampleApplication{
      * @throws IllegalArgumentException the configuration is null
      * @throws IllegalStateException the configuration is not yet registered
      */
-    public void unregisterObserver(SampleConfiguration configuration) {
+    public void unregisterObserver(AppCompatSampleConfiguration configuration) {
         if (configuration == null) {
             throw new IllegalArgumentException("The configuration is null.");
         }

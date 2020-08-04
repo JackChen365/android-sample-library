@@ -2,20 +2,19 @@ package com.cz.android.sample.library.component.code;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.appcompat.R;
 import com.cz.android.sample.library.component.code.view.SourceCodeView;
 import com.cz.android.sample.library.view.WebViewProgressBar;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 /**
  * @author Created by cz

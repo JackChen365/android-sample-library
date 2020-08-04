@@ -1,8 +1,9 @@
 package com.cz.android.sample.library.permission;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * @author Created by cz
@@ -12,9 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 public class PermissionViewModelProviders{
 
     public static PermissionViewModel getViewModel(FragmentActivity activity){
-        ViewModelProvider.Factory newInstanceFactory = new ViewModelProvider.NewInstanceFactory();
-        ViewModelProvider viewModelProvider = new ViewModelProvider(activity.getViewModelStore(), newInstanceFactory);
-        return viewModelProvider.get(PermissionViewModel.class);
+        return ViewModelProviders.of(activity).get(PermissionViewModel.class);
     }
 
     /**
@@ -26,9 +25,7 @@ public class PermissionViewModelProviders{
      */
     public static PermissionViewModel getViewModel(Fragment fragment){
         FragmentActivity activity = fragment.getActivity();
-        ViewModelProvider.Factory newInstanceFactory = new ViewModelProvider.NewInstanceFactory();
-        ViewModelProvider viewModelProvider = new ViewModelProvider(activity.getViewModelStore(), newInstanceFactory);
-        return viewModelProvider.get(PermissionViewModel.class);
+        return ViewModelProviders.of(activity).get(PermissionViewModel.class);
     }
 
 }

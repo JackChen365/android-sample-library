@@ -3,11 +3,10 @@ package com.cz.android.sample.library.permission;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.api.Function;
 import com.cz.android.sample.api.item.RegisterItem;
@@ -23,7 +22,7 @@ import com.cz.android.sample.library.main.SampleActivityLifeCycleCallbackAdapter
  * @see PermissionObserver if a sample want to request permission and want to know the result then implement PermissionObserver
  */
 @Function
-public class SamplePermissionFunction implements SampleFunction {
+public class SamplePermissionFunction implements SampleFunction<FragmentActivity> {
     /**
      * If your function wants to do some initial work. Here we inject the fragment.
      * But if we don't we this function, call SamplePermissionsFragment.injectIfNeededIn(context);
@@ -31,7 +30,7 @@ public class SamplePermissionFunction implements SampleFunction {
      * @param context
      */
     @Override
-    public void init(FragmentActivity context) {
+    public void initialize(FragmentActivity context) {
         //inject permission fragment
         SamplePermissionsFragment.injectIfNeededIn(context);
     }
