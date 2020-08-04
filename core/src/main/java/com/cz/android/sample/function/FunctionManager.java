@@ -4,7 +4,6 @@ package com.cz.android.sample.function;
 import android.app.Activity;
 
 import com.cz.android.sample.api.item.RegisterItem;
-
 import java.util.ArrayList;
 import java.util.List;
 

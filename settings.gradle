@@ -1,2 +1,2 @@
 include ':app', ':library', ':api', ':core', ':plugin'
-include ':library-appcompat'
+//include ':library-appcompat'

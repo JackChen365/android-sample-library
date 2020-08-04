@@ -25,16 +25,20 @@ public class AlertDialogActionProcessor extends AbsActionProcessor<AlertDialog> 
 
     @Override
     public AlertDialog getInstance(FragmentActivity context, RegisterItem item, Class clazz) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        SampleObject object;
+        SampleObject sampleObject;
         try{
-            object= (SampleObject) clazz.newInstance();
+            sampleObject= (SampleObject) clazz.newInstance();
         } catch (InstantiationException e){
             Class outerClass = clazz.getEnclosingClass();
             Constructor<SampleObject> constructor = clazz.getDeclaredConstructor(outerClass);
             Object outer = outerClass.newInstance();
-            object= constructor.newInstance(outer);
+            sampleObject= constructor.newInstance(outer);
         }
-        return (AlertDialog) object.getObject(context);
+        Object object = sampleObject.getObject(context);
+        if(null!=object&&object instanceof AlertDialog){
+            return (AlertDialog)object;
+        }
+        return null;
     }
 
     @Override

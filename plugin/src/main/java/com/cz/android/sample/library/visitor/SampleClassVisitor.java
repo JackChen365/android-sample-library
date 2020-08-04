@@ -20,17 +20,27 @@ import java.util.List;
 public class SampleClassVisitor extends ClassVisitor {
     private static final String SUPER_CLASS_NAME="com/cz/android/sample/library/appcompat/SampleAppCompatActivity";
 
-    private static final String SUPER_COMPAT_ACTIVITY_CLASS_NAME="androidx/appcompat/app/AppCompatActivity";
-    private static final String SUPER_FRAGMENT_ACTIVITY_CLASS_NAME="androidx/appcompat/app/AppCompatActivity";
-    private static final String SUPER_FRAGMENT_CLASS_NAME="androidx/fragment/app/Fragment";
+    private static final String ANDROIDX_COMPAT_ACTIVITY_CLASS_NAME ="androidx/appcompat/app/AppCompatActivity";
+    private static final String ANDROIDX_FRAGMENT_ACTIVITY_CLASS_NAME ="androidx/fragment/app/FragmentActivity";
+    private static final String ANDROIDX_FRAGMENT_CLASS_NAME ="androidx/fragment/app/Fragment";
+
+    private static final String APPCOMPAT_COMPAT_ACTIVITY_CLASS_NAME ="android/support/v7/app/AppCompatActivity";
+    private static final String APPCOMPAT_FRAGMENT_ACTIVITY_CLASS_NAME ="android/support/v4/app/FragmentActivity";
+    private static final String APPCOMPAT_FRAGMENT_CLASS_NAME ="android/support/v4/app/Fragment";
+
+
 
     private static final List<String> SAMPLE_CLASS_LIST= new ArrayList<>();
     private static final List<String> EXCLUDE_ANNOTATION_LIST= new ArrayList<>();
 
     static {
-        SAMPLE_CLASS_LIST.add(SUPER_COMPAT_ACTIVITY_CLASS_NAME);
-        SAMPLE_CLASS_LIST.add(SUPER_FRAGMENT_ACTIVITY_CLASS_NAME);
-        SAMPLE_CLASS_LIST.add(SUPER_FRAGMENT_CLASS_NAME);
+        SAMPLE_CLASS_LIST.add(ANDROIDX_COMPAT_ACTIVITY_CLASS_NAME);
+        SAMPLE_CLASS_LIST.add(ANDROIDX_FRAGMENT_ACTIVITY_CLASS_NAME);
+        SAMPLE_CLASS_LIST.add(ANDROIDX_FRAGMENT_CLASS_NAME);
+
+        SAMPLE_CLASS_LIST.add(APPCOMPAT_COMPAT_ACTIVITY_CLASS_NAME);
+        SAMPLE_CLASS_LIST.add(APPCOMPAT_FRAGMENT_ACTIVITY_CLASS_NAME);
+        SAMPLE_CLASS_LIST.add(APPCOMPAT_FRAGMENT_CLASS_NAME);
 
         EXCLUDE_ANNOTATION_LIST.add("com/cz/android/sample/main/MainSampleComponentFactory");
         EXCLUDE_ANNOTATION_LIST.add("L"+ Exclude.class.getName().replace('.','/') +";");
@@ -63,7 +73,9 @@ public class SampleClassVisitor extends ClassVisitor {
             }
         }
         //Here we change the super class name to our appcompat class.
-        if("androidx/appcompat/app/AppCompatActivity".equals(superName) || "androidx/fragment/app/FragmentActivity".equals(superName)){
+        if(ANDROIDX_COMPAT_ACTIVITY_CLASS_NAME.equals(superName) || ANDROIDX_FRAGMENT_ACTIVITY_CLASS_NAME.equals(superName)){
+            super.visit(version, access, name, signature, SUPER_CLASS_NAME, interfaces);
+        } else if(APPCOMPAT_COMPAT_ACTIVITY_CLASS_NAME.equals(superName) || APPCOMPAT_FRAGMENT_ACTIVITY_CLASS_NAME.equals(superName)){
             super.visit(version, access, name, signature, SUPER_CLASS_NAME, interfaces);
         } else {
             super.visit(version, access, name, signature, superName, interfaces);
