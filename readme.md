@@ -129,8 +129,8 @@ Because we collect all the Activity/Fragment, If you have other classes that you
     }
     ```
 
-* Setup an exception handler. If your sample does not works properly. Here you could trace the exception and check it out
-you do not have an exception handler. When the exception occurred. The application will crash. For a demo, It not a problem.
+* Setup an exception handler. If your sample does not works properly and you want see the details. Here you could trace the exception and check it out
+. But if you do not have an exception handler. When the exception occurred. The application will crash. For a demo, It is usually not a problem.
 
     ```
     val projectApplication = SampleApplication.getProjectApplication()
