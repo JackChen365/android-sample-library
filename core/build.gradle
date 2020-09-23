@@ -24,5 +24,5 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.github.momodae.AndroidSampleLibrary:api:1.1.8'
+    api 'com.github.momodae.AndroidSampleLibrary:api:1.2.7'
 }

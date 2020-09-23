@@ -45,5 +45,6 @@
     <declare-styleable name="SampleSlidingLayout">
         <attr name="sliding_handle" format="reference"/>
         <attr name="sliding_weight" format="float"/>
+        <attr name="android:orientation"/>
     </declare-styleable>
 </resources>

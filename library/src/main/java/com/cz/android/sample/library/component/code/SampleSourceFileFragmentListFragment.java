@@ -46,9 +46,6 @@ public class SampleSourceFileFragmentListFragment extends Fragment {
         return fragment;
     }
 
-    private SampleSourceFileFragmentListFragment(){
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

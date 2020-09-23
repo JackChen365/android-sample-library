@@ -39,6 +39,7 @@
 
     <style name="SampleSlidingLayout">
         <item name="sliding_weight">0.6</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="DialogTheme" parent="@android:style/Theme.Dialog">

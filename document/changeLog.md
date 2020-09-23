@@ -103,3 +103,11 @@ Fixed a few bugs
 *Author:* Jack chen
 
 * Fixed the crash when open the hierarchy Activity.
+
+### 1.2.8
+
+*Date:* 2020/9/23<br>
+*Author:* Jack chen
+
+* Fixed the crash when activity change the orientation configuration.
+* Support landscape message output component.

@@ -43,7 +43,7 @@ public class SampleMessageComponent implements ComponentContainer <FragmentActiv
     @Override
     public View getComponentView(FragmentActivity context, Object object, ViewGroup parentView,View view) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View contentLayout = layoutInflater.inflate(R.layout.sample_message_layout, parentView, false);
+        final View contentLayout = layoutInflater.inflate(R.layout.sample_message_layout, parentView, false);
         FrameLayout sampleMessageContentLayout=contentLayout.findViewById(R.id.sampleMessageContentLayout);
         sampleMessageContentLayout.addView(view);
         return contentLayout;

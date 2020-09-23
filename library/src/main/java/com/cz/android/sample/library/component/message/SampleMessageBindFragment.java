@@ -22,7 +22,11 @@ public class SampleMessageBindFragment extends Fragment{
             supportFragmentManager.beginTransaction().add(fragment, BIND_SAMPLE_MESSAGE_FRAGMENT_TAG).commit();
         }
     }
-    private final WorkThread<String> workThread;
+
+    private WorkThread<String> workThread;
+
+    public SampleMessageBindFragment() {
+    }
 
     public SampleMessageBindFragment(WorkThread<String> workThread) {
         this.workThread = workThread;
@@ -30,7 +34,9 @@ public class SampleMessageBindFragment extends Fragment{
 
     @Override
     public void onDestroy() {
-        workThread.clearObserver();
+        if(null!=workThread){
+            workThread.clearObserver();
+        }
         super.onDestroy();
     }
 }

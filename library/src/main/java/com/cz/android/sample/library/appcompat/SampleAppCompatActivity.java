@@ -7,12 +7,14 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -29,6 +31,7 @@ import com.cz.android.sample.window.impl.ComponentWindowDelegate;
  * @email bingo110@126.com
  */
 public class SampleAppCompatActivity extends AppCompatActivity implements SampleComponentContainer {
+    private static final String ANDROID_SUPPORT_FRAGMENTS="android:support:fragments";
     private ComponentWindowDelegate windowDelegate;
     /**
      * This is user's original view. However We may change it. or put this view input a fragment
@@ -46,6 +49,15 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
      * So we keep this view. If findViewById can't find the view. we try to find view from it
      */
     private View contentView=null;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //Because if we restart this activity. It will re-create the fragment by FragmentManagerState
+        if(null!=savedInstanceState){
+            savedInstanceState.remove(ANDROID_SUPPORT_FRAGMENTS);
+        }
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void setContentView(int layout) {
@@ -72,8 +84,6 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
             setContentViewInternal(contentView,view);
         }
     }
-
-
 
     private void setContentViewInternal(ViewGroup contentView,View view){
         this.contentView=view;

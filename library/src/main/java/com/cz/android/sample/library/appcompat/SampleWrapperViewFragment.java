@@ -24,6 +24,9 @@ public class SampleWrapperViewFragment extends Fragment {
      */
     public View view;
 
+    public SampleWrapperViewFragment() {
+    }
+
     public SampleWrapperViewFragment(View view) {
         this.view = view;
     }
