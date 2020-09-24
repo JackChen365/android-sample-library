@@ -25,7 +25,7 @@ The [Annotations](document/annotations/sampleAnnotation.md)
 ```
 //Project:build.gradle ---------------
 buildscript {
-    ext.sample_version = '1.2.1'
+    ext.sample_version = '1.2.9'
     repositories {
         ...
         maven { url 'https://jitpack.io' }
