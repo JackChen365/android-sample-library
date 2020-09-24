@@ -24,7 +24,7 @@ import java.util.Observer;
  * @date 2020-01-29 16:28
  * @email bingo110@126.com
  */
-public class SampleMessageComponent implements ComponentContainer<FragmentActivity> {
+public class SampleMessageComponent implements ComponentContainer <FragmentActivity>{
     private final WorkThread<String> workThread=new WorkThread("sample_work_thread");
     private final SampleSystemConsole sampleSystemConsole=new SampleSystemConsole();
 

@@ -17,7 +17,7 @@ public class WorkThread<E> extends Thread {
     /**
      * max size in our queue. It's a limitation like a buffer so we don't have to wait too much time or store too many data
      */
-    private final static int MAX_CAPACITY=100;
+    private final static int MAX_CAPACITY=1;
     /**
      * max wait time, if we don't have enough data we just wait a few second and store all the data
      */

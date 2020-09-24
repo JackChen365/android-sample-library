@@ -111,3 +111,10 @@ Fixed a few bugs
 
 * Fixed the crash when activity change the orientation configuration.
 * Support landscape message output component.
+
+### 1.2.8
+
+*Date:* 2020/9/24<br>
+*Author:* Jack chen
+
+* Synchronize the code with the support library.

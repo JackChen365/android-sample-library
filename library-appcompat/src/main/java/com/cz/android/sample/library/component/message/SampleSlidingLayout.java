@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.LinearLayout;
 
 import com.cz.android.sample.library.R;
@@ -135,7 +136,7 @@ public class SampleSlidingLayout extends ViewGroup {
         View handleLayout=findViewById(handleId);
         measureChild(handleLayout, widthMeasureSpec,  heightMeasureSpec);
 
-        int layoutWidth = measuredWidth - handleLayout.getMeasuredHeight() - paddingLeft - paddingRight;
+        int layoutWidth = measuredWidth - handleLayout.getMeasuredWidth() - paddingLeft - paddingRight;
 
         //The top panel
         View startLayout=getChildAt(0);
@@ -164,13 +165,13 @@ public class SampleSlidingLayout extends ViewGroup {
         View startLayout=getChildAt(0);
         //First measure the top panel
         float startLayoutHeight = slidingWeight * layoutHeight;
-        startLayout.measure(widthMeasureSpec,  MeasureSpec.makeMeasureSpec((int) startLayoutHeight, MeasureSpec.EXACTLY));
+        startLayout.measure(widthMeasureSpec,  MeasureSpec.makeMeasureSpec((int) startLayoutHeight,MeasureSpec.EXACTLY));
 
         //Measured the bottom view
         int childCount = getChildCount();
         View endLayout=getChildAt(childCount-1);
         float endLayoutHeight = (1f-slidingWeight) * layoutHeight;
-        endLayout.measure(widthMeasureSpec,  MeasureSpec.makeMeasureSpec((int) endLayoutHeight, MeasureSpec.EXACTLY));
+        endLayout.measure(widthMeasureSpec,  MeasureSpec.makeMeasureSpec((int) endLayoutHeight,MeasureSpec.EXACTLY));
     }
 
 
@@ -184,6 +185,32 @@ public class SampleSlidingLayout extends ViewGroup {
     }
 
     private void layoutHorizontally() {
+        int measuredWidth = getMeasuredWidth();
+        int measuredHeight = getMeasuredHeight();
+        int paddingLeft = getPaddingLeft();
+        int paddingTop = getPaddingTop();
+        int paddingRight = getPaddingRight();
+        int paddingBottom = getPaddingBottom();
+        View handleLayout=findViewById(handleId);
+        View startLayout=getChildAt(0);
+
+        int offsetLeft = getPaddingLeft();
+        //Layout the top view
+        startLayout.layout(offsetLeft,paddingTop,
+                offsetLeft+startLayout.getMeasuredWidth(),  measuredHeight-paddingBottom);
+        offsetLeft+=startLayout.getMeasuredWidth();
+        //Layout the handle view
+        handleLayout.layout(offsetLeft, paddingTop,
+                offsetLeft+handleLayout.getMeasuredWidth(), measuredHeight-paddingBottom);
+        offsetLeft+=handleLayout.getMeasuredWidth();
+        //Layout the bottom view
+        int childCount = getChildCount();
+        View endLayout=getChildAt(childCount-1);
+        endLayout.layout(offsetLeft,paddingTop,
+                offsetLeft+endLayout.getMeasuredWidth(), measuredHeight-paddingBottom);
+    }
+
+    private void layoutVertically() {
         int measuredWidth = getMeasuredWidth();
         int measuredHeight = getMeasuredHeight();
         int paddingLeft = getPaddingLeft();
@@ -208,46 +235,23 @@ public class SampleSlidingLayout extends ViewGroup {
                 measuredWidth-paddingRight,offsetTop+endLayout.getMeasuredHeight());
     }
 
-    private void layoutVertically() {
-        int measuredWidth = getMeasuredWidth();
-        int measuredHeight = getMeasuredHeight();
-        int paddingLeft = getPaddingLeft();
-        int paddingTop = getPaddingTop();
-        int paddingRight = getPaddingRight();
-        int paddingBottom = getPaddingBottom();
-        View handleLayout=findViewById(handleId);
-        View startLayout=getChildAt(0);
-
-        int offsetLeft = getPaddingLeft();
-        //Layout the top view
-        startLayout.layout(offsetLeft,paddingTop,
-                offsetLeft+startLayout.getMeasuredWidth(),  measuredHeight-paddingBottom);
-        offsetLeft+=startLayout.getMeasuredWidth();
-        //Layout the handle view
-        handleLayout.layout(paddingLeft, paddingTop,
-                offsetLeft+handleLayout.getMeasuredWidth(), measuredHeight-paddingBottom);
-        offsetLeft+=handleLayout.getMeasuredWidth();
-        //Layout the bottom view
-        int childCount = getChildCount();
-        View endLayout=getChildAt(childCount-1);
-        endLayout.layout(offsetLeft,paddingTop,
-                offsetLeft+endLayout.getMeasuredWidth(), measuredHeight-paddingBottom);
-    }
-
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         int action = ev.getActionMasked();
         if(MotionEvent.ACTION_DOWN==action){
             lastX=ev.getX();
             lastY=ev.getY();
-        } else if(MotionEvent.ACTION_MOVE==action){
             if(isBeginDragged(ev)){
+                ViewParent parent = getParent();
+                if(null!=parent){
+                    parent.requestDisallowInterceptTouchEvent(true);
+                }
                 return true;
             }
         } else if(MotionEvent.ACTION_UP==action||MotionEvent.ACTION_CANCEL==action){
             isBeingDragged = false;
         }
-        return super.onInterceptTouchEvent(ev);
+        return isBeingDragged;
     }
 
     @Override
@@ -351,16 +355,11 @@ public class SampleSlidingLayout extends ViewGroup {
     private boolean isBeginDragged(MotionEvent ev) {
         float x = ev.getX();
         float y = ev.getY();
-        float offsetX = Math.abs(x - lastX);
-        float offsetY = Math.abs(y - lastY);
         View handleLayout = findViewById(handleId);
-                tempRect.set(handleLayout.getLeft(), handleLayout.getTop(), handleLayout.getRight(), handleLayout.getBottom());
+        tempRect.set(handleLayout.getLeft(), handleLayout.getTop(), handleLayout.getRight(), handleLayout.getBottom());
         if (tempRect.contains(x,y)) {
-            if (offsetX > scaledTouchSlop || offsetY > scaledTouchSlop) {
-                //start drag
-                isBeingDragged = true;
-                return true;
-            }
+            isBeingDragged = true;
+            return true;
         }
         return false;
     }
