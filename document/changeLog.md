@@ -112,9 +112,16 @@ Fixed a few bugs
 * Fixed the crash when activity change the orientation configuration.
 * Support landscape message output component.
 
-### 1.2.8
+### 1.2.9
 
 *Date:* 2020/9/24<br>
 *Author:* Jack chen
 
 * Synchronize the code with the support library.
+
+### 1.3.0
+
+*Date:* 2020/9/24<br>
+*Author:* Jack chen
+
+* Fixed the crash when activity change the orientation configuration in some of the specific models that did not call onCreate.

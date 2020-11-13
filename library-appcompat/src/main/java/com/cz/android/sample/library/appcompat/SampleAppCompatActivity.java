@@ -8,7 +8,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -50,12 +49,10 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
     private View contentView=null;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         //Because if we restart this activity. It will re-create the fragment by FragmentManagerState
-        if(null!=savedInstanceState){
-            savedInstanceState.remove(ANDROID_SUPPORT_FRAGMENTS);
-        }
-        super.onCreate(savedInstanceState);
+        outState.remove(ANDROID_SUPPORT_FRAGMENTS);
     }
 
     @Override

@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -51,12 +50,10 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
     private View contentView=null;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         //Because if we restart this activity. It will re-create the fragment by FragmentManagerState
-        if(null!=savedInstanceState){
-            savedInstanceState.remove(ANDROID_SUPPORT_FRAGMENTS);
-        }
-        super.onCreate(savedInstanceState);
+        outState.remove(ANDROID_SUPPORT_FRAGMENTS);
     }
 
     @Override
