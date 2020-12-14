@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -38,6 +39,7 @@ import com.cz.android.sample.window.impl.ComponentWindowDelegate;
  */
 public class SampleAppCompatActivity extends AppCompatActivity implements SampleComponentContainer {
     private static final String BIND_MAIN_SAMPLE_FRAGMENT_TAG="android_sample_main_fragment";
+    private static final String ANDROID_SUPPORT_FRAGMENTS="android:support:fragments";
     private ComponentWindowDelegate windowDelegate;
     /**
      * This is user's original view. However We may change it. or put this view input a fragment
@@ -55,6 +57,13 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
      * So we keep this view. If findViewById can't find the view. we try to find view from it
      */
     private View contentView=null;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Because if we restart this activity. It will re-create the fragment by FragmentManagerState
+        outState.remove(ANDROID_SUPPORT_FRAGMENTS);
+    }
 
     @Override
     public void setContentView(int layout) {

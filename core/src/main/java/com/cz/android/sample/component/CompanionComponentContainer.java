@@ -1,6 +1,7 @@
 package com.cz.android.sample.component;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -36,7 +37,7 @@ public abstract class CompanionComponentContainer<T extends Activity> implements
      * @param view
      * @return
      */
-    public abstract View onCreateCompanionComponent(T context, Object object, ViewGroup parentView, View view);
+    public abstract View onCreateCompanionComponent(T context, Object object, ViewGroup parentView, View view, Bundle saveInstance);
 
     /**
      * Return a class array. So that I could add all the companion to this object
@@ -50,8 +51,8 @@ public abstract class CompanionComponentContainer<T extends Activity> implements
      * @param view
      * @return
      */
-    public View getCompanionComponent(T context, Object object, ViewGroup parentView, View view){
-        View companionComponentView = onCreateCompanionComponent(context, object, parentView, view);
+    public View getCompanionComponent(T context, Object object, ViewGroup parentView, View view, Bundle saveInstance){
+        View companionComponentView = onCreateCompanionComponent(context, object, parentView, view, saveInstance);
         return companionComponentView;
     }
 

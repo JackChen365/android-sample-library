@@ -1,6 +1,7 @@
 package com.cz.android.sample.window.impl;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +21,7 @@ public class ComponentWindowDelegate<C extends Activity> implements WindowDelega
     private static final String TAG="ComponentWindowDelegate";
 
     @Override
-    public View onCreateView(C context, Object object, ViewGroup parentView, View view) {
+    public View onCreateView(C context, Object object, ViewGroup parentView, View view, Bundle saveInstance) {
         ComponentManager componentManager = ComponentManager.getInstance();
         Set<ComponentContainer> componentContainerSet = componentManager.getComponentContainerSet();
         View componentView=view;
@@ -31,12 +32,12 @@ public class ComponentWindowDelegate<C extends Activity> implements WindowDelega
                 if(componentContainer instanceof CompanionComponentContainer){
                     CompanionComponentContainer companionComponentContainer = (CompanionComponentContainer) componentContainer;
                     if(!companionComponentContainer.isComponentCreated()){
-                        componentView=companionComponentContainer.getCompanionComponent(context, object, parentView, componentView);
+                        componentView=companionComponentContainer.getCompanionComponent(context, object, parentView, componentView,saveInstance);
                         companionComponentContainer.setComponentCreated();
                     }
                 }
                 //We use different component change the view
-                componentView = componentContainer.getComponentView(context,object, parentView,componentView);
+                componentView = componentContainer.getComponentView(context,object, parentView,componentView,saveInstance);
                 //Here we call onCreateView function
                 componentContainer.onCreatedView(context,componentContainer,componentView);
             }

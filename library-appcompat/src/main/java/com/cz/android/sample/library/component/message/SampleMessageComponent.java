@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-
 import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.thread.WorkThread;
@@ -26,7 +25,7 @@ import java.util.Observer;
  * @date 2020-01-29 16:28
  * @email bingo110@126.com
  */
-public class SampleMessageComponent implements ComponentContainer<FragmentActivity> {
+public class SampleMessageComponent implements ComponentContainer <FragmentActivity>{
     private final WorkThread<String> workThread=new WorkThread("sample_work_thread");
     private final SampleSystemConsole sampleSystemConsole=new SampleSystemConsole();
 
@@ -44,7 +43,7 @@ public class SampleMessageComponent implements ComponentContainer<FragmentActivi
     @Override
     public View getComponentView(FragmentActivity context, Object object, ViewGroup parentView,View view, Bundle saveInstance) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View contentLayout = layoutInflater.inflate(R.layout.sample_message_layout, parentView, false);
+        final View contentLayout = layoutInflater.inflate(R.layout.sample_message_layout, parentView, false);
         FrameLayout sampleMessageContentLayout=contentLayout.findViewById(R.id.sampleMessageContentLayout);
         sampleMessageContentLayout.addView(view);
         return contentLayout;

@@ -1,6 +1,7 @@
 package com.cz.android.sample.window;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,5 +17,5 @@ public interface WindowDelegate<C extends Activity> {
      * @param context
      * @param view
      */
-    View onCreateView(C context, Object object, ViewGroup container, View view);
+    View onCreateView(C context, Object object, ViewGroup container, View view, Bundle saveInstance);
 }

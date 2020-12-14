@@ -1,6 +1,7 @@
 package com.cz.android.sample.component;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,7 +33,7 @@ public interface ComponentContainer<C extends Activity> {
      * @param view your fragment/activity content view
      * @return
      */
-    View getComponentView(C context, Object object, ViewGroup parentView, View view);
+    View getComponentView(C context, Object object, ViewGroup parentView, View view, Bundle saveInstance);
 
     /**
      * After this component created a new view. This function will call automatically.
