@@ -13,5 +13,6 @@ import java.util.List;
  * @email bingo110@126.com
  */
 public interface SampleItemGenerator {
+    @NonNull
     List<RegisterItem> generate(@NonNull Context context, @NonNull List<String> sampleClassList);
 }

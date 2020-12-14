@@ -1,5 +1,6 @@
 package com.cz.android.sample.library.appcompat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,14 +14,20 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.cz.android.sample.component.SampleComponentContainer;
 import com.cz.android.sample.library.R;
+import com.cz.android.sample.library.main.AndroidSampleSupport;
+import com.cz.android.sample.library.main.SampleApplication;
+import com.cz.android.sample.main.MainSampleComponentFactory;
 import com.cz.android.sample.window.impl.ComponentWindowDelegate;
 
 /**
@@ -29,6 +36,7 @@ import com.cz.android.sample.window.impl.ComponentWindowDelegate;
  * @email bingo110@126.com
  */
 public class SampleAppCompatActivity extends AppCompatActivity implements SampleComponentContainer {
+    private static final String BIND_MAIN_SAMPLE_FRAGMENT_TAG="android_sample_main_fragment";
     private ComponentWindowDelegate windowDelegate;
     /**
      * This is user's original view. However We may change it. or put this view input a fragment
@@ -51,7 +59,8 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
     public void setContentView(int layout) {
         String launchActivityName = getLaunchActivityName(this);
         if(launchActivityName.equals(getClass().getName())){
-            super.setContentView(layout);
+//            super.setContentView(layout);
+            injectMainComponent(this);
         } else {
             LinearLayout contentView = new LinearLayout(this);
             contentView.setOrientation(LinearLayout.VERTICAL);
@@ -65,7 +74,8 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
     public void setContentView(View view) {
         String launchActivityName = getLaunchActivityName(this);
         if(launchActivityName.equals(getClass().getName())){
-           super.setContentView(view);
+//           super.setContentView(view);
+            injectMainComponent(this);
         } else {
             LinearLayout contentView = new LinearLayout(this);
             contentView.setOrientation(LinearLayout.VERTICAL);
@@ -81,10 +91,10 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
             windowDelegate=new ComponentWindowDelegate();
         }
         if(hasToolBar(view)){
-            View createView = windowDelegate.onCreateView(this,this,contentView, view);
+            View createView = windowDelegate.onCreateView(this,this,contentView, view,null);
             super.setContentView(createView);
         } else {
-            View createView = windowDelegate.onCreateView(this,this, contentView, view);
+            View createView = windowDelegate.onCreateView(this,this, contentView, view,null);
             if(!hasToolBar(createView)){
                 Toolbar toolBar = new Toolbar(new ContextThemeWrapper(this, R.style.AppTheme_AppBarOverlay));
                 //set toolbar background color.
@@ -157,6 +167,31 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
     }
 
     /**
+     * Check this activity if is main activity we will inject our fragment
+     * @param activity
+     */
+    private void injectMainComponent(@NonNull Activity activity) {
+        String launchActivityName = getLaunchActivityName(activity);
+        if(launchActivityName.equals(activity.getClass().getName())){
+            //Here we are the main activity
+            if(!(activity instanceof AppCompatActivity)){
+                throw new IllegalArgumentException("The main activity should extend from AppCompatActivity! We can't support the Activity!");
+            } else {
+                AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
+                //Add the main fragment if needed;
+                FragmentManager supportFragmentManager = appCompatActivity.getSupportFragmentManager();
+                if (supportFragmentManager.findFragmentByTag(BIND_MAIN_SAMPLE_FRAGMENT_TAG) == null) {
+                    SampleApplication projectApplication = SampleApplication.getProjectApplication();
+                    AndroidSampleSupport androidSample = projectApplication.getAndroidSample();
+                    MainSampleComponentFactory<Fragment> componentContainer = androidSample.getComponentContainerFactory();
+                    Fragment fragment = componentContainer.getFragmentComponent();
+                    supportFragmentManager.beginTransaction().add(android.R.id.content,fragment, BIND_MAIN_SAMPLE_FRAGMENT_TAG).commit();
+                }
+            }
+        }
+    }
+
+    /**
      * Get android.intent.action.MAIN activity class name
      * @param context
      * @return
@@ -166,4 +201,5 @@ public class SampleAppCompatActivity extends AppCompatActivity implements Sample
         Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
         return intent.getComponent().getClassName();
     }
+
 }

@@ -138,8 +138,8 @@ public class SampleHierarchyActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, TreeNode<Demonstrable> node, Demonstrable item, int viewType, int position) {
-            String titleResourceEntryName=null;
-            String categoryResourceEntryName=null;
+            String titleEntryName=null;
+            String categoryEntryName=null;
             holder.itemView.setPadding(padding * node.depth,
                     holder.itemView.getPaddingTop(),
                     holder.itemView.getPaddingRight(),
@@ -155,15 +155,16 @@ public class SampleHierarchyActivity extends AppCompatActivity {
                 imageFlagView.setSelected(node.isExpand);
 
                 if(0!=categoryItem.titleRes){
-                    titleResourceEntryName=resources.getResourceEntryName(categoryItem.titleRes);
+                    titleEntryName=resources.getString(categoryItem.titleRes);
                 }
                 if(0!=categoryItem.categoryRes){
-                    categoryResourceEntryName=resources.getResourceEntryName(categoryItem.categoryRes);
+                    categoryEntryName=resources.getString(categoryItem.categoryRes);
                 }
-                titleRef.setText((null==titleResourceEntryName? "0" : "R.string."+titleResourceEntryName));
-                categoryRef.setText((null==categoryResourceEntryName? "0" : "R.string."+categoryResourceEntryName));
+                titleRef.setVisibility(null==titleEntryName?View.GONE:View.VISIBLE);
+                categoryRef.setVisibility(null==categoryEntryName?View.GONE:View.VISIBLE);
+                titleRef.setText(null==titleEntryName? "#" : titleEntryName);
+                categoryRef.setText((null==categoryEntryName? "#" : categoryEntryName));
             } else if(TYPE_SAMPLE==viewType){
-                List<TreeNode<Demonstrable>> children = node.parent.children;
                 int index = indexOf(node.parent.children,node);
                 final RegisterItem registerItem = (RegisterItem) item;
                 TextView sampleNumber=holder.itemView.findViewById(R.id.sampleNumber);
@@ -232,9 +233,9 @@ public class SampleHierarchyActivity extends AppCompatActivity {
             if(0!=registerItem.categoryRes){
                 categoryResourceEntryName=resources.getResourceEntryName(registerItem.categoryRes);
             }
-            sampleRef.setText("title:"+(null==titleResourceEntryName? "0" : "R.string."+titleResourceEntryName)+"\n"+
-                    "desc:"+(null==descResourceEntryName? "0" : "R.string."+descResourceEntryName)+"\n"+
-                    "category:"+(null==categoryResourceEntryName? "0" : "R.string."+categoryResourceEntryName));
+            sampleRef.setText("title:"+(null==titleResourceEntryName? "#" : "R.string."+titleResourceEntryName)+"\n"+
+                    "desc:"+(null==descResourceEntryName? "#" : "R.string."+descResourceEntryName)+"\n"+
+                    "category:"+(null==categoryResourceEntryName? "#" : "R.string."+categoryResourceEntryName));
 
             //Launcher the sample.
             View sampleButton=view.findViewById(R.id.sampleButton);

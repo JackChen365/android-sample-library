@@ -1,5 +1,6 @@
 package com.cz.android.appcompat.sample.custom.component;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -44,7 +45,7 @@ public class BorderComponent implements ComponentContainer<FragmentActivity> {
      * @return
      */
     @Override
-    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view) {
+    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
         BorderLayout borderLayout=new BorderLayout(context);
         borderLayout.addView(view);
         return borderLayout;

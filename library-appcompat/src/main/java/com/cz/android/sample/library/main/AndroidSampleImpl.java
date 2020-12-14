@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
@@ -135,7 +136,7 @@ class AndroidSampleImpl implements AndroidSampleSupport, AppCompatSampleConfigur
         if(null!=newRegisterList){
             registerList.addAll(newRegisterList);
         }
-        List<CategoryItem> newCategoryList = sampleCategoryGenerator.generate(context,registerList);
+        List<CategoryItem> newCategoryList = sampleCategoryGenerator.generate(context,registerList,newRegisterList);
         if(null!=newCategoryList){
             //Filter the exist category.
             for(CategoryItem newCategoryItem:newCategoryList){
@@ -400,7 +401,7 @@ class AndroidSampleImpl implements AndroidSampleSupport, AppCompatSampleConfigur
         return registerTestCaseList;
     }
 
-    public MainSampleComponentFactory getMainComponentContainer() {
+    public MainSampleComponentFactory getComponentContainerFactory() {
         return this.mainComponentContainer;
     }
 

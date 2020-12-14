@@ -136,7 +136,7 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
         if(null!=newRegisterList){
             registerList.addAll(newRegisterList);
         }
-        List<CategoryItem> newCategoryList = sampleCategoryGenerator.generate(context,registerList);
+        List<CategoryItem> newCategoryList = sampleCategoryGenerator.generate(context,registerList,newRegisterList);
         if(null!=newCategoryList){
             //Filter the exist category.
             for(CategoryItem newCategoryItem:newCategoryList){
@@ -401,7 +401,8 @@ class AndroidSampleImpl implements AndroidSampleSupport, SampleConfiguration {
         return registerTestCaseList;
     }
 
-    public MainSampleComponentFactory getMainComponentContainer() {
+    @Override
+    public MainSampleComponentFactory getComponentContainerFactory() {
         return this.mainComponentContainer;
     }
 

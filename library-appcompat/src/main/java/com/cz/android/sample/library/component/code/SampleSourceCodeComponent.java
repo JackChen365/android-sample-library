@@ -1,5 +1,6 @@
 package com.cz.android.sample.library.component.code;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -34,7 +35,7 @@ public class SampleSourceCodeComponent extends CompanionComponentContainer<Fragm
     }
 
     @Override
-    public View onCreateCompanionComponent(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view) {
+    public View onCreateCompanionComponent(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View contentLayout = layoutInflater.inflate(R.layout.sample_fragment_tab, parentView, false);
         ViewPager sampleViewPager=contentLayout.findViewById(R.id.sampleViewPager);
@@ -53,7 +54,7 @@ public class SampleSourceCodeComponent extends CompanionComponentContainer<Fragm
     }
 
     @Override
-    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view) {
+    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
         ViewPager sampleViewPager=view.findViewById(R.id.sampleViewPager);
         TabLayout sampleTabLayout=view.findViewById(R.id.sampleTabLayout);
         PagerAdapter adapter = sampleViewPager.getAdapter();

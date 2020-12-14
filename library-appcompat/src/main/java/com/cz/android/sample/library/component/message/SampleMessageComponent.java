@@ -1,5 +1,6 @@
 package com.cz.android.sample.library.component.message;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.NestedScrollView;
@@ -41,7 +42,7 @@ public class SampleMessageComponent implements ComponentContainer<FragmentActivi
     }
 
     @Override
-    public View getComponentView(FragmentActivity context, Object object, ViewGroup parentView,View view) {
+    public View getComponentView(FragmentActivity context, Object object, ViewGroup parentView,View view, Bundle saveInstance) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View contentLayout = layoutInflater.inflate(R.layout.sample_message_layout, parentView, false);
         FrameLayout sampleMessageContentLayout=contentLayout.findViewById(R.id.sampleMessageContentLayout);

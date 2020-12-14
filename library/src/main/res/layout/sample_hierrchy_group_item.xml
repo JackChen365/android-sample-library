@@ -33,7 +33,7 @@
         tools:text="@string/sample_source_code"
         app:layout_constraintLeft_toRightOf="@+id/imageFlagView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/imageFlagView"/>
+        app:layout_constraintBottom_toTopOf="@+id/titleRef"/>
 
     <TextView
         android:id="@+id/titleRef"
@@ -45,7 +45,8 @@
         android:ellipsize="end"
         tools:text="@string/sample_source_code"
         app:layout_constraintLeft_toLeftOf="@id/categoryName"
-        app:layout_constraintTop_toBottomOf="@+id/categoryName" />
+        app:layout_constraintTop_toBottomOf="@+id/categoryName"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/categoryRef"

@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 
-
 import com.cz.android.sample.api.item.RegisterItem;
 import com.cz.android.sample.library.R;
 import com.cz.android.sample.window.impl.ComponentWindowDelegate;
@@ -77,7 +76,7 @@ public class SampleFragmentContainerActivity extends AppCompatActivity {
     }
 
     private void setContentViewInternal(final Fragment fragment, ViewGroup contentView, View view){
-        View createView = windowDelegate.onCreateView(this,fragment, contentView, view);
+        View createView = windowDelegate.onCreateView(this,fragment, contentView, view,null);
         if(!hasToolBar(createView)){
             Toolbar toolBar = new Toolbar(new ContextThemeWrapper(this, R.style.AppTheme_AppBarOverlay));
             //set toolbar background color.
@@ -124,11 +123,6 @@ public class SampleFragmentContainerActivity extends AppCompatActivity {
                 supportFragmentManager.beginTransaction().add(R.id.sampleActivityFragmentContainer,fragment,SAMPLE_FRAGMENT_TAG).commit();
             }
         });
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**

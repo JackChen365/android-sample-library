@@ -77,7 +77,7 @@ public class SampleFragmentContainerActivity extends AppCompatActivity{
     }
 
     private void setContentViewInternal(final Fragment fragment, ViewGroup contentView, View view){
-        View createView = windowDelegate.onCreateView(this,fragment, contentView, view);
+        View createView = windowDelegate.onCreateView(this,fragment, contentView, view,null);
         if(!hasToolBar(createView)){
             Toolbar toolBar = new Toolbar(new ContextThemeWrapper(this, R.style.AppTheme_AppBarOverlay));
             //set toolbar background color.

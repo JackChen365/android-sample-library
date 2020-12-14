@@ -1,5 +1,6 @@
 package com.cz.android.sample.library.component.memory;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class SampleMemoryComponent implements ComponentContainer<FragmentActivit
     }
 
     @Override
-    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view) {
+    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View createView = layoutInflater.inflate(R.layout.sample_memory_layout, parentView, false);
         final View memoryView = createView.findViewById(R.id.sampleMemoryView);

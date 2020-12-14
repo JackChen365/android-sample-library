@@ -21,6 +21,10 @@ public class DataManager {
         return DataManager.getDataService(context, DataProvider.class);
     }
 
+    public static ColorProvider getColorProvider(Context context){
+        return DataManager.getDataService(context, ColorProvider.class);
+    }
+
     /**
      * Return a data service by class
      * @param clazz

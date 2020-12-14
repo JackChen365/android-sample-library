@@ -103,3 +103,11 @@ Fixed a few bugs
 *Author:* Jack chen
 
 * Fixed the crash when open the hierarchy Activity.
+
+### 1.3.1
+
+*Date:* 2020/12/14<br>
+*Author:* Jack chen
+
+* Filter the category only have one sample item.
+* Add a color data provider.

@@ -1,5 +1,6 @@
 package com.cz.android.sample.library.component.document;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -35,7 +36,7 @@ public class SampleDocumentComponent extends CompanionComponentContainer<Fragmen
     }
 
     @Override
-    public View onCreateCompanionComponent(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view) {
+    public View onCreateCompanionComponent(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View contentLayout = layoutInflater.inflate(R.layout.sample_fragment_tab, parentView, false);
         ViewPager sampleViewPager=contentLayout.findViewById(R.id.sampleViewPager);
@@ -54,7 +55,7 @@ public class SampleDocumentComponent extends CompanionComponentContainer<Fragmen
     }
 
     @Override
-    public View getComponentView(FragmentActivity context,Object object,ViewGroup container, View view) {
+    public View getComponentView(FragmentActivity context,Object object,ViewGroup container, View view, Bundle saveInstance) {
         SampleDocument sampleDocument = object.getClass().getAnnotation(SampleDocument.class);
         String url = sampleDocument.value();
         TabLayout sampleTabLayout=view.findViewById(R.id.sampleTabLayout);
