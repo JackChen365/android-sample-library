@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
@@ -63,7 +64,11 @@ public class MarkdownView extends WebView {
 
     @Override
     public void loadUrl(String url) {
-        loadMarkdownFromUrl(url);
+        if (url.endsWith(".md")) {
+            loadMarkdownFromUrl(url);
+        } else {
+            super.loadUrl(url);
+        }
     }
 
     /**

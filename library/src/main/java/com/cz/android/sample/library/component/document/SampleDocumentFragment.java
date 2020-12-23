@@ -91,7 +91,7 @@ public class SampleDocumentFragment extends Fragment {
             markdownView.loadUrl("about:blank");
         } else {
             if(url.startsWith("http")){
-                markdownView.loadMarkdownFromUrl(url);
+                markdownView.loadUrl(url);
             } else if(url.startsWith("assets://")){
                 url=url.substring("assets://".length());
                 markdownView.loadMarkdownFromAssets(url,null);
