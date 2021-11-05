@@ -14,7 +14,6 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "com.github.momodae.AndroidSampleLibrary:plugin:$sample_version"
-        classpath 'com.github.momodae.UploadPlugin:jitpack:1.0.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -31,25 +30,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-apply plugin: 'jitpack.upload'
-
-jitpack{
-    module{
-        name "api"
-        group "com.cz.android.sample"
-    }
-    module{
-        name "core"
-        group "com.cz.android.sample"
-    }
-    module{
-        name "plugin"
-        group "com.cz.android.sample"
-    }
-    module{
-        name "library"
-        group "com.cz.android.sample"
-    }
-}
-
