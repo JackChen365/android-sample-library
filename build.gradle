@@ -51,9 +51,5 @@ jitpack{
         name "library"
         group "com.cz.android.sample"
     }
-    module{
-        name "library-appcompat"
-        group "com.cz.android.sample"
-    }
 }
 
