@@ -1,3 +1,0 @@
-include ':appcompat-app'
-include ':app', ':library', ':api', ':core', ':plugin'
-include ':library-appcompat'
