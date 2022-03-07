@@ -134,7 +134,7 @@ Because we collect all the Activity/Fragment, If you have other classes that you
 
     ```
     val projectApplication = SampleApplication.getProjectApplication()
-    projectApplication.androidSample.registerExceptionHandler { context, e, registerItem, item ->
+    projectApplication.androidSample.registerExceptionHandler { context, e, sampleItem, item ->
         Log.e(TAG, "Exception occurs:" + e.message)
     }
     ```

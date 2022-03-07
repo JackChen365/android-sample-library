@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.api.Component;
 import com.cz.android.sample.component.ComponentContainer;
-import com.cz.android.sample.window.impl.ComponentWindowDelegate;
+import com.cz.android.sample.window.AppcompatWindowDelegate;
 
 /**
  * @author Created by cz
@@ -36,7 +36,7 @@ public class BorderComponent implements ComponentContainer<FragmentActivity> {
      * And return a new view for the next.
      *
      * Tips:
-     * 1. If the sample is not a activity or fragment. Take a look on {@link ComponentWindowDelegate}
+     * 1. If the sample is not a activity or fragment. Take a look on {@link AppcompatWindowDelegate}
      *
      * @param context activity context
      * @param object the instance of the sample. It depends on which one that you registered

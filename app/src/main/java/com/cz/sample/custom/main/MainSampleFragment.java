@@ -29,8 +29,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.AndroidSample;
 import com.cz.android.sample.api.AndroidSampleConstant;
+import com.cz.android.sample.api.SampleItem;
 import com.cz.android.sample.api.item.Demonstrable;
-import com.cz.android.sample.api.item.RegisterItem;
 import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.main.SampleApplication;
 import com.cz.android.sample.library.main.adapter.SampleTemplateAdapter;
@@ -92,7 +92,7 @@ public class MainSampleFragment extends Fragment implements MainSampleComponentF
             fragmentActivity.setSupportActionBar(sampleToolBar);
 
             //Here show all the testCases
-            List<RegisterItem> testCases = androidSample.getTestCases();
+            List<SampleItem> testCases = androidSample.getTestCases();
             if(null!=testCases&&!testCases.isEmpty()){
                 alertTestCaseDialog(androidSample,context,testCases);
             }
@@ -117,10 +117,10 @@ public class MainSampleFragment extends Fragment implements MainSampleComponentF
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Demonstrable demonstrable = adapter.getItem(i);
-                if(demonstrable instanceof RegisterItem){
+                if(demonstrable instanceof SampleItem){
                     //run this sample
-                    RegisterItem registerItem = (RegisterItem) demonstrable;
-                    androidSample.start(context,registerItem);
+                    SampleItem sampleItem = (SampleItem) demonstrable;
+                    androidSample.start(context, sampleItem);
                 } else {
                     //move to the subcategories
                     String category = demonstrable.getTitle();
@@ -145,24 +145,24 @@ public class MainSampleFragment extends Fragment implements MainSampleComponentF
      * @param context
      * @param testCases
      */
-    private void alertTestCaseDialog(final AndroidSample androidSample, final FragmentActivity context,@NonNull final List<RegisterItem> testCases) {
+    private void alertTestCaseDialog(final AndroidSample androidSample, final FragmentActivity context,@NonNull final List<SampleItem> testCases) {
         if(1==testCases.size()){
             //Run this testcase immediately
-            RegisterItem registerItem = testCases.get(0);
-            androidSample.start(context,registerItem);
+            SampleItem sampleItem = testCases.get(0);
+            androidSample.start(context, sampleItem);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             CharSequence[] items=new CharSequence[testCases.size()];
             for(int i=0;i<testCases.size();i++){
-                RegisterItem registerItem = testCases.get(i);
-                items[i]=registerItem.getTitle();
+                SampleItem sampleItem = testCases.get(i);
+                items[i]= sampleItem.getTitle();
             }
             builder.setTitle(R.string.sample_choice_test_case)
                     .setItems(items, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            RegisterItem registerItem = testCases.get(i);
-                            androidSample.start(context,registerItem);
+                            SampleItem sampleItem = testCases.get(i);
+                            androidSample.start(context, sampleItem);
                         }
                     }).setCancelable(false);
             builder.show();

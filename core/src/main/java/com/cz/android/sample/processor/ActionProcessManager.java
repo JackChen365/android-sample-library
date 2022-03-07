@@ -1,13 +1,11 @@
 package com.cz.android.sample.processor;
 
-import android.app.Activity;
-
-import com.cz.android.sample.api.item.RegisterItem;
+import androidx.appcompat.app.AppCompatActivity;
+import com.cz.android.sample.api.SampleItem;
+import com.cz.android.sample.exception.SampleFailedException;
 import com.cz.android.sample.function.FunctionManager;
 import com.cz.android.sample.processor.clazz.ActivityClassActionProcessor;
 import com.cz.android.sample.processor.clazz.DialogClassActionProcessor;
-import com.cz.android.sample.processor.exception.ActionExceptionHandler;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,79 +13,50 @@ import java.util.List;
  * @author Created by cz
  * @date 2020-01-27 15:24
  * @email bingo110@126.com
- *
  * This is an action com.cz.android.sample.library.processor manager
- *
- * @see AbsActionProcessor
+ * @see ActionProcessor
  */
 public class ActionProcessManager {
     /**
-     * An action exceptionHandlerList;
-     */
-    private List<ActionExceptionHandler> exceptionHandlerList =new ArrayList<>();
-    /**
      * all registered com.cz.android.sample.library.processor list
      */
-    private final List<AbsActionProcessor> processorList=new ArrayList<>();
+    private final List<ActionProcessor> processorList = new ArrayList<>();
+
     {
         //register default action com.cz.android.sample.library.processor
         register(new DialogClassActionProcessor());
         register(new ActivityClassActionProcessor());
     }
+
     /**
      * Register an new action com.cz.android.sample.library.processor
+     *
      * @param processor
      */
-    public void register(AbsActionProcessor processor){
+    public void register(ActionProcessor processor) {
         this.processorList.add(processor);
     }
 
     /**
      * Unregister an action com.cz.android.sample.library.processor from list
+     *
      * @param processor
      */
-    public void unregister(AbsActionProcessor processor){
+    public void unregister(ActionProcessor processor) {
         this.processorList.remove(processor);
-    }
-
-    /**
-     * Register an exceptionHandlerList for action com.cz.android.sample.library.processor
-     * @param exceptionHandler
-     */
-    public void registerExceptionHandler(ActionExceptionHandler exceptionHandler){
-        this.exceptionHandlerList.add(exceptionHandler);
     }
 
     /**
      * process the action when user execute an action
      */
-    public<C extends Activity> void process(FunctionManager functionManager, final C context, final RegisterItem item) throws Exception {
-        Class clazz=item.clazz;
-        for (final AbsActionProcessor processor:processorList) {
-            if (processor.isInstance(clazz)) {
-                Object instance = null;
-                try {
-                    instance = processor.getInstance(context,item,clazz);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if(null!=instance){
-                    if(exceptionHandlerList.isEmpty()){
-                        processor.run(context, item, instance);
-                        //process all the functions
-                        functionManager.execute(context,item,instance);
-                    } else {
-                        try {
-                            processor.run(context, item, instance);
-                            //process all the functions
-                            functionManager.execute(context,item,instance);
-                        } catch (Exception e) {
-                            for(ActionExceptionHandler exceptionHandler:exceptionHandlerList){
-                                exceptionHandler.handleException(context,e,item, instance);
-                            }
-                        }
-                    }
-                }
+    public void process(FunctionManager functionManager, final AppCompatActivity context,
+            final SampleItem item) throws SampleFailedException {
+        Class clazz = item.clazz();
+        for (final ActionProcessor processor : processorList) {
+            if (processor.isAvailable(clazz)) {
+                processor.execute(context, item);
+                //process all the functions
+                functionManager.execute(context, item);
             }
         }
     }

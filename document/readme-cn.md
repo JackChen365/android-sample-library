@@ -79,7 +79,7 @@ The [Annotations](document/annotations/sampleAnnotation.md)
     ```
 
     val projectApplication = SampleApplication.getProjectApplication()
-    projectApplication.androidSample.registerExceptionHandler { context, e, registerItem, item ->
+    projectApplication.androidSample.registerExceptionHandler { context, e, sampleItem, item ->
         Log.e(TAG, "Exception occurs:" + e.message)
     }
     ```

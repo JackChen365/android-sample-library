@@ -1,12 +1,11 @@
 dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
   repositories {
     google()
     mavenCentral()
-    jcenter() // Warning: this repository is going to shut down soon
     maven("https://jitpack.io")
   }
 }
 
 rootProject.name = "AndroidSampleLibrary"
-include(":app", ":api", ":core", ":library", ":plugin")
+include(":app", ":api", ":core", ":extension", ":plugin")
