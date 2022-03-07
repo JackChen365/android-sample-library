@@ -1,26 +1,31 @@
-## AndroidSampleLibrary
+[![Version]()
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-> During the very critical moment. I made a plan for learning other computer languages. I was realized that I've lost a lot of source code.<br>
-  After I finished one project or finished one part of the project. I forgot it immediately. That's why I was keep working on the Sample Library. Here is the fourth or fifth version of a test project.<br>
-  I must say it's my favorite<br>
+## android-sample-library
 
-After one week of hard working. I've finished some functions:
-* [Sample component](document/component/sampleCompoent.md)
-* [Sample function](document/function/sampleFunction.md)
-* [Action processor](document/actionprocessor/actionProcessor.md)
+> A powerful library to help you demonstrate your android app.
 
-### Annotations
-The [Annotations](document/annotations/sampleAnnotation.md)
+## Table of content
 
-#### [中文文档](document/readme-cn.md)
+- [Compile](#Compile)
+  - [Compile-with-groovy](#Compile-with-groovy)
+  - [Compile-with-kts](#Compile-with-kts)
+  - [Using one script to configure the library](#Using-one-script-to-configure-the-library)
+- [Project structure](#Project-structure)
+- [Usage](#How-to-use-it)
+  - [Using the package to generate the category](#Using-the-package-to-generate-the-category)
+  - [Custom the title and category](#Custom-the-title-and-category)
+  - [Working with testcase](#Working-with-testcase)
+  - [Working with extension](#Working-with-extension)
+- [Design](#Design)
+- [Sample file](#Sample)
 
-### Sample
-[APK FILE](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/file/app-debug.apk?raw=true)
+### Compile
 
-### Better ways for you to simplify your samples.
-[Usage](document/usage.md)
+#### Compile with groovy
 
-### Gradle
+<details>
+<summary>Groovy</summary>
 
 ```
 //Project:build.gradle ---------------
@@ -48,106 +53,166 @@ dependencies {
     ...
     implementation "com.github.momodae.AndroidSampleLibrary:library:$sample_version"
 }
+```
+
+</details>
+
+
+#### Compile with kts
+
+<details>
+<summary>Kotlin</summary>
 
 ```
+//Project:build.gradle ---------------
+buildscript {
+    ext.sample_version = '1.3.0'
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        ...
+        //Here is our plugin.
+        classpath "com.github.momodae.AndroidSampleLibrary:plugin:$sample_version"
+}
+
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+//Project:app -------------
+apply plugin: 'sample'
+dependencies {
+    ...
+    implementation "com.github.momodae.AndroidSampleLibrary:library:$sample_version"
+}
+```
+</details>
+
+#### Using one script to configure the library
+
+We highly recommend you use one script to configure this library.
+
+```
+...
+```
+
+### Project structure
+
+- api: Common api for both library and plugin
+- app: the demo app
+- core: The core library. It supports the basic action processor and extension.
+- extension: Based on the core. It helps us implements all the extensions, such as components and functions.
+- sample-plugin: This Gradle plugin helps us collect all the sample, testcases, extensions. 
+
+It will generate a class file while compiling. (Without source code). The class file has a string field containing a JSON string so you can parse it to get all the components and extensions.
+
+### Design
+
+* [Sample component](document/sample-compoent.md)
+* [Action processor](document/sample-processor.md)
+
+
+### How to use it
+
+#### Using the package to generate the category
+
+We try to simplify the demo classification. So what's the simplest way to category the demon? It should be the package name and component class.
+That's it.
+
+For example. this is your project structure
+
+```
+com.andorid.test.fragment
+    FragmentDemo1.kt
+    FragmentDemo2.kt
+com.android.test.ui
+    ViewDemo1.kt
+    ViewDemo2.kt
+```
+
+Your demo will look like this list.
+
+```
+|-- fragment
+  |-- FragmentDemo1
+  |-- FragmentDemo2
+|-- ui
+  |-- ViewDemo1
+  |-- ViewDemo2
+```
+
+That's all, You don't need to do anything.
+
+#### Custom the title and category
+
+If you want to customize your demo. You have to use this annotation `@Register`
+
+For example:
+
+```
+@Register(title="Demo1",desc="This is your demo",path="")
+class DemoActivity:AppcompatActivity{
+  ...
+}
+```
+
+* the field title is the demo's title...
+* the field desc is the demo's description...
+* path: this one is your category. You can use it this way: ui/list or ui/text.
+
+Tips:
+
+For the field path, you can either make it empty or use a specific path. I will collect all the paths and help you generate a tree.
+
+#### Working with testcase
+
+Imagine you have a vast demonstration app, and finding one demo is hard. So you may want to open it directly whenever you launch your app.
+
+The solution is to annotate your component with `@TestCase`
+
+```
+@TestCase
+@Register(title="Demo1",desc="This is your demo",path="")
+class DemoActivity:AppcompatActivity{
+  ...
+}
+```
+
+For more testcases I will help you pop up a dialog, and you can choose your demo.
+
+#### Working with extension
+
+This is a simple case to use all kinds of extensions.
+When you use `SampleSourceCode,` it will help you generate a ViewPager and put your source code as a list.
+
+```
+@SampleMemory
+@SampleMessage
+@SampleSourceCode
+@SampleDocument("documentSample.md")
+@Register(title = "组件集", desc = "展示当前己扩展的组件")
+class ComponentListSampleActivity : AppCompatActivity() {
+  ...
+}
+```
+
+Now we support several extensions.
+
+* Component
+  * SampleDocument: display the related document
+  * SampleMemory: display the runtime memory.
+  * SampleSourceCode: display the source file
+  * SampleMessage: display the test message.
+
+### Sample
+[APK FILE](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/file/app-debug.apk?raw=true)
 
 ### Pictures
 
 ![Image1](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/image1.gif?raw=true)<br>
 ![Image2](https://github.com/momodae/LibraryResources/blob/master/AndroidSampleLibrary/image/image2.gif?raw=true)<br>
-
-### How to use this library.
-
-* The simplest way to use this library.
-If you want to use this library as simple as possible. The only thing you have to do is configure all the dependency and plugin. That's it.
-I will help you generate all the categories and the sample information.
-For example
-
-```
-|--test1
-    |-- Sample1Activity
-    |-- Sample2Activity
-|--test2
-    |-- Sample1Activity
-    |-- Sample2Activity
-```
-
-From the package and class. I will help you generate all the demonstrate structure. Noticed that this is only for Activity and Fragment.
-Because we collect all the Activity/Fragment, If you have other classes that you use them for special purposes. Use the annotation class:@Exclude.
-
-* The other way, configure the category and sample by yourself.
-
-* For an activity sample
-
-    You could use either @Register or @RefRegister to set this sample up<br>
-
-    ```
-    @RefRegister(title=R.string.component_sample3,desc=R.string.component_sample3_desc,category = R.string.component_category,priority = 2)
-    class ComponentSourceSampleActivity : AppCompatActivity() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_component_source_code_sample)
-        }
-    }
-    ```
-
-* For an fragment sample
-    You could use either @Register or @RefRegister to set this sample up<br>
-
-    ```
-    @RefRegister(title=R.string.component_sample5,desc = R.string.component_sample5_desc,category = R.string.component_category)
-    class ComponentSampleFragment : Fragment() {
-        private var index=0
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-            return inflater.inflate(R.layout.fragment_component_sample, container, false);
-        }
-    }
-    ```
-
-* How to organize each samples
-
-    First every samples belong to root. But if you setup your sample like this:<br>
-    You actually changed the category of this sample<br>
-    ```
-    @RefRegister(xxx,category = R.string.component_category)<br>
-    class Sample{
-        ...
-    }
-    ```
-
-    But if this category does not exist. The sample will be lost.
-
-* How to use different kinds of components
-
-    ```
-    //Mark each component annotation to this sample
-    @SampleMessage
-    @SampleMemory
-    ...
-    class Sample{
-        ...
-    }
-    ```
-
-* Setup an exception handler. If your sample does not works properly and you want see the details. Here you could trace the exception and check it out
-. But if you do not have an exception handler. When the exception occurred. The application will crash. For a demo, It is usually not a problem.
-
-    ```
-    val projectApplication = SampleApplication.getProjectApplication()
-    projectApplication.androidSample.registerExceptionHandler { context, e, sampleItem, item ->
-        Log.e(TAG, "Exception occurs:" + e.message)
-    }
-    ```
-
-
-* The different between RefCategory and Category.
-> We use R.string to support i18n. If you want to support that. The Category is more convenient.
-
-
-### About me
-
-A programmer in mainland China.
-
-If you have any new idea about this project, feel free to contact me with this email:bingo110@126.com
-
 
