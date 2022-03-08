@@ -4,9 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 
 import com.cz.android.sample.api.ActionProcessor;
-import com.cz.android.sample.api.item.RegisterItem;
+import com.cz.android.sample.api.SampleItem;
 import com.cz.android.sample.library.sample.SampleObject;
-import com.cz.android.sample.processor.AbsActionProcessor;
+import com.cz.android.sample.processor.ActionProcessor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -17,14 +17,14 @@ import java.lang.reflect.InvocationTargetException;
  * @email bingo110@126.com
  */
 @ActionProcessor
-public class AlertDialogActionProcessor extends AbsActionProcessor<AlertDialog,FragmentActivity> {
+public class AlertDialogActionProcessor extends ActionProcessor<AlertDialog,FragmentActivity> {
     @Override
     public boolean isInstance(Class clazz) {
         return SampleObject.class.isAssignableFrom(clazz);
     }
 
     @Override
-    public AlertDialog getInstance(FragmentActivity context, RegisterItem item, Class clazz) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public AlertDialog getInstance(FragmentActivity context, SampleItem item, Class clazz) throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         SampleObject sampleObject;
         try{
             sampleObject= (SampleObject) clazz.newInstance();
@@ -42,7 +42,7 @@ public class AlertDialogActionProcessor extends AbsActionProcessor<AlertDialog,F
     }
 
     @Override
-    public void run(FragmentActivity context, RegisterItem registerItem, AlertDialog item) {
+    public void run(FragmentActivity context, SampleItem sampleItem, AlertDialog item) {
         item.show();
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Core</string>
+    <string name="sample_choice_test_case">Please choose a test case</string>
 </resources>

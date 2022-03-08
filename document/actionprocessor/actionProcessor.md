@@ -22,10 +22,10 @@ public abstract class AbsActionProcessor<T> {
     /**
      * process the register configuration
      * @param context Android context object. Here you is an FragmentActivity.
-     * @param registerItem the one that you register which is all the information you could use
+     * @param sampleItem the one that you register which is all the information you could use
      * @throws Exception when you execute an action failed throw an exception
      */
-    public abstract void run(FragmentActivity context, RegisterItem registerItem,T item) throws Exception;
+    public abstract void run(FragmentActivity context, RegisterItem sampleItem,T item) throws Exception;
 }
 
 ```
@@ -42,11 +42,11 @@ public class ActivityClassActionProcessor extends ClassActionProcessor {
     }
 
     @Override
-    public void run(FragmentActivity context, RegisterItem registerItem, Class clazz){
+    public void run(FragmentActivity context, RegisterItem sampleItem, Class clazz){
         //How the activity processor handle the class.  
         Intent intent = new Intent(context, clazz);
-        intent.putExtra("title",registerItem.title);
-        intent.putExtra("desc",registerItem.desc);
+        intent.putExtra("title",sampleItem.title);
+        intent.putExtra("desc",sampleItem.desc);
         context.startActivity(intent);
     }
 }
@@ -63,7 +63,7 @@ public class DialogClassActionProcessor extends ClassActionProcessor {
     }
 
     @Override
-    public void run(FragmentActivity context, RegisterItem registerItem, Class clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
+    public void run(FragmentActivity context, RegisterItem sampleItem, Class clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
         Constructor<Dialog> constructor = (Constructor<Dialog>) clazz.getConstructor(Context.class);
         Dialog dialog = constructor.newInstance(context);
         dialog.show();

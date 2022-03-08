@@ -63,7 +63,7 @@ public class AlertDialogActionProcessor extends AbsActionProcessor<AlertDialog> 
     }
 
     @Override
-    public void run(FragmentActivity context, RegisterItem registerItem, AlertDialog item) {
+    public void run(FragmentActivity context, RegisterItem sampleItem, AlertDialog item) {
         item.show();
     }
 }

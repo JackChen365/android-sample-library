@@ -1,5 +1,6 @@
 plugins {
   id("com.android.library")
+  kotlin("android")
 }
 
 android {
@@ -23,9 +24,18 @@ android {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
+
+  buildFeatures{
+    viewBinding=true
+  }
 }
 
 dependencies {
   api(project(":api"))
-//  api(Libs.SAMPLE_API)
+  implementation(Libs.AndroidX.KTX)
+  implementation(Libs.AndroidX.APPCOMPAT)
+  implementation(Libs.AndroidX.CONSTRAINTLAYOUT)
+  implementation(Libs.AndroidX.RECYCLERVIEW)
+  implementation(Libs.AndroidX.START_UP)
+  implementation(Libs.GSON)
 }

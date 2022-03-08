@@ -7,6 +7,7 @@ object Libs {
     const val APPCOMPAT = "androidx.appcompat:appcompat:1.2.0"
     const val CONSTRAINTLAYOUT = "androidx.constraintlayout:constraintlayout:2.0.4"
     const val RECYCLERVIEW = "androidx.recyclerview:recyclerview:1.1.0"
+    const val START_UP = "androidx.startup:startup-runtime:1.0.0"
 
     const val ANNOTATION = "androidx.annotation:annotation:1.1.0"
 

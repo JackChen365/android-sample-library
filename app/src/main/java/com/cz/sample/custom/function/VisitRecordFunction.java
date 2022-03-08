@@ -1,12 +1,10 @@
 package com.cz.sample.custom.function;
 
 import android.util.Log;
-
 import androidx.annotation.Keep;
-import androidx.fragment.app.FragmentActivity;
-
-import com.cz.android.sample.api.Function;
-import com.cz.android.sample.api.item.RegisterItem;
+import androidx.appcompat.app.AppCompatActivity;
+import com.cz.android.sample.api.Extension;
+import com.cz.android.sample.api.SampleItem;
 import com.cz.android.sample.function.SampleFunction;
 
 /**
@@ -15,12 +13,11 @@ import com.cz.android.sample.function.SampleFunction;
  * @email bingo110@126.com
  */
 @Keep
-@Function
-public class VisitRecordFunction implements SampleFunction<FragmentActivity> {
-    private static final String TAG="VisitRecordFunction";
+@Extension
+public class VisitRecordFunction implements SampleFunction {
+    private static final String TAG = "VisitRecordFunction";
 
-    @Override
-    public void initialize(FragmentActivity context) {
+    @Override public void onInitialize(final AppCompatActivity context) {
     }
 
     @Override
@@ -29,7 +26,7 @@ public class VisitRecordFunction implements SampleFunction<FragmentActivity> {
     }
 
     @Override
-    public void run(FragmentActivity context, Object object, RegisterItem item) {
-        Log.e(TAG,"Title:"+item.getTitle()+" class:"+object.toString());
+    public void execute(AppCompatActivity context, SampleItem item) {
+        Log.e(TAG, "Title:" + item.title + " class:" + item.className);
     }
 }

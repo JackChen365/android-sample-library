@@ -1,7 +1,6 @@
 plugins {
   id("com.android.application")
   kotlin("android")
-  id("kotlin-android-extensions")
   id("sample")
 }
 
@@ -43,6 +42,6 @@ dependencies {
   testImplementation(Libs.Test.JUNIT)
   androidTestImplementation(Libs.Test.ANDROIDX_JUNIT)
   androidTestImplementation(Libs.Test.ESPRESSO)
-  implementation(project(":library"))
-//    implementation(Libs.SAMPLE)
+  implementation(project(":extension"))
+  //    implementation(Libs.SAMPLE)
 }
