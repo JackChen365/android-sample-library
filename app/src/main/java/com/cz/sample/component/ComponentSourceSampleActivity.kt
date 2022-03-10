@@ -2,12 +2,12 @@ package com.cz.sample.component
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.cz.android.sample.api.RefRegister
+import com.cz.android.sample.api.Register
 import com.cz.android.sample.library.component.code.SampleSourceCode
 import com.cz.sample.R
 
 @SampleSourceCode
-@RefRegister(title=R.string.component_sample3,desc=R.string.component_sample3_desc,category = R.string.component_category,priority = 2)
+@Register(title="源码组件",desc="展示如何为示例添加源码查看组件",path = "组件示例")
 class ComponentSourceSampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

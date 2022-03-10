@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  * Here are the solution. We implement component container as a CompanionComponentContainer
  * Once there has one create a component. The others don't have to do the same.
  */
-public abstract class CompanionComponentContainer<T extends Activity> implements ComponentContainer<T> {
+public abstract class CompanionComponentContainer implements ComponentContainer {
     /**
      * All the companion component
      */
@@ -37,7 +38,7 @@ public abstract class CompanionComponentContainer<T extends Activity> implements
      * @param view
      * @return
      */
-    public abstract View onCreateCompanionComponent(T context, Object object, ViewGroup parentView, View view, Bundle saveInstance);
+    public abstract View onCreateCompanionComponent(AppCompatActivity context, Object object, ViewGroup parentView, View view, Bundle saveInstance);
 
     /**
      * Return a class array. So that I could add all the companion to this object
@@ -51,7 +52,7 @@ public abstract class CompanionComponentContainer<T extends Activity> implements
      * @param view
      * @return
      */
-    public View getCompanionComponent(T context, Object object, ViewGroup parentView, View view, Bundle saveInstance){
+    public View getCompanionComponent(AppCompatActivity context, Object object, ViewGroup parentView, View view, Bundle saveInstance){
         View companionComponentView = onCreateCompanionComponent(context, object, parentView, view, saveInstance);
         return companionComponentView;
     }

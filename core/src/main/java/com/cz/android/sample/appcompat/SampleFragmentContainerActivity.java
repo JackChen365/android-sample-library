@@ -22,7 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.cz.android.sample.api.SampleItem;
-import com.cz.android.sample.library.R;
+import com.cz.android.sample.core.R;
 import com.cz.android.sample.window.AppcompatWindowDelegate;
 
 /**

@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentActivity;
 import com.cz.android.sample.api.Extension;
 import com.cz.android.sample.api.SampleItem;
 import com.cz.android.sample.function.SampleFunction;
-import com.cz.android.sample.library.main.SampleActivityLifeCycleCallbackAdapter;
 
 /**
  * @author Created by cz
@@ -48,13 +47,32 @@ public class SamplePermissionFunction implements SampleFunction {
     @Override
     public void execute(AppCompatActivity context, final SampleItem item) {
         final Application application = context.getApplication();
-        application.registerActivityLifecycleCallbacks(new SampleActivityLifeCycleCallbackAdapter(){
+        application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks(){
+
             @Override
-            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
-                super.onActivityCreated(activity, savedInstanceState);
+            public void onActivityCreated(@NonNull final Activity activity, @Nullable final Bundle savedInstanceState) {
                 application.unregisterActivityLifecycleCallbacks(this);
                 FragmentActivity fragmentActivity=(FragmentActivity)activity;
                 requestSamplePermission(fragmentActivity,item);
+            }
+
+            @Override public void onActivityStarted(@NonNull final Activity activity) {
+            }
+
+            @Override public void onActivityResumed(@NonNull final Activity activity) {
+            }
+
+            @Override public void onActivityPaused(@NonNull final Activity activity) {
+            }
+
+            @Override public void onActivityStopped(@NonNull final Activity activity) {
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(@NonNull final Activity activity, @NonNull final Bundle outState) {
+            }
+
+            @Override public void onActivityDestroyed(@NonNull final Activity activity) {
             }
         });
     }

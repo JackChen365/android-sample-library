@@ -1,8 +1,10 @@
 package com.cz.android.sample.main.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.cz.android.sample.AndroidSample
 import com.cz.android.sample.api.SampleItem
 import com.cz.android.sample.core.databinding.SampleListItemBinding
 
@@ -11,10 +13,14 @@ import com.cz.android.sample.core.databinding.SampleListItemBinding
  * @date 2020-01-27 21:42
  * @email bingo110@126.com
  */
-class SampleListAdapter(items: MutableList<SampleItem>) :
-    MutableListAdapter<SampleItem, SampleListAdapter.ViewHolder>(items) {
+class SampleListAdapter(items: MutableList<AndroidSample.PathNode>) :
+    MutableListAdapter<AndroidSample.PathNode, SampleListAdapter.ViewHolder>(items) {
 
-    override fun compareItem(checkContent: Boolean, first: SampleItem, second: SampleItem): Boolean {
+    override fun compareItem(
+        checkContent: Boolean,
+        first: AndroidSample.PathNode,
+        second: AndroidSample.PathNode
+    ): Boolean {
         return if (checkContent) first == second else first === second
     }
 
@@ -24,13 +30,21 @@ class SampleListAdapter(items: MutableList<SampleItem>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(this[position], position)
+        holder.bind(this[position])
+        holder.itemView.setOnClickListener { v -> dispatchItemClickEvent(v, holder.layoutPosition) }
     }
 
     class ViewHolder(private val binding: SampleListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(sampleItem: SampleItem, position: Int) {
-            binding.textTitle.text = sampleItem.title
+        fun bind(node: AndroidSample.PathNode) {
+            val item = node.item
+            if (item is String) {
+                binding.sampleTitle.text = item
+                binding.sampleDescription.visibility = View.GONE
+            } else if (item is SampleItem) {
+                binding.sampleTitle.text = item.title
+                binding.sampleDescription.text = item.desc
+                binding.sampleDescription.visibility = View.VISIBLE
+            }
         }
     }
 }

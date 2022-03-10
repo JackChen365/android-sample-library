@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/sampleToolBar"
+            android:id="@+id/sample_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?colorPrimary"
@@ -20,16 +20,14 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             android:theme="@style/AppTheme.AppBarOverlay"/>
 
-        <ListView
-            android:id="@+id/sampleListView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sample_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/sample_activity_horizontal_margin"
             android:layout_marginRight="@dimen/sample_activity_horizontal_margin"
             android:layout_marginTop="@dimen/sample_activity_vertical_margin"
-            android:layout_marginBottom="@dimen/sample_activity_vertical_margin"
-            android:dividerHeight="1dp"
-            android:divider="@color/sampleLightGray"/>
+            android:layout_marginBottom="@dimen/sample_activity_vertical_margin" />
     </LinearLayout>
 
 </FrameLayout>

@@ -9,14 +9,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.FragmentActivity;
-
+import com.cz.android.sample.api.Extension;
 import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.library.R;
-
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,7 +23,8 @@ import java.util.Observer;
  * @date 2020-01-29 16:28
  * @email bingo110@126.com
  */
-public class SampleMessageComponent implements ComponentContainer <FragmentActivity>{
+@Extension
+public class SampleMessageComponent implements ComponentContainer{
     private final WorkThread<String> workThread=new WorkThread("sample_work_thread");
     private final SampleSystemConsole sampleSystemConsole=new SampleSystemConsole();
 
@@ -41,7 +40,7 @@ public class SampleMessageComponent implements ComponentContainer <FragmentActiv
     }
 
     @Override
-    public View getComponentView(FragmentActivity context, Object object, ViewGroup parentView,View view, Bundle saveInstance) {
+    public View getComponentView(AppCompatActivity context, Object object, ViewGroup parentView,View view, Bundle saveInstance) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         final View contentLayout = layoutInflater.inflate(R.layout.sample_message_layout, parentView, false);
         FrameLayout sampleMessageContentLayout=contentLayout.findViewById(R.id.sampleMessageContentLayout);
@@ -50,7 +49,7 @@ public class SampleMessageComponent implements ComponentContainer <FragmentActiv
     }
 
     @Override
-    public void onCreatedView(FragmentActivity context, Object object, View view) {
+    public void onCreatedView(AppCompatActivity context, Object object, View view) {
         //If activity/fragment want to output message
         final NestedScrollView scrollView=view.findViewById(R.id.sampleScrollView);
         final TextView messageView = view.findViewById(R.id.sampleMessageText);

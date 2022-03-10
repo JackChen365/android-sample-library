@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
-import com.cz.android.sample.api.RefRegister
-import com.cz.sample.R
-import kotlinx.android.synthetic.main.activity_source_code_sample.*
+import com.cz.android.sample.api.Register
+import com.cz.sample.databinding.ActivitySourceCodeSampleBinding
 
 /**
  * @author :Created by cz
@@ -14,23 +13,24 @@ import kotlinx.android.synthetic.main.activity_source_code_sample.*
  * @email bingo110@126.com
  * @see com.cz.android.sample.library.component.code.view.SourceCodeView A webView that responsible for demonstrate source code.
  */
-//@RefRegister(title = R.string.other_sample2,desc=R.string.other_sample2_desc,category = R.string.other)
+@Register(title = "title", desc = "演示源码加载,高度展示", path = "其他")
 class SourceCodeSampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_source_code_sample)
+        val binding = ActivitySourceCodeSampleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        sampleProgressBar.startProgressAnim()
-        sampleProgressBar.setOnProgressListener { v -> v.animate().alpha(0f) }
-        sourceCodeView.webChromeClient = object : WebChromeClient() {
+        binding.sampleProgressBar.startProgressAnim()
+        binding.sampleProgressBar.setOnProgressListener { v -> v.animate().alpha(0f) }
+        binding.sourceCodeView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
-                if (null != sampleProgressBar && newProgress >= sampleProgressBar!!.getFirstProgress()) {
-                    sampleProgressBar!!.passAnimation()
+                if (null != binding.sampleProgressBar && newProgress >= binding.sampleProgressBar!!.getFirstProgress()) {
+                    binding.sampleProgressBar!!.passAnimation()
                 }
             }
         }
-        sourceCodeView.loadSourceCodeFromUrl("https://raw.githubusercontent.com/momodae/SuperTextView/master/library/src/main/java/com/cz/widget/supertextview/library/Styled.java")
+        binding.sourceCodeView.loadSourceCodeFromUrl("https://raw.githubusercontent.com/momodae/SuperTextView/master/library/src/main/java/com/cz/widget/supertextview/library/Styled.java")
     }
 }

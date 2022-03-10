@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class AndroidSampleInitializer implements Initializer<AndroidSample> {
     @NonNull @Override public AndroidSample create(@NonNull final Context context) {
-        final AndroidSample androidSample = AndroidSample.getInstance();
+        final AndroidSample androidSample = AndroidSample.Companion.getInstance();
         androidSample.attachToContext(context);
         return androidSample;
     }

@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.ContextMenu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.cz.android.sample.api.RefCategory
-import com.cz.android.sample.api.RefRegister
+import com.cz.android.sample.api.Register
 import com.cz.android.sample.library.component.document.SampleDocument
 import com.cz.sample.R
 
@@ -31,8 +30,7 @@ import com.cz.sample.R
  * @see SampleDocument This annotation will add a additional panel to your sample.
  */
 @SampleDocument("readme-cn.md")
-@RefCategory(title=R.string.component_category,desc = R.string.component_category_desc)
-@RefRegister(title=R.string.component_sample2,desc=R.string.component_sample2_desc,category = R.string.component_category,priority = 1)
+@Register(title = "文档组件", desc = "展示如何为演示关联文档", path = "组件示例")
 class ComponentDocumentSampleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
