@@ -22,10 +22,10 @@
         <activity android:name=".test.SourceCodeSampleActivity" />
 
         <!--all the components sample-->
-        <activity android:name=".component.ComponentSampleActivity"></activity>
-        <activity android:name=".component.ComponentDocumentSampleActivity"></activity>
-        <activity android:name=".component.ComponentSourceSampleActivity"></activity>
-        <activity android:name=".component.ComponentListSampleActivity"></activity>
+        <activity android:name=".component.ComponentSampleActivity" />
+        <activity android:name=".component.ComponentDocumentSampleActivity" />
+        <activity android:name=".component.ComponentSourceSampleActivity" />
+        <activity android:name=".component.ComponentListSampleActivity" />
     </application>
 
 </manifest>

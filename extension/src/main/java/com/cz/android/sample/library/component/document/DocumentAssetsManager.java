@@ -5,8 +5,6 @@ import android.content.res.AssetManager;
 
 import androidx.annotation.Nullable;
 
-import com.cz.android.sample.library.main.SampleConfiguration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.List;
  * @date 2020/5/27 8:02 PM
  * @email bingo110@126.com
  */
-public class DocumentAssetsManager implements SampleConfiguration {
+public class DocumentAssetsManager {
     private final static DocumentAssetsManager documentAssetsManager =new DocumentAssetsManager();
 
     public static DocumentAssetsManager getInstance(){
@@ -25,7 +23,6 @@ public class DocumentAssetsManager implements SampleConfiguration {
 
     private List<String> documentFileList=new ArrayList<>();
 
-    @Override
     public void onCreate(Context context) {
         AssetManager assets = context.getAssets();
         collectDocumentFiles(assets,documentFileList,"document");
