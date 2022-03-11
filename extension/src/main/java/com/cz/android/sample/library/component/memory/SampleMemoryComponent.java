@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
+import com.cz.android.sample.api.Extension;
 import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.library.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,7 +19,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * @date 2020-01-29 19:06
  * @email bingo110@126.com
  */
-public class SampleMemoryComponent implements ComponentContainer<FragmentActivity> {
+@Extension
+public class SampleMemoryComponent implements ComponentContainer {
 
     @Override
     public boolean isComponentAvailable(@NonNull Object object) {
@@ -26,7 +29,7 @@ public class SampleMemoryComponent implements ComponentContainer<FragmentActivit
     }
 
     @Override
-    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
+    public View getComponentView(@NonNull AppCompatActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View createView = layoutInflater.inflate(R.layout.sample_memory_layout, parentView, false);
         final View memoryView = createView.findViewById(R.id.sampleMemoryView);
@@ -45,7 +48,7 @@ public class SampleMemoryComponent implements ComponentContainer<FragmentActivit
     }
 
     @Override
-    public void onCreatedView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull View view) {
+    public void onCreatedView(@NonNull AppCompatActivity context, @NonNull Object object, @NonNull View view) {
     }
 
     @Override

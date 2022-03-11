@@ -1,17 +1,12 @@
 package com.cz.sample.dialog;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
-
-import com.cz.android.sample.api.RefCategory;
-import com.cz.android.sample.api.RefRegister;
-import com.cz.android.sample.library.sample.SampleObject;
-import com.cz.sample.R;
+import androidx.appcompat.app.AppCompatActivity;
+import com.cz.android.sample.api.Register;
+import com.cz.android.sample.main.sample.SampleInterface;
 import com.cz.sample.custom.processor.AlertDialogActionProcessor;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,16 +16,15 @@ import java.util.List;
  * @email bingo110@126.com
  * @see AlertDialogActionProcessor Our own action processor
  */
-@RefCategory(title= R.string.dialog,desc=R.string.dialog_desc)
-public class DialogSample{
+public class DialogSample {
 
     public DialogSample() {
     }
 
-    @RefRegister(title = R.string.dialog_sample1,desc =R.string.dialog_sample1_desc,category = R.string.dialog)
-    public class DialogSample1 implements SampleObject {
+    @Register(title = "登陆提示", desc = "一个简单的登陆提示Dialog示例", path = "dialog")
+    public class DialogSample1 implements SampleInterface<AlertDialog> {
         @Override
-        public Object getObject(final Context context) {
+        public AlertDialog getObject(final AppCompatActivity context) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Login Alert")
                     .setMessage("Are you sure, you want to continue ?")
@@ -38,13 +32,13 @@ public class DialogSample{
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(context,"Selected Option: YES",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Selected Option: YES", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(context,"Selected Option: No",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Selected Option: No", Toast.LENGTH_SHORT).show();
                         }
                     });
             //Creating dialog box
@@ -52,17 +46,17 @@ public class DialogSample{
         }
     }
 
-    @RefRegister(title = R.string.dialog_sample2,desc =R.string.dialog_sample2_desc,category = R.string.dialog)
-    public class DialogSample2 implements SampleObject {
+    @Register(title = "选择颜色", desc = "一个简单的多选Dialog示例...", path = "dialog")
+    public class DialogSample2 implements SampleInterface<AlertDialog> {
         final CharSequence[] colors = { "Pink", "Red", "Yellow", "Blue" };
-        private List<Integer> selectList=new ArrayList<>();
+        private List<Integer> selectList = new ArrayList<>();
         private boolean icount[] = new boolean[colors.length];
 
         @Override
-        public Object getObject(final Context context) {
+        public AlertDialog getObject(final AppCompatActivity context) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("Choose Colors")
-                    .setMultiChoiceItems(colors,icount, new DialogInterface.OnMultiChoiceClickListener() {
+                    .setMultiChoiceItems(colors, icount, new DialogInterface.OnMultiChoiceClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1, boolean arg2) {
                             if (arg2) {
@@ -73,7 +67,7 @@ public class DialogSample{
                                 selectList.remove(Integer.valueOf(arg1));
                             }
                         }
-                    })      .setCancelable(false)
+                    }).setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -81,13 +75,14 @@ public class DialogSample{
                             for (int i = 0; i < selectList.size(); i++) {
                                 msg = msg + "\n" + (i + 1) + " : " + colors[selectList.get(i)];
                             }
-                            Toast.makeText(context, "Total " + selectList.size() + " Items Selected.\n" + msg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Total " + selectList.size() + " Items Selected.\n" + msg,
+                                    Toast.LENGTH_SHORT).show();
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(context,"No Option Selected",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "No Option Selected", Toast.LENGTH_SHORT).show();
                         }
                     });
             //Creating dialog box

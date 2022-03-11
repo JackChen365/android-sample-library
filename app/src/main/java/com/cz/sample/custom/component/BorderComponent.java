@@ -5,9 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
-import com.cz.android.sample.api.Component;
+import com.cz.android.sample.api.Extension;
 import com.cz.android.sample.component.ComponentContainer;
 import com.cz.android.sample.window.AppcompatWindowDelegate;
 
@@ -16,8 +17,8 @@ import com.cz.android.sample.window.AppcompatWindowDelegate;
  * @date 2020-01-30 13:23
  * @email bingo110@126.com
  */
-@Component
-public class BorderComponent implements ComponentContainer<FragmentActivity> {
+@Extension
+public class BorderComponent implements ComponentContainer {
 
     /**
      * We check if this object has Annotation:SampleBorder.
@@ -45,7 +46,7 @@ public class BorderComponent implements ComponentContainer<FragmentActivity> {
      * @return
      */
     @Override
-    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
+    public View getComponentView(@NonNull AppCompatActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
         BorderLayout borderLayout=new BorderLayout(context);
         borderLayout.addView(view);
         return borderLayout;
@@ -59,7 +60,7 @@ public class BorderComponent implements ComponentContainer<FragmentActivity> {
      * @param view
      */
     @Override
-    public void onCreatedView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull View view) {
+    public void onCreatedView(@NonNull AppCompatActivity context, @NonNull Object object, @NonNull View view) {
     }
 
     /**

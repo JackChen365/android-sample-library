@@ -2,7 +2,6 @@ package com.cz.sample.component
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.cz.android.sample.api.RefRegister
 import com.cz.android.sample.api.Register
 import com.cz.android.sample.library.component.code.SampleSourceCode
 import com.cz.android.sample.library.component.document.SampleDocument
@@ -10,24 +9,25 @@ import com.cz.android.sample.library.component.memory.SampleMemory
 import com.cz.android.sample.library.component.message.SampleMessage
 import com.cz.sample.R
 import com.cz.sample.custom.component.SampleBorder
-import kotlinx.android.synthetic.main.activity_component_sample.*
+import com.cz.sample.databinding.ActivityComponentSampleBinding
 
 @SampleMemory
 @SampleMessage
 @SampleBorder
 @SampleSourceCode
-@RefRegister(title=R.string.component_sample1,desc=R.string.component_sample1_desc,category = R.string.component_category)
+@Register(title="基础组件演示",desc="展示通过注解添加三种不同组件为示例添加不同的功能扩展",path = "组件示例")
 class ComponentSampleActivity : AppCompatActivity() {
     private var index=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_component_sample)
+        val binding = ActivityComponentSampleBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //Annotation above support two different functions
 
         //@SampleMemory will add memory panel to the sample
         //@SampleMessage will add message output panel
-        testButton.setOnClickListener {
+        binding.testButton.setOnClickListener {
             //This message will show up in message panel automatically
             println("Message from ComponentSampleActivity:${index++}")
         }

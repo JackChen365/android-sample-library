@@ -4,22 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
+import com.cz.android.sample.appcompat.SampleWrapperViewFragment;
 import com.cz.android.sample.component.CompanionComponentContainer;
 import com.cz.android.sample.library.R;
 import com.cz.android.sample.library.adapter.SimpleFragmentPagerAdapter;
-import com.cz.android.sample.library.appcompat.SampleWrapperViewFragment;
 import com.cz.android.sample.library.component.document.SampleDocumentComponent;
 import com.google.android.material.tabs.TabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +24,7 @@ import java.util.List;
  * @date 2020-01-31 11:38
  * @email bingo110@126.com
  */
-public class SampleSourceCodeComponent extends CompanionComponentContainer<FragmentActivity> {
+public class SampleSourceCodeComponent extends CompanionComponentContainer {
 
     @Override
     public boolean isComponentAvailable(@NonNull Object object) {
@@ -37,26 +33,9 @@ public class SampleSourceCodeComponent extends CompanionComponentContainer<Fragm
     }
 
     @Override
-    public View onCreateCompanionComponent(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View contentLayout = layoutInflater.inflate(R.layout.sample_fragment_tab, parentView, false);
-        ViewPager sampleViewPager=contentLayout.findViewById(R.id.sampleViewPager);
-        List<CharSequence> titleList=new ArrayList<>();
-        titleList.add(context.getString(R.string.sample));
-        List<Fragment> fragmentList=new ArrayList<>();
-        fragmentList.add(SampleWrapperViewFragment.newFragment(view));
-        sampleViewPager.setOffscreenPageLimit(3);
-        sampleViewPager.setAdapter(SimpleFragmentPagerAdapter.create(context.getSupportFragmentManager(), fragmentList,titleList));
-        return contentLayout;
-    }
-
-    @Override
-    public Class<CompanionComponentContainer>[] getCompanionComponent() {
-        return new Class[]{SampleDocumentComponent.class};
-    }
-
-    @Override
-    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view, Bundle saveInstance) {
+    public View getComponentView(final AppCompatActivity context, final Object object, final ViewGroup parentView,
+            final View view,
+            final Bundle saveInstance) {
         ViewPager sampleViewPager=view.findViewById(R.id.sampleViewPager);
         TabLayout sampleTabLayout=view.findViewById(R.id.sampleTabLayout);
         PagerAdapter adapter = sampleViewPager.getAdapter();
@@ -84,8 +63,29 @@ public class SampleSourceCodeComponent extends CompanionComponentContainer<Fragm
         return view;
     }
 
+    @Override public void onCreatedView(final AppCompatActivity context, final Object object, final View view) {
+
+    }
+
     @Override
-    public void onCreatedView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull View view) {
+    public View onCreateCompanionComponent(final AppCompatActivity context, final Object object, final ViewGroup parentView,
+            final View view,
+            final Bundle saveInstance) {
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View contentLayout = layoutInflater.inflate(R.layout.sample_fragment_tab, parentView, false);
+        ViewPager sampleViewPager=contentLayout.findViewById(R.id.sampleViewPager);
+        List<CharSequence> titleList=new ArrayList<>();
+        titleList.add(context.getString(R.string.sample));
+        List<Fragment> fragmentList=new ArrayList<>();
+        fragmentList.add(SampleWrapperViewFragment.newFragment(view));
+        sampleViewPager.setOffscreenPageLimit(3);
+        sampleViewPager.setAdapter(SimpleFragmentPagerAdapter.create(context.getSupportFragmentManager(), fragmentList,titleList));
+        return contentLayout;
+    }
+
+    @Override
+    public Class<CompanionComponentContainer>[] getCompanionComponent() {
+        return new Class[]{SampleDocumentComponent.class};
     }
 
     @Override

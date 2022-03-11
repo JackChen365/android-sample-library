@@ -28,6 +28,7 @@ abstract class AndroidSample protected constructor() {
     }
 
     private var applicationContext: Context? = null
+
     open fun attachToContext(context: Context) {
         val application = context.applicationContext as Application
         application.registerActivityLifecycleCallbacks(SampleActivityLifeCycleCallback())
@@ -42,7 +43,7 @@ abstract class AndroidSample protected constructor() {
 
     abstract fun getComponentManager(): ComponentManager
 
-    abstract fun getPathNode(): PathNode
+    abstract fun getPathNodeList(path: String): List<PathNode>
 
     /**
      * Start a sample.
@@ -52,7 +53,7 @@ abstract class AndroidSample protected constructor() {
      */
     abstract fun start(context: AppCompatActivity?, item: SampleItem?)
 
-    class AndroidSampleImpl : AndroidSample() {
+    private class AndroidSampleImpl : AndroidSample() {
         private val rootNode = PathNode(".")
         private val actionProcessor = ActionProcessManager()
         private val sampleItemList: MutableList<SampleItem> = ArrayList()
@@ -189,7 +190,12 @@ abstract class AndroidSample protected constructor() {
             return testcases
         }
 
-        override fun getPathNode() = rootNode
+        override fun getPathNodeList(path: String): List<PathNode> {
+            if (null == path) {
+                return rootNode.children
+            }
+            return rootNode.path(path)
+        }
 
         override fun start(context: AppCompatActivity?, item: SampleItem?) {
             val functionManager = getFunctionManager()
