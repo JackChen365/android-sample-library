@@ -11,12 +11,12 @@ val pomProjectUrl = "https://github.com/JackChen365/AndroidSampleLibrary"
 
 val pomInception = "2022"
 val pomLicenses = mapOf(
-  "The Apache Software License, Version 2.0" to "http://www.apache.org/licenses/LICENSE-2.0.txt"
+    "The Apache Software License, Version 2.0" to "http://www.apache.org/licenses/LICENSE-2.0.txt"
 )
 
 val pomDevelopers = mapOf(
-  "JackChen" to "zhenchen@tubi.tv",
-  "Airsaid" to "airsaid1024@gmail.com"
+    "JackChen" to "zhenchen@tubi.tv",
+    "Airsaid" to "airsaid1024@gmail.com"
 )
 
 val pomScmUrl = "https://github.com/JackChen365/AndroidSampleLibrary"
@@ -80,6 +80,14 @@ afterEvaluate {
     // Configure MavenCentral repository
     // `io.github.gradle-nexus.publish-plugin` plugin is responsible for configuration
 
+
+    // Configure MavenLocal repository
+    repositories {
+      maven {
+        name = "myMavenLocal"
+        url = uri(File(rootProject.rootDir, ".m2/repository"))
+      }
+    }
   }
 }
 
