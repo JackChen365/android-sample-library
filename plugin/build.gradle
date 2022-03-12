@@ -1,6 +1,6 @@
 plugins {
   id 'groovy'
-  id 'kotlin'
+  id 'org.jetbrains.kotlin.jvm'
   id 'java-gradle-plugin'
   id 'maven-central-publish'
 }
@@ -20,7 +20,7 @@ java {
 gradlePlugin {
   plugins {
     register("sample") {
-      id = 'sample'
+      id = 'com.airsaid.sample'
       implementationClass = 'com.cz.android.sample.library.SamplePlugin'
     }
   }

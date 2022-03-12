@@ -16,16 +16,23 @@ nexusPublishing {
 }
 
 buildscript {
+  val isApplyPlugin by extra(false)
+
   repositories {
     google()
     jitpack()
     jcenter() // Warning: this repository is going to shut down soon
+    maven {
+      url = uri(File(rootDir, ".m2/repository"))
+    }
   }
 
   dependencies {
     classpath("com.android.tools.build:gradle:${Versions.ANDROID_GRADLE_PLUGIN}")
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}")
-    classpath("com.github.momodae.AndroidSampleLibrary:plugin:${Versions.SAMPLE}")
+    if (isApplyPlugin) {
+      classpath("com.airsaid:sample-plugin:1.0.0-SNAPSHOT")
+    }
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
   }
