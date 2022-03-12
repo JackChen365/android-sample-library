@@ -1,4 +1,20 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+  id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+}
+
+group = "com.airsaid"
+version = "1.0.0-SNAPSHOT"
+
+nexusPublishing {
+  repositories {
+    sonatype {
+      nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+      snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+    }
+  }
+}
+
 buildscript {
   repositories {
     google()

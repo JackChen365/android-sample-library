@@ -2,10 +2,8 @@ plugins {
   id 'groovy'
   id 'kotlin'
   id 'java-gradle-plugin'
+  id 'maven-central-publish'
 }
-
-group = "com.cz.android.sample.library"
-version "1.0.0"
 
 compileKotlin {
   kotlinOptions.jvmTarget = "1.8"
