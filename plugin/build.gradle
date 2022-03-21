@@ -1,11 +1,9 @@
 plugins {
   id 'groovy'
-  id 'kotlin'
+  id 'org.jetbrains.kotlin.jvm'
   id 'java-gradle-plugin'
+  id 'maven-central-publish'
 }
-
-group = "com.cz.android.sample.library"
-version "1.0.0"
 
 compileKotlin {
   kotlinOptions.jvmTarget = "1.8"
@@ -22,7 +20,7 @@ java {
 gradlePlugin {
   plugins {
     register("sample") {
-      id = 'sample'
+      id = 'com.airsaid.sample'
       implementationClass = 'com.cz.android.sample.library.SamplePlugin'
     }
   }

@@ -1,5 +1,6 @@
 plugins {
   id("com.android.library")
+  id("maven-central-publish")
 }
 
 android {

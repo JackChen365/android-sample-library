@@ -1,7 +1,10 @@
 plugins {
   id("com.android.application")
   kotlin("android")
-  id("sample")
+}
+val isApplyPlugin: Boolean by project.rootProject.extra
+if (isApplyPlugin) {
+  apply(plugin = "com.airsaid.sample")
 }
 
 android {
@@ -47,5 +50,4 @@ dependencies {
   androidTestImplementation(Libs.Test.ANDROIDX_JUNIT)
   androidTestImplementation(Libs.Test.ESPRESSO)
   implementation(project(":extension"))
-  //    implementation(Libs.SAMPLE)
 }

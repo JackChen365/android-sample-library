@@ -4,6 +4,9 @@ dependencyResolutionManagement {
     google()
     mavenCentral()
     maven("https://jitpack.io")
+    maven {
+      url = uri(File(rootDir, ".m2/repository"))
+    }
   }
 }
 
