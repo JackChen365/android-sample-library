@@ -20,7 +20,7 @@ public class SampleActivityLifeCycleCallback implements Application.ActivityLife
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
         //initialize all functions
-        AndroidSample androidSample = AndroidSample.getInstance();
+        AndroidSample androidSample = AndroidSample.Companion.getInstance();
         FunctionManager functionManager = androidSample.getFunctionManager();
         List<SampleFunction> functionList = functionManager.getFunctionList();
         for(SampleFunction function:functionList){
