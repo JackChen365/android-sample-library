@@ -1,14 +1,27 @@
-dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
-  repositories {
-    google()
-    mavenCentral()
-    maven("https://jitpack.io")
-    maven {
-      url = uri(File(rootDir, ".m2/repository"))
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven("https://jitpack.io")
+        maven("https://plugins.gradle.org/m2/")
+        maven("https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
     }
-  }
 }
-
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        maven("https://jitpack.io")
+        maven("https://plugins.gradle.org/m2/")
+        maven("https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
+    }
+}
+enableFeaturePreview("VERSION_CATALOGS")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "AndroidSampleLibrary"
-include(":app", ":api", ":core", ":extension", ":plugin")
+rootProject.buildFileName = "build.gradle.kts"
+include(":app", ":api", ":core", ":extension", ":sample-plugin")

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cz.sample">
+    package="com.github.jackchen.sample">
 
     <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
 
@@ -11,21 +11,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name="com.github.jackchen.sample.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".function.SamplePermissionActivity" />
-        <activity android:name=".test.SourceCodeSampleActivity" />
+        <activity
+            android:name="com.github.jackchen.sample.function.SamplePermissionActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.github.jackchen.sample.test.SourceCodeSampleActivity"
+            android:exported="false" />
 
         <!--all the components sample-->
-        <activity android:name=".component.ComponentSampleActivity" />
-        <activity android:name=".component.ComponentDocumentSampleActivity" />
-        <activity android:name=".component.ComponentSourceSampleActivity" />
-        <activity android:name=".component.ComponentListSampleActivity" />
+        <activity
+            android:name="com.github.jackchen.sample.component.ComponentSampleActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.github.jackchen.sample.component.ComponentDocumentSampleActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.github.jackchen.sample.component.ComponentSourceSampleActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.github.jackchen.sample.component.ComponentListSampleActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

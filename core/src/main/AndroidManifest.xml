@@ -1,15 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.cz.android.sample.core">
+    package="com.github.jackchen.android.core">
 
     <application>
+        <activity
+            android:name=".appcompat.SampleFragmentContainerActivity"
+            android:exported="false" />
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
-            tools:node="merge" >
+            tools:node="merge">
             <meta-data
-                android:name="com.cz.android.sample.initializer.AndroidSampleInitializer"
+                android:name="com.github.jackchen.android.core.initializer.AndroidSampleInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>
