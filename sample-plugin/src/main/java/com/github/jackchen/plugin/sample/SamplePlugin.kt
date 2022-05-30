@@ -44,9 +44,7 @@ class SamplePlugin : Plugin<Project> {
                             sampleBuildDir.mkdirs()
                         }
                         val documentBuildFile = File(sampleBuildDir, "document")
-                        mergeDocument(project, documentBuildFile)
-                        //Add the configuration placeholder in the sample build dir
-                        configurationFile.writeText("{}")
+                        mergeDocumentFiles(project, documentBuildFile)
                         //We copy all the source file into the assets folder.
                         appExtension.sourceSets.forEach { sourceSet: AndroidSourceSet ->
                             if (sourceSet.name == "main") {
@@ -78,12 +76,12 @@ class SamplePlugin : Plugin<Project> {
      * @param project
      * @param outputFolder
      */
-    private fun mergeDocument(project: Project, outputFolder: File) {
+    private fun mergeDocumentFiles(project: Project, outputFolder: File) {
         //Collect all the documents inside the project.
         val rootProject = project.rootProject
         val projectDir = rootProject.projectDir
         val projectAbsolutePath = projectDir.absolutePath
-        val documentList = collectDocuments(project)
+        val documentList = collectDocumentFiles(project)
         for (file in documentList) {
             try {
                 val absolutePath = file.absolutePath
@@ -100,7 +98,7 @@ class SamplePlugin : Plugin<Project> {
         }
     }
 
-    private fun collectDocuments(project: Project): List<File> {
+    private fun collectDocumentFiles(project: Project): List<File> {
         val projectDir = project.rootProject.projectDir
         val ignoreFileList: MutableList<String> = ArrayList()
         val documentList: MutableList<File> = ArrayList()

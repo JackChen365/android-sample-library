@@ -6,6 +6,7 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.internal.tasks.CompressAssetsTask
 import com.github.jackchen.android.sample.api.ExtensionItem
 import com.github.jackchen.android.sample.api.SampleItem
+import com.github.jackchen.plugin.sample.PathNodePrinter
 import com.github.jackchen.plugin.sample.SamplePlugin
 import com.github.jackchen.plugin.sample.visitor.SampleClassVisitor
 import com.github.jackchen.plugin.sample.visitor.annotaiton.ExtensionAnnotationHandler
@@ -60,9 +61,8 @@ class SampleTransform(private val project: Project, private val configurationFil
         }
         val outputProvider = transformInvocation.outputProvider
         outputProvider.deleteAll()
-        val inputs = transformInvocation.inputs
         //Copy all the jar and classes to the where they need to...
-        for (input in inputs) {
+        for (input in transformInvocation.inputs) {
             input.jarInputs.parallelStream().forEach { jarInput: JarInput ->
                 val dest = outputProvider
                     .getContentLocation(
@@ -84,12 +84,11 @@ class SampleTransform(private val project: Project, private val configurationFil
         }
         val sampleItemList: MutableList<SampleItem> = mutableListOf()
         val extensionList: MutableList<ExtensionItem> = mutableListOf()
-        for (input in inputs) {
+        for (input in transformInvocation.inputs) {
             input.directoryInputs?.forEach(Consumer { dir: DirectoryInput ->
                 try {
-                    val file = dir.file
-                    if (file.isDirectory) {
-                        Files.walk(file.toPath()).filter { path: Path ->
+                    if (dir.file.isDirectory) {
+                        Files.walk(dir.file.toPath()).filter { path: Path ->
                             val name = path.toFile().name
                             name.endsWith(".class") && !name.startsWith("R$") &&
                                     "R.class" != name && "BuildConfig.class" != name
@@ -110,11 +109,10 @@ class SampleTransform(private val project: Project, private val configurationFil
                     e.printStackTrace()
                 }
                 try {
-                    val destFolder = outputProvider
-                        .getContentLocation(
-                            dir.name, dir.contentTypes, dir.scopes,
-                            Format.DIRECTORY
-                        )
+                    val destFolder = outputProvider.getContentLocation(
+                        dir.name, dir.contentTypes, dir.scopes,
+                        Format.DIRECTORY
+                    )
                     FileUtils.copyDirectory(dir.file, destFolder)
                 } catch (e: IOException) {
                     throw UncheckedIOException(e)
@@ -122,55 +120,25 @@ class SampleTransform(private val project: Project, private val configurationFil
             })
         }
         //Output the debug log.
-        println("The sample plugin >")
-        println("----| sample")
-        sampleItemList.forEach { item ->
-            println("--------| title:${item.title} path:${item.path}")
-        }
-        println("----| extension")
-        extensionList.forEach { item ->
-            println("--------| class:${item.className}")
-        }
+        PathNodePrinter.printPathTree(sampleItemList)
         //Write the sample configuration to file
-        replaceCompressedAssetsConfigurationFile(sampleItemList, extensionList)
+        createSampleConfigurationClass(transformInvocation, sampleItemList, extensionList)
     }
 
-    private fun replaceCompressedAssetsConfigurationFile(
+    private fun createSampleConfigurationClass(
+        transformInvocation: TransformInvocation,
         sampleItemList: MutableList<SampleItem>,
         extensionList: MutableList<ExtensionItem>
     ) {
         val configurationJsonText = Gson().toJson(mapOf("samples" to sampleItemList, "extensions" to extensionList))
-        val samplePlugin = project.plugins.getPlugin(SamplePlugin::class.java)
-        val sampleBuildDir = samplePlugin.getSampleBuildDir()
-        if (!sampleBuildDir.exists()) {
-            sampleBuildDir.mkdirs()
-        }
-        configurationFile.writeText(configurationJsonText)
-        val configurationJarFile = File(project.buildDir, "tmp/" + configurationFile.name + ".jar")
-        JarOutputStream(FileOutputStream(configurationJarFile)).use { output ->
-            output.putNextEntry(JarEntry("assets/"))
-            output.closeEntry()
-            val entry = JarEntry("assets/" + configurationFile.name)
-            output.putNextEntry(entry)
-            output.write(configurationFile.readBytes())
-            output.closeEntry()
-        }
-        val appExtension = project.extensions.getByType(AppExtension::class.java)
-        appExtension.applicationVariants.forEach { applicationVariant ->
-            val buildType = applicationVariant.buildType.name.replaceFirstChar { it.uppercaseChar() }
-            val compressAssetsTask =
-                project.tasks.findByName("compress${buildType}Assets")
-            if (null != compressAssetsTask && compressAssetsTask is CompressAssetsTask) {
-                val outputDir = compressAssetsTask.outputDir.asFile.get()
-                val assetsCompressFile = File(outputDir, "assets")
-                if (assetsCompressFile.exists()) {
-                    val compressConfigurationJarFile = File(assetsCompressFile, configurationFile.name + ".jar")
-                    if (compressConfigurationJarFile.exists()) {
-                        compressConfigurationJarFile.delete()
-                        configurationJarFile.copyTo(compressConfigurationJarFile, true)
-                    }
-                }
-            }
+        val transformInput = transformInvocation.inputs.first { it.directoryInputs.isNotEmpty() }
+        val directoryInput = transformInput.directoryInputs.first()
+        if (null != directoryInput) {
+            val destFolder = transformInvocation.outputProvider.getContentLocation(
+                directoryInput.name, directoryInput.contentTypes, directoryInput.scopes,
+                Format.DIRECTORY
+            )
+            AndroidSampleTemplateCreator.create(destFolder, configurationJsonText)
         }
     }
 

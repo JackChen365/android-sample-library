@@ -70,7 +70,6 @@ class SamplePluginTest : GradlePluginTest() {
     }
 
     @Test
-    @TestWithCache(true)
     @TestVersion(androidVersion = "7.1.3", gradleVersion = "7.2")
     fun `test sample plugin build`() {
         //:app:assembleDebug

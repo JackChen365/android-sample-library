@@ -63,9 +63,10 @@ abstract class AndroidSample protected constructor() {
         override fun attachToContext(context: Context) {
             super.attachToContext(context)
             try {
-                val text = context.assets.open(SampleConstants.SAMPLE_CONFIGURATION_FILE_NAME)
-                    .use { it.bufferedReader().readText() }
-                val jsonObject = JSONObject(text)
+                val configurationClass = Class.forName(SampleConstants.SAMPLE_CONFIGURATION_CLASS)
+                val configurationField = configurationClass.getField(SampleConstants.SAMPLE_CONFIGURATION_FIELD_NAME)
+                val configurationText = configurationField.get(null)
+                val jsonObject = JSONObject(configurationText.toString())
                 initialSampleItems(jsonObject)
                 initialExtensions(jsonObject)
             } catch (e: IOException) {
@@ -133,7 +134,7 @@ abstract class AndroidSample protected constructor() {
             }
             if (1 == parentNode.children.size && currentNode.item is String) {
                 parentNode.remove(currentNode)
-                currentNode.children.forEach { childNode ->
+                currentNode.children.toList().forEach { childNode ->
                     parentNode.add(childNode)
                 }
             }
@@ -214,10 +215,12 @@ abstract class AndroidSample protected constructor() {
         }
 
         override fun getPathNodeList(path: String?): List<PathNode> {
-            if (null == path) {
-                return rootNode.children
+            var pathNodeList = if (null == path)
+                rootNode.children else rootNode.path(path)
+            return pathNodeList.sortedBy {
+                val item = it.item
+                if (item is SampleItem) item.title else item.toString()
             }
-            return rootNode.path(path)
         }
 
         override fun start(context: AppCompatActivity, item: SampleItem) {
