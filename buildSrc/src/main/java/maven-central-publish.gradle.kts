@@ -1,6 +1,6 @@
 plugins {
-  `maven-publish`
-  signing
+    `maven-publish`
+    signing
 }
 val groupName = rootProject.group as String
 val versionName = rootProject.version as String
@@ -15,7 +15,7 @@ val pomLicenses = mapOf(
 )
 
 val pomDevelopers = mapOf(
-    "JackChen" to "zhenchen@tubi.tv",
+    "JackChen" to "sillyjack@163.com",
     "Airsaid" to "airsaid1024@gmail.com"
 )
 
@@ -26,71 +26,62 @@ val pomScmDevConnection = "scm:git:ssh://git@github.com/JackChen365/AndroidSampl
 val isAndroidLibrary = project.plugins.hasPlugin("com.android.library")
 
 afterEvaluate {
-  publishing {
-    publications {
-      create<MavenPublication>("${pomProjectName.capitalize()}Artifact") {
-        if (isAndroidLibrary) {
-          from(components["release"])
-        } else {
-          from(components["java"])
+    publishing {
+        publications {
+            create<MavenPublication>("${pomProjectName.capitalize()}Artifact") {
+                if (isAndroidLibrary) {
+                    from(components["release"])
+                } else {
+                    from(components["java"])
+                }
+
+                pom {
+                    // Description
+                    name.set(pomProjectName)
+                    description.set(pomProjectDesc)
+                    url.set(pomProjectUrl)
+
+                    // Archive
+                    groupId = groupName
+                    version = versionName
+                    artifactId = "sample-${project.name}"
+
+                    // License
+                    inceptionYear.set(pomInception)
+                    licenses {
+                        pomLicenses.forEach { (licenseName, licenseUrl) ->
+                            license {
+                                name.set(licenseName)
+                                url.set(licenseUrl)
+                            }
+                        }
+                    }
+
+                    // Developer
+                    developers {
+                        pomDevelopers.forEach { (developerName, developerEmail) ->
+                            developer {
+                                id.set(developerName.decapitalize())
+                                name.set(developerName)
+                                email.set(developerEmail)
+                            }
+                        }
+                    }
+
+                    scm {
+                        url.set(pomScmUrl)
+                        connection.set(pomScmConnection)
+                        developerConnection.set(pomScmDevConnection)
+                    }
+                }
+            }
         }
 
-        pom {
-          // Description
-          name.set(pomProjectName)
-          description.set(pomProjectDesc)
-          url.set(pomProjectUrl)
-
-          // Archive
-          groupId = groupName
-          version = versionName
-          artifactId = "sample-${project.name}"
-
-          // License
-          inceptionYear.set(pomInception)
-          licenses {
-            pomLicenses.forEach { (licenseName, licenseUrl) ->
-              license {
-                name.set(licenseName)
-                url.set(licenseUrl)
-              }
-            }
-          }
-
-          // Developer
-          developers {
-            pomDevelopers.forEach { (developerName, developerEmail) ->
-              developer {
-                id.set(developerName.decapitalize())
-                name.set(developerName)
-                email.set(developerEmail)
-              }
-            }
-          }
-
-          scm {
-            url.set(pomScmUrl)
-            connection.set(pomScmConnection)
-            developerConnection.set(pomScmDevConnection)
-          }
-        }
-      }
+        // Configure MavenCentral repository
+        // `io.github.gradle-nexus.publish-plugin` plugin is responsible for configuration
     }
-
-    // Configure MavenCentral repository
-    // `io.github.gradle-nexus.publish-plugin` plugin is responsible for configuration
-
-
-    // Configure MavenLocal repository
-    repositories {
-      maven {
-        name = "myMavenLocal"
-        url = uri(File(rootProject.rootDir, ".m2/repository"))
-      }
-    }
-  }
 }
 
 signing {
-  sign(publishing.publications)
+    sign(publishing.publications)
 }
