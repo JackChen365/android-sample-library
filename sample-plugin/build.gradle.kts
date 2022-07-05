@@ -77,6 +77,5 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotlin.reflect)
     testImplementation(libs.commons.io)
-    // testImplementation(libs.gradle.test.toolkit)
-    testImplementation(files("libs/test-toolkit-1.0.0.jar"))
+    testImplementation(libs.gradle.test.toolkit)
 }

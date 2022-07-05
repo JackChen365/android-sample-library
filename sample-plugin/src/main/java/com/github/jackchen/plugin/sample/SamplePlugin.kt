@@ -1,13 +1,17 @@
 package com.github.jackchen.plugin.sample
 
 import com.android.build.api.dsl.AndroidSourceSet
+import com.android.build.api.instrumentation.FramesComputationMode
+import com.android.build.api.instrumentation.InstrumentationScope
+import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.internal.api.DefaultAndroidSourceDirectorySet
 import com.android.build.gradle.internal.api.DefaultAndroidSourceSet
-import com.github.jackchen.plugin.sample.transform.SampleTransform
+import com.github.jackchen.plugin.sample.instrumentation.SampleAsmClassVisitorFactory
 import org.apache.commons.io.FileUtils
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.compile.JavaCompile
 import java.io.File
 import java.io.IOException
 import java.nio.file.FileVisitResult
@@ -19,47 +23,64 @@ import java.util.ArrayList
 
 class SamplePlugin : Plugin<Project> {
     companion object {
+        private const val SAMPLE_DIR_NAME = "sample"
+        private const val SAMPLE_DOCUMENT_FOLDER = "document"
+        private const val SAMPLE_CONFIGURATION_FILE_NAME = "sample_configuration.json"
         fun isAndroidProject(project: Project): Boolean {
             return null != project.plugins.findPlugin("com.android.application")
         }
     }
 
-    private lateinit var sampleBuildDir: File
-
     override fun apply(project: Project) {
         if (!isAndroidProject(project)) return
-        sampleBuildDir = File(project.buildDir, "sample")
-        val configurationFile = File(sampleBuildDir, "sample_configuration.json")
+        val sampleBuildDir = File(project.buildDir, SAMPLE_DIR_NAME)
+//        project.tasks.withType(JavaCompile::class.java){ compileTask->
+//            val output = compileTask.outputs
+//            val input = compileTask.inputs
+//            println()
+//        }
+        val androidComponentsExtension = project.extensions.getByType(AndroidComponentsExtension::class.java)
+        androidComponentsExtension.onVariants { variant ->
+            variant.transformClassesWith(
+                SampleAsmClassVisitorFactory::class.java,
+                InstrumentationScope.ALL
+            ) { params ->
+                params.configurationFile.set(File(sampleBuildDir, SAMPLE_CONFIGURATION_FILE_NAME))
+            }
+            variant.setAsmFramesComputationMode(
+                FramesComputationMode.COMPUTE_FRAMES_FOR_INSTRUMENTED_METHODS
+            )
+        }
+        mergeExtraResources(project, sampleBuildDir)
+    }
+
+    private fun mergeExtraResources(project: Project, sampleBuildDir: File) {
         val appExtension = project.extensions.getByType(AppExtension::class.java)
-        //Register the gradle transform.
-        appExtension.registerTransform(SampleTransform(project, configurationFile))
-        project.afterEvaluate {
-            appExtension.applicationVariants.forEach { applicationVariant ->
-                if (applicationVariant.mergeAssetsProvider.isPresent) {
-                    val mergeAsserts = applicationVariant.mergeAssetsProvider.get()
-                    mergeAsserts.outputDir.files().files
-                    mergeAsserts.doFirst {
-                        //Merge all the documents inside the project.
-                        if (!sampleBuildDir.exists()) {
-                            sampleBuildDir.mkdirs()
-                        }
-                        val documentBuildFile = File(sampleBuildDir, "document")
-                        mergeDocumentFiles(project, documentBuildFile)
-                        //We copy all the source file into the assets folder.
-                        appExtension.sourceSets.forEach { sourceSet: AndroidSourceSet ->
-                            if (sourceSet.name == "main") {
-                                if (sourceSet is DefaultAndroidSourceSet) {
-                                    val javaSourceSet = sourceSet.java
-                                    if (javaSourceSet is DefaultAndroidSourceDirectorySet) {
-                                        sourceSet.assets.srcDirs(javaSourceSet.srcDirs)
-                                    }
-                                    val kotlinSourceSet = sourceSet.kotlin
-                                    if (kotlinSourceSet is DefaultAndroidSourceDirectorySet) {
-                                        sourceSet.assets.srcDirs(kotlinSourceSet.srcDirs)
-                                    }
-                                    sourceSet.assets.srcDirs(documentBuildFile.absolutePath)
-                                    sourceSet.assets.srcDirs(sampleBuildDir.absolutePath)
+        appExtension.applicationVariants.forEach { applicationVariant ->
+            if (applicationVariant.mergeAssetsProvider.isPresent) {
+                val mergeAsserts = applicationVariant.mergeAssetsProvider.get()
+                mergeAsserts.outputDir.files().files
+                mergeAsserts.doFirst {
+                    //Merge all the documents inside the project.
+                    if (!sampleBuildDir.exists()) {
+                        sampleBuildDir.mkdirs()
+                    }
+                    val documentBuildFile = File(sampleBuildDir, SAMPLE_DOCUMENT_FOLDER)
+                    mergeDocumentFiles(project, documentBuildFile)
+                    //We copy all the source file into the assets folder.
+                    appExtension.sourceSets.forEach { sourceSet: AndroidSourceSet ->
+                        if (sourceSet.name == "main") {
+                            if (sourceSet is DefaultAndroidSourceSet) {
+                                val javaSourceSet = sourceSet.java
+                                if (javaSourceSet is DefaultAndroidSourceDirectorySet) {
+                                    sourceSet.assets.srcDirs(javaSourceSet.srcDirs)
                                 }
+                                val kotlinSourceSet = sourceSet.kotlin
+                                if (kotlinSourceSet is DefaultAndroidSourceDirectorySet) {
+                                    sourceSet.assets.srcDirs(kotlinSourceSet.srcDirs)
+                                }
+                                sourceSet.assets.srcDirs(documentBuildFile.absolutePath)
+                                sourceSet.assets.srcDirs(sampleBuildDir.absolutePath)
                             }
                         }
                     }
@@ -67,8 +88,6 @@ class SamplePlugin : Plugin<Project> {
             }
         }
     }
-
-    fun getSampleBuildDir() = sampleBuildDir
 
     /**
      * Collect all the documents inside this project.

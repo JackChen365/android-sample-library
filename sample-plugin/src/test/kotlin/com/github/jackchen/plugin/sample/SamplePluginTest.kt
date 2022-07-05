@@ -59,12 +59,12 @@ class SamplePluginTest : GradlePluginTest() {
     }
 
     @Test
-    @TestVersion(androidVersion = "7.1.3", gradleVersion = "7.2")
+    @TestVersion(androidVersion = "7.1.3", gradleVersion = "7.4.2")
     fun `test sample plugin transform classes`() {
         //:app:transformClassesWithSampleForDebug
         testProjectSetup {
-            build(":app:transformClassesWithSampleForDebug") {
-                Assertions.assertEquals(TaskOutcome.SUCCESS, task(":app:processDebugResources")?.outcome)
+            build(":app:compileReleaseKotlin") {
+                Assertions.assertEquals(TaskOutcome.SUCCESS, task(":app:compileReleaseKotlin")?.outcome)
             }
         }
     }

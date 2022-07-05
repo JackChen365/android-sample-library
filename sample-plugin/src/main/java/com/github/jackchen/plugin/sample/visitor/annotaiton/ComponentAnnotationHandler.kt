@@ -1,21 +1,21 @@
 package com.github.jackchen.plugin.sample.visitor.annotaiton;
 
 import com.github.jackchen.android.sample.api.Register
+import com.github.jackchen.android.sample.api.SampleItem
 import com.github.jackchen.android.sample.api.TestCase
+import com.github.jackchen.plugin.sample.visitor.SampleClassVisitor
 
-class SampleAnnotationHandler : AnnotationHandler {
+class ComponentAnnotationHandler : AnnotationHandler() {
     companion object {
         private val SAMPLE_ANNOTATION_DESC =
             "L" + Register::class.java.name.replace('.', '/') + ";"
-        private val SAMPLE_TEST_CASE_DESC =
-            "L" + TestCase::class.java.name.replace('.', '/') + ";"
     }
+    var sampleItem:SampleItem?=null
 
-    private var sampleItem: com.github.jackchen.android.sample.api.SampleItem? = null
-
-    override fun accept(desc: String, visible: Boolean): Boolean {
+    override fun accept(classVisitor: SampleClassVisitor,desc: String, visible: Boolean): Boolean {
         if (SAMPLE_ANNOTATION_DESC == desc) {
-            sampleItem = com.github.jackchen.android.sample.api.SampleItem()
+            sampleItem = SampleItem()
+            whenFoundClass?.invoke(classVisitor)
             return true
         }
         return false
@@ -27,13 +27,5 @@ class SampleAnnotationHandler : AnnotationHandler {
             "desc" -> sampleItem?.desc = value.toString()
             "path" -> sampleItem?.path = value.toString()
         }
-    }
-
-    override fun visitEnd() {
-        sampleItem = null
-    }
-
-    fun getSampleItem(): com.github.jackchen.android.sample.api.SampleItem? {
-        return sampleItem
     }
 }
