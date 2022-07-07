@@ -1,10 +1,6 @@
 package com.github.jackchen.plugin.sample.visitor
 
-import com.github.jackchen.android.sample.api.ExtensionItem
-import com.github.jackchen.android.sample.api.SampleItem
-import com.github.jackchen.plugin.sample.visitor.annotaiton.AnnotationHandler
-import com.github.jackchen.plugin.sample.visitor.annotaiton.ExpandableAnnotationHandler
-import com.github.jackchen.plugin.sample.visitor.annotaiton.ComponentAnnotationHandler
+import com.github.jackchen.plugin.sample.instrumentation.SampleClassHandler
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.Opcodes
@@ -16,11 +12,6 @@ class SampleClassVisitor(classVisitor: ClassVisitor?) : ClassVisitor(Opcodes.ASM
         private const val ANDROIDX_FRAGMENT_ACTIVITY_CLASS_NAME = "androidx/fragment/app/FragmentActivity"
         private const val ANDROIDX_FRAGMENT_CLASS_NAME = "androidx/fragment/app/Fragment"
 
-        private val SAMPLE_TEST_CASE_DESC =
-            "L" + com.github.jackchen.android.sample.api.TestCase::class.java.name.replace('.', '/') + ";"
-        private val SAMPLE_EXTENSION_DESC =
-            "L" + com.github.jackchen.android.sample.api.Extension::class.java.name.replace('.', '/') + ";"
-
         private val SAMPLE_CLASS_LIST: MutableList<String> = ArrayList()
 
         init {
@@ -28,41 +19,10 @@ class SampleClassVisitor(classVisitor: ClassVisitor?) : ClassVisitor(Opcodes.ASM
             SAMPLE_CLASS_LIST.add(ANDROIDX_FRAGMENT_ACTIVITY_CLASS_NAME)
             SAMPLE_CLASS_LIST.add(ANDROIDX_FRAGMENT_CLASS_NAME)
         }
-        private val sampleAnnotationHandlerList: MutableList<AnnotationHandler> = ArrayList()
-        private val sampleList = mutableListOf<SampleItem>()
-        private val extensionList = mutableListOf<ExtensionItem>()
-
-        init {
-            val componentAnnotationHandler = ComponentAnnotationHandler()
-            componentAnnotationHandler.whenFoundClass {
-                val sampleItem = componentAnnotationHandler.sampleItem
-                if(null != sampleItem){
-                    sampleList.add(sampleItem)
-                }
-            }
-            sampleAnnotationHandlerList.add(componentAnnotationHandler)
-            val testcaseAnnotationHandler = ExpandableAnnotationHandler(listOf(SAMPLE_TEST_CASE_DESC))
-            testcaseAnnotationHandler.whenFoundClass {
-                val sampleItem = componentAnnotationHandler.sampleItem
-                if(null != sampleItem){
-                    sampleItem.isTestCase = true
-                }
-            }
-            sampleAnnotationHandlerList.add(testcaseAnnotationHandler)
-            val sampleExtensionAnnotationHandler = ExpandableAnnotationHandler(listOf(SAMPLE_EXTENSION_DESC))
-            sampleExtensionAnnotationHandler.whenFoundClass { classVisitor->
-                val extensionItem = ExtensionItem()
-                extensionItem.className = classVisitor.className.replace('/', '.')
-                extensionItem.superClass = classVisitor.superClass
-                extensionItem.interfaces = classVisitor.interfaceArray
-                extensionList.add(extensionItem)
-            }
-            sampleAnnotationHandlerList.add(sampleExtensionAnnotationHandler)
-        }
     }
     private lateinit var superClass: String
-    private var interfaceArray = emptyArray<String>()
     private lateinit var className: String
+    private var interfaceArray = emptyArray<String>()
 
 
     override fun visit(
@@ -81,16 +41,21 @@ class SampleClassVisitor(classVisitor: ClassVisitor?) : ClassVisitor(Opcodes.ASM
     }
 
     override fun visitAnnotation(desc: String, visible: Boolean): AnnotationVisitor {
-        val annotationVisitor =
-            sampleAnnotationHandlerList.find { it.accept(this, desc, visible) }
-        if (null != annotationVisitor) {
+        val annotationHandler = SampleClassHandler.accept(this, desc, visible)
+        if (null != annotationHandler) {
             return object : AnnotationVisitor(Opcodes.ASM6, super.visitAnnotation(desc, visible)) {
                 override fun visit(name: String, value: Any?) {
                     super.visit(name, value)
-                    annotationVisitor.visit(name, value)
+                    annotationHandler.visit(name, value)
                 }
             }
         }
         return super.visitAnnotation(desc, visible)
     }
+
+    fun getClassName() = className.replace('/','.')
+
+    fun getSuperClassName() = superClass.replace('/','.')
+
+    fun getInterfaces() = interfaceArray
 }
