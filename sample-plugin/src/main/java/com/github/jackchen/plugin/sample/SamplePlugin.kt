@@ -4,7 +4,6 @@ import com.android.build.api.instrumentation.FramesComputationMode
 import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.AppExtension
-import com.android.build.gradle.tasks.ProcessAndroidResources
 import com.android.build.gradle.tasks.TransformClassesWithAsmTask
 import com.github.jackchen.android.sample.api.ExtensionItem
 import com.github.jackchen.android.sample.api.SampleItem
@@ -50,6 +49,8 @@ class SamplePlugin : Plugin<Project> {
     private fun configureTransformClass(project: Project) {
         val androidComponentsExtension = project.extensions.getByType(AndroidComponentsExtension::class.java)
         androidComponentsExtension.onVariants { variant ->
+            // Clear the data every time when we register the transform.
+            SampleClassHandler.clearData()
             variant.transformClassesWith(
                 SampleAsmClassVisitorFactory::class.java,
                 InstrumentationScope.PROJECT
@@ -57,8 +58,8 @@ class SamplePlugin : Plugin<Project> {
             variant.setAsmFramesComputationMode(
                 FramesComputationMode.COMPUTE_FRAMES_FOR_INSTRUMENTED_METHODS
             )
-            createSampleConfigurationClassAfterTransform(project)
         }
+        createSampleConfigurationClassAfterTransform(project)
     }
 
     private fun createSampleConfigurationClassAfterTransform(project: Project) {
@@ -71,6 +72,7 @@ class SamplePlugin : Plugin<Project> {
                     val destFolder = files.first()
                     createSampleConfigurationClass(destFolder, sampleList, extensionList)
                 }
+                PathNodePrinter.printPathTree(sampleList)
             }
         }
     }

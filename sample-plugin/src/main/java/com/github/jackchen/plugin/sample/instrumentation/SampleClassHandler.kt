@@ -53,4 +53,9 @@ object SampleClassHandler {
     fun getSampleList() = sampleList
 
     fun getExtensionList() = extensionList
+
+    fun clearData(){
+        sampleList.clear()
+        extensionList.clear()
+    }
 }
