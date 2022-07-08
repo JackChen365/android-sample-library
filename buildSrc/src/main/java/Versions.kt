@@ -10,7 +10,7 @@ object Versions {
         const val VERSION_NAME = "1.0.0"
     }
 
-    const val ANDROID_GRADLE_PLUGIN = "7.1.2"
+    const val ANDROID_GRADLE_PLUGIN = "7.2.1"
     const val KOTLIN = "1.6.20"
     const val JUNIT = "4.13.2"
     const val SAMPLE = "1.3.0"

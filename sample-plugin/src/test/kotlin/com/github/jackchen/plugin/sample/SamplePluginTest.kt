@@ -2,7 +2,6 @@ package com.github.jackchen.plugin.sample
 
 import com.github.jackchen.gradle.test.toolkit.GradlePluginTest
 import com.github.jackchen.gradle.test.toolkit.ext.TestVersion
-import com.github.jackchen.gradle.test.toolkit.ext.TestWithCache
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -59,19 +58,19 @@ class SamplePluginTest : GradlePluginTest() {
     }
 
     @Test
-    @TestVersion(androidVersion = "7.1.3", gradleVersion = "7.2")
-    fun `test sample plugin transform classes`() {
-        //:app:transformClassesWithSampleForDebug
+    @TestVersion(androidVersion = "7.2.1", gradleVersion = "7.4.1")
+    fun `test sample plugin build`() {
+        //:app:assembleDebug
         testProjectSetup {
-            build(":app:transformClassesWithSampleForDebug") {
-                Assertions.assertEquals(TaskOutcome.SUCCESS, task(":app:processDebugResources")?.outcome)
+            build(":app:transformDebugClassesWithAsm") {
+                Assertions.assertEquals(TaskOutcome.SUCCESS, task(":app:transformDebugClassesWithAsm")?.outcome)
             }
         }
     }
 
     @Test
-    @TestVersion(androidVersion = "7.1.3", gradleVersion = "7.2")
-    fun `test sample plugin build`() {
+    @TestVersion(androidVersion = "7.2.1", gradleVersion = "7.4.1")
+    fun `test assemble build`() {
         //:app:assembleDebug
         testProjectSetup {
             build(":app:assembleDebug") {

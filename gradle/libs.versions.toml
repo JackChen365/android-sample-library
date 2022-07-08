@@ -1,13 +1,13 @@
 [versions]
 kotlin = "1.6.21"
 androidPlugin = "7.1.3"
-gradleWrapper = "7.2"
+gradleWrapper = "7.4.2"
 junit5 = "5.5.2"
 commonsIo = "2.8.0"
 archUnit = "0.16.0"
 asm = "7.0"
 jdom2 = "2.0.5"
-gradle-test-toolkit = "1.0.0"
+gradle-test-toolkit = "1.0.3"
 gson = "2.8.9"
 
 [libraries]

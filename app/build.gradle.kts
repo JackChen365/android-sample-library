@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-    id("test.sample")
     kotlin("android")
 }
 

@@ -20,13 +20,13 @@ gradlePlugin {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
@@ -77,6 +77,5 @@ dependencies {
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotlin.reflect)
     testImplementation(libs.commons.io)
-    // testImplementation(libs.gradle.test.toolkit)
-    testImplementation(files("libs/test-toolkit-1.0.0.jar"))
+    testImplementation(libs.gradle.test.toolkit)
 }

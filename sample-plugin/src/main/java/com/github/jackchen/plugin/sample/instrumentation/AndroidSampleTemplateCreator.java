@@ -1,4 +1,4 @@
-package com.github.jackchen.plugin.sample.transform;
+package com.github.jackchen.plugin.sample.instrumentation;
 
 import java.io.File;
 import java.io.FileOutputStream;
