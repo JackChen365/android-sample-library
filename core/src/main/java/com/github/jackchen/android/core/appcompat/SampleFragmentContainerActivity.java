@@ -31,7 +31,7 @@ import com.github.jackchen.android.sample.api.SampleItem;
  * @date 2020-01-28 18:00
  * @email bingo110@126.com
  */
-public class SampleFragmentContainerActivity extends AppCompatActivity {
+public class SampleFragmentContainerActivity extends AbstractSampleActivity {
     private static final String SAMPLE_FRAGMENT_TAG = "sample_fragment_tag";
 
     private AppcompatWindowDelegate windowDelegate = new AppcompatWindowDelegate();
@@ -145,24 +145,5 @@ public class SampleFragmentContainerActivity extends AppCompatActivity {
             }
         }
         return fragment;
-    }
-
-    /**
-     * If user want to have his own toolbar. we won't add the standard toolbar for sample
-     *
-     * @param view
-     * @return
-     */
-    private Boolean hasToolBar(View view) {
-        if (Toolbar.class == view.getClass()) {
-            return true;
-        } else if (view instanceof ViewGroup) {
-            ViewGroup viewGroup = (ViewGroup) view;
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                View childView = viewGroup.getChildAt(i);
-                return hasToolBar(childView);
-            }
-        }
-        return false;
     }
 }
