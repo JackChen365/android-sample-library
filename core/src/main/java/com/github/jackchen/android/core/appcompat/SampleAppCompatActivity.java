@@ -31,9 +31,8 @@ import com.github.jackchen.android.core.main.component.DefaultMainSampleFragment
  * @date 2020-01-28 14:05
  * @email bingo110@126.com
  */
-public class SampleAppCompatActivity extends AppCompatActivity {
+public class SampleAppCompatActivity extends AbstractSampleActivity {
     public static final String BIND_MAIN_SAMPLE_FRAGMENT_TAG = "android_sample_main_fragment";
-    private static final String ANDROID_SUPPORT_FRAGMENTS = "android:support:fragments";
     private AppcompatWindowDelegate windowDelegate;
     /**
      * This is user's original view. However We may change it. or put this view input a fragment
@@ -51,13 +50,6 @@ public class SampleAppCompatActivity extends AppCompatActivity {
      * So we keep this view. If findViewById can't find the view. we try to find view from it
      */
     private View contentView = null;
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //Because if we restart this activity. It will re-create the fragment by FragmentManagerState
-        outState.remove(ANDROID_SUPPORT_FRAGMENTS);
-    }
 
     @Override
     public void setContentView(int layout) {
@@ -148,25 +140,6 @@ public class SampleAppCompatActivity extends AppCompatActivity {
             v = contentView.findViewById(id);
         }
         return v;
-    }
-
-    /**
-     * If user want to have his own toolbar. we won't add the standard toolbar for sample
-     *
-     * @param view
-     * @return
-     */
-    private Boolean hasToolBar(View view) {
-        if (Toolbar.class == view.getClass()) {
-            return true;
-        } else if (view instanceof ViewGroup) {
-            ViewGroup viewGroup = (ViewGroup) view;
-            for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                View childView = viewGroup.getChildAt(i);
-                return hasToolBar(childView);
-            }
-        }
-        return false;
     }
 
     /**

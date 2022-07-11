@@ -10,20 +10,11 @@ class SampleClassVisitor(classVisitor: ClassVisitor?) : ClassVisitor(Opcodes.ASM
         private const val SUPER_CLASS_NAME = "com/github/jackchen/android/core/appcompat/SampleAppCompatActivity"
         private const val ANDROIDX_COMPAT_ACTIVITY_CLASS_NAME = "androidx/appcompat/app/AppCompatActivity"
         private const val ANDROIDX_FRAGMENT_ACTIVITY_CLASS_NAME = "androidx/fragment/app/FragmentActivity"
-        private const val ANDROIDX_FRAGMENT_CLASS_NAME = "androidx/fragment/app/Fragment"
-
-        private val SAMPLE_CLASS_LIST: MutableList<String> = ArrayList()
-
-        init {
-            SAMPLE_CLASS_LIST.add(ANDROIDX_COMPAT_ACTIVITY_CLASS_NAME)
-            SAMPLE_CLASS_LIST.add(ANDROIDX_FRAGMENT_ACTIVITY_CLASS_NAME)
-            SAMPLE_CLASS_LIST.add(ANDROIDX_FRAGMENT_CLASS_NAME)
-        }
     }
+
     private lateinit var superClass: String
     private lateinit var className: String
     private var interfaceArray = emptyArray<String>()
-
 
     override fun visit(
         version: Int, access: Int, name: String,
