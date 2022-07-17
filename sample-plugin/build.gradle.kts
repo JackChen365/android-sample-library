@@ -8,8 +8,8 @@ plugins {
 
 gradlePlugin {
   plugins {
-    register("sample") {
-      id = "test.sample"
+    register("samplePlugin") {
+      id = "io.github.jackchen365.sample"
       implementationClass = "com.github.jackchen.plugin.sample.SamplePlugin"
     }
   }
@@ -33,13 +33,15 @@ tasks.withType<PluginUnderTestMetadata>().configureEach {
   pluginClasspath.from(configurations.compileOnly)
 }
 
-// Test tasks loods plugin from local maven repository
+// Test tasks loads plugin from local maven repository
 tasks.named("test").configure {
-  dependsOn("publishToMavenLocal")
+  dependsOn("publishToMavenLocal", project(":api").tasks.named("publishToMavenLocal"))
 }
 
 tasks.withType<Test>().configureEach {
   useJUnitPlatform()
+
+  systemProperty("io.github.jackchen365.sample.version", version.toString())
 }
 
 /**
@@ -67,6 +69,7 @@ dependencies {
   compileOnly(libs.gson)
   compileOnly(libs.commons.io)
   compileOnly(libs.kotlin.stdlib)
+
   internalLibs(projects.api)
 
   testImplementation(gradleTestKit())

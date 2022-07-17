@@ -10,6 +10,7 @@ import java.io.File
 class SamplePluginTest : GradlePluginTest() {
 
     private fun testProjectSetup(closure: GradlePluginTest.() -> Unit) {
+        val pluginVersion = System.getProperty("io.github.jackchen365.sample.version")
         val testPackageName = "com.github.jackchen.plugin.test"
         kotlinAndroidTemplate {
             template {
@@ -17,12 +18,12 @@ class SamplePluginTest : GradlePluginTest() {
                     packageName = testPackageName
                 }
                 plugins {
-                    id("test.sample").version(testPluginVersion())
+                    id("io.github.jackchen365.sample").version(pluginVersion)
                 }
                 dependencies {
                     implementation("androidx.core:core-ktx:1.7.0")
                     implementation("androidx.appcompat:appcompat:1.4.1")
-                    files(File("libs/api-1.0.0-SNAPSHOT.jar").absolutePath)
+                    implementation("io.github.jackchen365:sample-api:$pluginVersion")
                 }
             }
             project {
