@@ -20,7 +20,6 @@ dependencyResolutionManagement {
     maven("https://dl.bintray.com/jetbrains/kotlin-native-dependencies")
   }
 }
-enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "android-sample-library"
 rootProject.buildFileName = "build.gradle.kts"
