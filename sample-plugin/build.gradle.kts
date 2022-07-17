@@ -1,13 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val pluginGroup = "com.github.jackchen.plugin.sample"
-group = pluginGroup
-version = rootProject.projectDir.resolve("VERSION_CURRENT.txt").readText().trim()
-
 plugins {
-  id("org.jetbrains.kotlin.jvm")
   `java-gradle-plugin`
-  `maven-publish`
+  id("org.jetbrains.kotlin.jvm")
+  id("com.vanniktech.maven.publish")
 }
 
 gradlePlugin {
