@@ -7,7 +7,7 @@
 * [扩展功能](function/sampleFunction.md)
 * [演示处理器](actionprocessor/actionProcessor.md)
 
-#### [英文文档](../readme.md)
+#### [英文文档](../README.md)
 
 ### 示例下载
 [apk file](https://github.com/momodae/AndroidSampleLibrary/raw/master/apk/app-debug.apk)

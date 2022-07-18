@@ -1,10 +1,13 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+@Suppress("DSL_SCOPE_VIOLATION") // https://youtrack.jetbrains.com/issue/KTIJ-19369
 plugins {
-    id("com.android.application") version Versions.ANDROID_GRADLE_PLUGIN apply false
-    id("com.android.library") version Versions.ANDROID_GRADLE_PLUGIN apply false
-    id("org.jetbrains.kotlin.android") version Versions.KOTLIN apply false
-    id("test.sample") version("1.0.0-SNAPSHOT") apply false
+  alias(libs.plugins.android.application).apply(false)
+  alias(libs.plugins.android.library).apply(false)
+  alias(libs.plugins.kotlin.android).apply(false)
+  alias(libs.plugins.vanniktech.maven.publish).apply(false)
+  alias(libs.plugins.sample).apply(false)
 }
 
 tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+  delete(rootProject.buildDir)
 }

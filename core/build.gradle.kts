@@ -1,42 +1,42 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    id("maven-central-publish")
+  id("com.android.library")
+  id("org.jetbrains.kotlin.android")
+  id("com.vanniktech.maven.publish")
 }
 
 android {
-    compileSdk = Versions.App.COMPILE_SDK
+  compileSdk = Versions.App.COMPILE_SDK
 
-    defaultConfig {
-        minSdk = Versions.App.MIN_SDK
-        targetSdk = Versions.App.TARGET_SDK
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
+  defaultConfig {
+    minSdk = Versions.App.MIN_SDK
+    targetSdk = Versions.App.TARGET_SDK
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    consumerProguardFiles("consumer-rules.pro")
+  }
 
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
+  buildTypes {
+    getByName("release") {
+      isMinifyEnabled = false
+      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
+  }
 
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+  }
 
-    buildFeatures {
-        viewBinding = true
-    }
+  buildFeatures {
+    viewBinding = true
+  }
 }
 
 dependencies {
-    api(project(":api"))
-    implementation(Libs.AndroidX.KTX)
-    implementation(Libs.AndroidX.APPCOMPAT)
-    implementation(Libs.AndroidX.CONSTRAINTLAYOUT)
-    implementation(Libs.AndroidX.RECYCLERVIEW)
-    implementation(Libs.AndroidX.START_UP)
-    implementation(libs.gson)
+  api(projects.api)
+  implementation(libs.androidx.ktx)
+  implementation(libs.androidx.appcompat)
+  implementation(libs.androidx.constraintlayout)
+  implementation(libs.androidx.recyclerview)
+  implementation(libs.androidx.startup.runtime)
+  implementation(libs.gson)
 }

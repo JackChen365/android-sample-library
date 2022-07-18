@@ -1,7 +1,7 @@
 plugins {
   id("com.android.library")
-  kotlin("android")
-  id("maven-central-publish")
+  id("org.jetbrains.kotlin.android")
+  id("com.vanniktech.maven.publish")
 }
 
 android {
@@ -28,10 +28,10 @@ android {
 }
 
 dependencies {
-  implementation(Libs.AndroidX.APPCOMPAT)
-  implementation(Libs.AndroidX.CONSTRAINTLAYOUT)
-  implementation(Libs.MATERIAL)
-  implementation(Libs.AndroidX.START_UP)
-  implementation("com.github.momodae.RecyclerViewLibrary2:adapter:1.0.1")
+  implementation(libs.androidx.appcompat)
+  implementation(libs.androidx.constraintlayout)
+  implementation(libs.android.material)
+  implementation(libs.androidx.startup.runtime)
+  implementation(libs.recyclerview.library)
   api(projects.core)
 }
