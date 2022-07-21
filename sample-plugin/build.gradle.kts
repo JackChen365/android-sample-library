@@ -50,6 +50,7 @@ tasks.withType<Test>().configureEach {
 val internalLibs: Configuration by configurations.creating
 configurations.compileOnly.configure { extendsFrom(internalLibs) }
 tasks.withType<org.gradle.jvm.tasks.Jar>().configureEach {
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
   internalLibs.files.forEach { file ->
     if (file.isDirectory) {
       from(file)
