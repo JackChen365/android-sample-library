@@ -7,6 +7,7 @@ import com.android.build.gradle.AppExtension
 import com.android.build.gradle.tasks.TransformClassesWithAsmTask
 import com.github.jackchen.android.sample.api.ExtensionItem
 import com.github.jackchen.android.sample.api.SampleItem
+import com.github.jackchen.plugin.sample.extension.SampleExtension
 import com.github.jackchen.plugin.sample.instrumentation.AndroidSampleTemplateCreator
 import com.github.jackchen.plugin.sample.instrumentation.SampleAsmClassVisitorFactory
 import com.github.jackchen.plugin.sample.instrumentation.SampleClassHandler
@@ -22,11 +23,17 @@ import java.io.File
  */
 class SamplePlugin : Plugin<Project> {
 
+  companion object {
+    private const val EXTENSION_NAME = "sample"
+  }
+
   override fun apply(project: Project) {
     if (!project.isAndroidProject()) {
       throw GradleException("${project.name} is not an Android project.")
     }
+    val sampleExtension = project.extensions.create(EXTENSION_NAME, SampleExtension::class.java)
     configureTransformClass(project)
+    createSampleConfigurationClassAfterTransform(project, sampleExtension)
     configureCollectSourceFileAndDocTask(project)
   }
 
@@ -44,7 +51,6 @@ class SamplePlugin : Plugin<Project> {
         FramesComputationMode.COMPUTE_FRAMES_FOR_INSTRUMENTED_METHODS
       )
     }
-    createSampleConfigurationClassAfterTransform(project)
   }
 
   private fun configureCollectSourceFileAndDocTask(project: Project) {
@@ -65,7 +71,10 @@ class SamplePlugin : Plugin<Project> {
     }
   }
 
-  private fun createSampleConfigurationClassAfterTransform(project: Project) {
+  private fun createSampleConfigurationClassAfterTransform(
+    project: Project,
+    sampleExtension: SampleExtension
+  ) {
     project.tasks.withType(TransformClassesWithAsmTask::class.java) { transformTask ->
       transformTask.doLast(object : Action<Task> {
         override fun execute(t: Task) {
@@ -76,7 +85,9 @@ class SamplePlugin : Plugin<Project> {
             val destFolder = files.first()
             createSampleConfigurationClass(destFolder, sampleList, extensionList)
           }
-          PathNodePrinter.printPathTree(sampleList)
+          if (sampleExtension.enableDebug.get()) {
+            PathNodePrinter.printPathTree(sampleList)
+          }
         }
       })
     }
