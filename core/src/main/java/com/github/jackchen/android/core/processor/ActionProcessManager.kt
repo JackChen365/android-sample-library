@@ -5,7 +5,6 @@ import com.github.jackchen.android.core.function.FunctionManager
 import androidx.appcompat.app.AppCompatActivity
 import com.github.jackchen.android.sample.api.SampleItem
 import com.github.jackchen.android.core.extension.ExtensionHandler
-import com.github.jackchen.android.core.processor.clazz.DialogClassActionProcessor
 import com.github.jackchen.android.core.processor.clazz.ActivityClassActionProcessor
 import java.util.ArrayList
 
@@ -18,7 +17,7 @@ import java.util.ArrayList
  */
 object ActionProcessManager : ExtensionHandler<ActionProcessor> {
     private val ACTION_PROCESSOR_CLASS_DESC = ActionProcessor::class.java.name.replace('.', '/')
-    private val SAMPLE_INTERFACE_PROCESSOR_CLASS_DESC = SampleInterfaceProcessor::class.java.name.replace('.', '/')
+    private val SAMPLE_INTERFACE_PROCESSOR_CLASS_NAME = SampleInterfaceProcessor::class.java.name
 
     /**
      * all registered com.cz.android.sample.library.processor list
@@ -27,7 +26,6 @@ object ActionProcessManager : ExtensionHandler<ActionProcessor> {
 
     init {
         //register default action processor
-        register(DialogClassActionProcessor())
         register(ActivityClassActionProcessor())
         register(FragmentClassActionProcessor())
         register(DialogFragmentClassActionProcessor())
@@ -35,7 +33,7 @@ object ActionProcessManager : ExtensionHandler<ActionProcessor> {
 
     override fun handle(className: String, superClass: String, interfaces: List<String>): Boolean {
         if (interfaces.contains(ACTION_PROCESSOR_CLASS_DESC) ||
-            superClass == SAMPLE_INTERFACE_PROCESSOR_CLASS_DESC
+            superClass == SAMPLE_INTERFACE_PROCESSOR_CLASS_NAME
         ) {
             try {
                 val clazz = Class.forName(className)
