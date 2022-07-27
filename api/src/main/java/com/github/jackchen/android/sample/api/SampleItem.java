@@ -28,6 +28,16 @@ public class SampleItem implements Comparable<SampleItem> {
         return null;
     }
 
+    public boolean isAvailable() {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            // Ignore
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "SampleItem{" +

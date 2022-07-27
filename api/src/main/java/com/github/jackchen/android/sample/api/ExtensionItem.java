@@ -17,6 +17,16 @@ public class ExtensionItem {
         this.interfaces = interfaces;
     }
 
+    public boolean isAvailable() {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            // Ignore
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "ExtensionItem{" +
