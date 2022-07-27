@@ -30,7 +30,13 @@ public class SampleItem implements Comparable<SampleItem> {
 
     @Override
     public String toString() {
-        return title;
+        return "SampleItem{" +
+            "title='" + title + '\'' +
+            ", desc='" + desc + '\'' +
+            ", path='" + path + '\'' +
+            ", className='" + className + '\'' +
+            ", isTestCase=" + isTestCase +
+            '}';
     }
 
     @Override public int compareTo(final SampleItem sampleItem) {
@@ -39,16 +45,14 @@ public class SampleItem implements Comparable<SampleItem> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         SampleItem that = (SampleItem) o;
-        return Objects.equals(title, that.title);
+        return Objects.equals(className, that.className);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, desc);
+        return Objects.hash(className);
     }
 }
