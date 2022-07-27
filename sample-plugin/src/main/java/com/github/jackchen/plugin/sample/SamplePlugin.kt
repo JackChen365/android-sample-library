@@ -41,8 +41,6 @@ class SamplePlugin : Plugin<Project> {
     val androidComponentsExtension =
       project.extensions.getByType(AndroidComponentsExtension::class.java)
     androidComponentsExtension.onVariants { variant ->
-      // Clear the data every time when we register the transform.
-      SampleClassHandler.clearData()
       variant.transformClassesWith(
         SampleAsmClassVisitorFactory::class.java,
         InstrumentationScope.PROJECT
@@ -95,8 +93,8 @@ class SamplePlugin : Plugin<Project> {
 
   private fun createSampleConfigurationClass(
     destFolder: File,
-    sampleItemList: MutableList<SampleItem>,
-    extensionList: MutableList<ExtensionItem>
+    sampleItemList: List<SampleItem>,
+    extensionList: List<ExtensionItem>
   ) {
     val configurationJsonText =
       Gson().toJson(mapOf("samples" to sampleItemList, "extensions" to extensionList))

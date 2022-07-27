@@ -14,19 +14,22 @@ object SampleClassHandler {
         "L" + com.github.jackchen.android.sample.api.Extension::class.java.name.replace('.', '/') + ";"
 
     private val sampleAnnotationHandlerList: MutableList<AnnotationHandler> = ArrayList()
-    private val sampleList = mutableListOf<SampleItem>()
-    private val extensionList = mutableListOf<ExtensionItem>()
+
+    private val sampleMap = hashMapOf<String, SampleItem>()
+    private val extensionMap = hashMapOf<String, ExtensionItem>()
 
     init {
         val componentAnnotationHandler = ComponentAnnotationHandler()
-        componentAnnotationHandler.whenFoundClass { classVisitor->
+        componentAnnotationHandler.whenFoundClass { classVisitor ->
             val sampleItem = componentAnnotationHandler.sampleItem
             if(null != sampleItem){
-                sampleItem.className = classVisitor.getClassName()
-                sampleList.add(sampleItem)
+                val className = classVisitor.getClassName()
+                sampleItem.className = className
+                sampleMap[className] = sampleItem
             }
         }
         sampleAnnotationHandlerList.add(componentAnnotationHandler)
+
         val testcaseAnnotationHandler = ExpandableAnnotationHandler(listOf(SAMPLE_TEST_CASE_DESC))
         testcaseAnnotationHandler.whenFoundClass {
             val sampleItem = componentAnnotationHandler.sampleItem
@@ -35,13 +38,15 @@ object SampleClassHandler {
             }
         }
         sampleAnnotationHandlerList.add(testcaseAnnotationHandler)
+
         val sampleExtensionAnnotationHandler = ExpandableAnnotationHandler(listOf(SAMPLE_EXTENSION_DESC))
-        sampleExtensionAnnotationHandler.whenFoundClass { classVisitor->
-            val extensionItem = ExtensionItem()
-            extensionItem.className = classVisitor.getClassName()
-            extensionItem.superClass = classVisitor.getSuperClassName()
-            extensionItem.interfaces = classVisitor.getInterfaces()
-            extensionList.add(extensionItem)
+        sampleExtensionAnnotationHandler.whenFoundClass { classVisitor ->
+                val extensionItem = ExtensionItem()
+                val className = classVisitor.getClassName()
+                extensionItem.className = className
+                extensionItem.superClass = classVisitor.getSuperClassName()
+                extensionItem.interfaces = classVisitor.getInterfaces()
+                extensionMap[className] = extensionItem
         }
         sampleAnnotationHandlerList.add(sampleExtensionAnnotationHandler)
     }
@@ -50,12 +55,22 @@ object SampleClassHandler {
         return sampleAnnotationHandlerList.find { it.accept(classVisitor, desc, visible) }
     }
 
-    fun getSampleList() = sampleList
+    fun getSampleList(): List<SampleItem> = sampleMap.values.toList()
 
-    fun getExtensionList() = extensionList
+    fun getExtensionList(): List<ExtensionItem> = extensionMap.values.toList()
 
-    fun clearData(){
-        sampleList.clear()
-        extensionList.clear()
+    /**
+     * For incremental scenarios, if the new class no longer matches,
+     * it needs to be removed from the list to avoid generating dirty data.
+     *
+     * @param notMatchClassName Class names that do not conform to the processing rules.
+     */
+    fun cleanDirtyData(notMatchClassName: String) {
+        if (sampleMap.containsKey(notMatchClassName)) {
+            sampleMap.remove(notMatchClassName)
+        }
+        if (extensionMap.containsKey(notMatchClassName)) {
+            extensionMap.remove(notMatchClassName)
+        }
     }
 }

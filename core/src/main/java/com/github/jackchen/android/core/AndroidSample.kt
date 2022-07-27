@@ -154,7 +154,9 @@ abstract class AndroidSample protected constructor() {
                     sampleItem.path = sampleItem.className.substringBeforeLast(".").replace('.', '/')
                 }
                 sampleItem.isTestCase = sampleObject.getBoolean("isTestCase")
-                sampleItemList.add(sampleItem)
+                if (sampleItem.isAvailable) {
+                    sampleItemList.add(sampleItem)
+                }
             }
             return sampleItemList
         }
@@ -183,7 +185,9 @@ abstract class AndroidSample protected constructor() {
                 extensionItem.interfaces = Array<String>(interfaceArray.length()) { index ->
                     interfaceArray.getString(index)
                 }
-                extensionItemList.add(extensionItem)
+                if (extensionItem.isAvailable) {
+                    extensionItemList.add(extensionItem)
+                }
             }
             return extensionItemList
         }
