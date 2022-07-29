@@ -20,8 +20,12 @@ class SampleClassVisitor(classVisitor: ClassVisitor?) : ClassVisitor(Opcodes.ASM
   private var interfaceArray = emptyArray<String>()
 
   override fun visit(
-    version: Int, access: Int, name: String,
-    signature: String?, superName: String, interfaces: Array<String>
+    version: Int,
+    access: Int,
+    name: String,
+    signature: String?,
+    superName: String,
+    interfaces: Array<String>
   ) {
     className = name
     superClass = superName

@@ -57,8 +57,8 @@ class SamplePlugin : Plugin<Project> {
       appExtension.applicationVariants.forEach { applicationVariant ->
         val task = project.tasks.create(
           MergeSourceFileAndDocTask.TASK_NAME + "With" +
-              applicationVariant.flavorName.capitalized() +
-              applicationVariant.buildType.name.capitalized(),
+            applicationVariant.flavorName.capitalized() +
+            applicationVariant.buildType.name.capitalized(),
           MergeSourceFileAndDocTask::class.java
         )
         if (applicationVariant.mergeAssetsProvider.isPresent) {
