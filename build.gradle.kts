@@ -6,6 +6,7 @@ plugins {
   alias(libs.plugins.kotlin.android).apply(false)
   alias(libs.plugins.vanniktech.maven.publish).apply(false)
   alias(libs.plugins.sample).apply(false)
+  alias(libs.plugins.ktlint).apply(false)
 }
 
 tasks.register("clean", Delete::class) {

@@ -42,4 +42,5 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "android-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
 vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.21.0" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "10.3.0" }
 sample = { id = "io.github.jackchen365.sample", version.ref = "sample-plugin" }
