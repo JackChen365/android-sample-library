@@ -20,52 +20,51 @@ import com.google.android.material.tabs.TabLayout
 @Extension
 open class SamplePagerComponentContainer : ComponentContainer {
 
-    override fun isComponentAvailable(component: Any): Boolean {
-        val sampleSourceCode = component.javaClass.getAnnotation(SampleSourceCode::class.java)
-        val sampleDocument = component.javaClass.getAnnotation(SampleDocument::class.java)
-        return sampleSourceCode?.value != null || sampleDocument?.value != null
+  override fun isComponentAvailable(component: Any): Boolean {
+    val sampleSourceCode = component.javaClass.getAnnotation(SampleSourceCode::class.java)
+    val sampleDocument = component.javaClass.getAnnotation(SampleDocument::class.java)
+    return sampleSourceCode?.value != null || sampleDocument?.value != null
+  }
+
+  override fun getComponentView(
+    context: AppCompatActivity,
+    component: Any,
+    parentView: ViewGroup,
+    view: View
+  ): View {
+    val layoutInflater = LayoutInflater.from(context)
+    val contentLayout = layoutInflater.inflate(R.layout.sample_fragment_tab, parentView, false)
+    val sampleTabLayout = contentLayout.findViewById<TabLayout>(R.id.sampleTabLayout)
+    val sampleViewPager = contentLayout.findViewById<ViewPager>(R.id.sampleViewPager)
+    val titleList: MutableList<CharSequence> = ArrayList()
+    titleList.add(context.getString(R.string.sample))
+    val fragmentList: MutableList<Fragment> = java.util.ArrayList()
+    fragmentList.add(SampleWrapperViewFragment.newFragment(view))
+
+    val sampleSourceCode = component.javaClass.getAnnotation(SampleSourceCode::class.java)
+    if (null != sampleSourceCode) {
+      val filter: String = sampleSourceCode.value
+      // Plus our component
+      titleList.add(context.getString(R.string.sample_source_code))
+      val packageName = component.javaClass.getPackage().name
+      fragmentList.add(SampleSourceFileFragmentListFragment.newInstance(packageName, filter))
     }
 
-    override fun getComponentView(
-        context: AppCompatActivity,
-        component: Any,
-        parentView: ViewGroup,
-        view: View
-    ): View {
-        val layoutInflater = LayoutInflater.from(context)
-        val contentLayout = layoutInflater.inflate(R.layout.sample_fragment_tab, parentView, false)
-        val sampleTabLayout = contentLayout.findViewById<TabLayout>(R.id.sampleTabLayout)
-        val sampleViewPager = contentLayout.findViewById<ViewPager>(R.id.sampleViewPager)
-        val titleList: MutableList<CharSequence> = ArrayList()
-        titleList.add(context.getString(R.string.sample))
-        val fragmentList: MutableList<Fragment> = java.util.ArrayList()
-        fragmentList.add(SampleWrapperViewFragment.newFragment(view))
-
-        val sampleSourceCode = component.javaClass.getAnnotation(SampleSourceCode::class.java)
-        if (null != sampleSourceCode) {
-            val filter: String = sampleSourceCode.value
-            //Plus our component
-            titleList.add(context.getString(R.string.sample_source_code))
-            val packageName = component.javaClass.getPackage().name
-            fragmentList.add(SampleSourceFileFragmentListFragment.newInstance(packageName, filter))
-        }
-
-        val sampleDocument = component.javaClass.getAnnotation(SampleDocument::class.java)
-        if (null != sampleDocument) {
-            val url: String = sampleDocument.value
-            val packageName = component.javaClass.getPackage().name
-            titleList.add(context.getString(R.string.sample_document))
-            fragmentList.add(SampleDocumentFragment.newInstance(packageName, url))
-        }
-        sampleTabLayout.setupWithViewPager(sampleViewPager)
-        sampleViewPager.offscreenPageLimit = 3
-        sampleViewPager.adapter =
-            SimpleFragmentPagerAdapter.create(context.supportFragmentManager, fragmentList, titleList)
-        return contentLayout
+    val sampleDocument = component.javaClass.getAnnotation(SampleDocument::class.java)
+    if (null != sampleDocument) {
+      val url: String = sampleDocument.value
+      val packageName = component.javaClass.getPackage().name
+      titleList.add(context.getString(R.string.sample_document))
+      fragmentList.add(SampleDocumentFragment.newInstance(packageName, url))
     }
+    sampleTabLayout.setupWithViewPager(sampleViewPager)
+    sampleViewPager.offscreenPageLimit = 3
+    sampleViewPager.adapter =
+      SimpleFragmentPagerAdapter.create(context.supportFragmentManager, fragmentList, titleList)
+    return contentLayout
+  }
 
-    override fun onCreatedView(context: AppCompatActivity, `object`: Any, view: View) = Unit
+  override fun onCreatedView(context: AppCompatActivity, `object`: Any, view: View) = Unit
 
-    override fun getComponentPriority(): Int = 999
-
+  override fun getComponentPriority(): Int = 999
 }
