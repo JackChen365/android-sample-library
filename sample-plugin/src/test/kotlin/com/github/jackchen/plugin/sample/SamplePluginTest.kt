@@ -2,9 +2,15 @@ package com.github.jackchen.plugin.sample
 
 import com.github.jackchen.gradle.test.toolkit.GradlePluginTest
 import com.github.jackchen.gradle.test.toolkit.ext.TestVersion
+import com.github.jackchen.gradle.test.toolkit.ext.TestWithCache
+import com.github.jackchen.gradle.test.toolkit.testdsl.TestProjectIntegration
+import org.gradle.testkit.runner.BuildResult
+import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import kotlin.math.absoluteValue
+import kotlin.random.Random
 
 /**
  * @author JackChen
@@ -13,7 +19,7 @@ class SamplePluginTest : GradlePluginTest() {
 
   private fun testProjectSetup(
     isEnableDebug: Boolean = false,
-    closure: GradlePluginTest.() -> Unit
+    closure: TestProjectIntegration.TestProject.() -> Unit
   ) {
     val pluginVersion = System.getProperty("io.github.jackchen365.sample.version")
     val testPackageName = "com.github.jackchen.plugin.test"
@@ -93,9 +99,9 @@ class SamplePluginTest : GradlePluginTest() {
             }
           }
         }
+        apply(closure)
       }
     }
-    apply(closure)
   }
 
   @Test
@@ -134,6 +140,58 @@ class SamplePluginTest : GradlePluginTest() {
         )
         Assertions.assertTrue(output.contains("+---The test dialog"))
         Assertions.assertTrue(output.contains("+---The test fragment2"))
+      }
+    }
+  }
+
+  private fun buildTask(
+    gradleRunner: GradleRunner,
+    task: String,
+    assertions: BuildResult.() -> Unit = {}
+  ) {
+    val buildArgumentList = mutableListOf<String>()
+    buildArgumentList.add(task)
+//    buildArgumentList.add("--info")
+    gradleRunner
+      .withArguments(buildArgumentList)
+      .withDebug(true)
+      .build()
+      .run { assertions() }
+  }
+
+  @Test
+  @TestWithCache(true)
+  @TestVersion(androidVersion = "7.2.1", gradleVersion = "7.4.1")
+  fun `test plugin with incremental`() {
+    testProjectSetup(isEnableDebug = true) {
+      val gradleRunnerProvider = SampleGradleRunnerProvider()
+      val gradleRunner = gradleRunnerProvider.getGradleRunner(
+        testProjectRunner.projectDir,
+        testProjectRunner.testVersions.supportedGradleVersion
+      )
+      module("app"){
+        kotlinSourceDir("com.android.test"){
+          //New file
+          val testMethod = "testMethod${Random.nextInt().absoluteValue}"
+          file("TestDialog2.kt") {
+            """
+              |package com.android.test
+              |import androidx.appcompat.app.AppCompatDialog
+              |@com.github.jackchen.android.sample.api.Register(title="The test dialog2")
+              |class TestDialog2{
+              |   fun $testMethod(){
+              |     println("$testMethod")
+              |   }
+              |}
+            """.trimMargin()
+          }
+        }
+      }
+      buildTask(gradleRunner,":app:transformDebugClassesWithAsm") {
+        Assertions.assertEquals(
+          TaskOutcome.SUCCESS,
+          task(":app:transformDebugClassesWithAsm")?.outcome
+        )
       }
     }
   }
