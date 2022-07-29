@@ -12,12 +12,12 @@ import com.github.jackchen.android.sample.api.SampleItem
  * @email bingo110@126.com
  */
 class FragmentClassActionProcessor : ActionProcessor() {
-    override fun isAvailable(clazz: Class<*>?): Boolean {
-        return Fragment::class.java.isAssignableFrom(clazz)
-    }
+  override fun isAvailable(clazz: Class<*>?): Boolean {
+    return Fragment::class.java.isAssignableFrom(clazz)
+  }
 
-    @Throws(SampleFailedException::class)
-    override fun execute(context: AppCompatActivity, sampleItem: SampleItem) {
-        SampleFragmentContainerActivity.startActivity(context, sampleItem)
-    }
+  @Throws(SampleFailedException::class)
+  override fun execute(context: AppCompatActivity, sampleItem: SampleItem) {
+    SampleFragmentContainerActivity.startActivity(context, sampleItem)
+  }
 }

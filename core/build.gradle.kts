@@ -2,6 +2,7 @@ plugins {
   id("com.android.library")
   id("org.jetbrains.kotlin.android")
   id("com.vanniktech.maven.publish")
+  id("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
@@ -39,4 +40,10 @@ dependencies {
   implementation(libs.androidx.recyclerview)
   implementation(libs.androidx.startup.runtime)
   implementation(libs.gson)
+}
+
+ktlint {
+  debug.set(true)
+  android.set(true)
+  additionalEditorconfigFile.set(file("$rootDir/.editorconfig"))
 }
