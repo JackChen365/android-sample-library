@@ -18,17 +18,17 @@ import com.github.jackchen.sample.databinding.FragmentComponentSampleBinding
 @SampleSourceCode
 @Register(title = "Fragment显示组件", desc = "演示在 Fragment 中展示所有基础组件")
 class ComponentSampleFragment : Fragment() {
-    private lateinit var binding: FragmentComponentSampleBinding
-    private var index = 0
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentComponentSampleBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+  private lateinit var binding: FragmentComponentSampleBinding
+  private var index = 0
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    binding = FragmentComponentSampleBinding.inflate(inflater, container, false)
+    return binding.root
+  }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        binding.testButton.setOnClickListener {
-            println("Message from ComponentSampleActivity:${index++}")
-        }
+  override fun onActivityCreated(savedInstanceState: Bundle?) {
+    super.onActivityCreated(savedInstanceState)
+    binding.testButton.setOnClickListener {
+      println("Message from ComponentSampleActivity:${index++}")
     }
+  }
 }

@@ -1,11 +1,9 @@
 package com.github.jackchen.sample.component
 
 import android.os.Bundle
-import android.view.ContextMenu
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.github.jackchen.android.sample.library.component.document.SampleDocument
 import com.github.jackchen.android.sample.api.Register
+import com.github.jackchen.android.sample.library.component.document.SampleDocument
 import com.github.jackchen.sample.R
 
 /**
@@ -32,8 +30,8 @@ import com.github.jackchen.sample.R
 @SampleDocument("readme-cn.md")
 @Register(title = "文档组件", desc = "展示如何为演示关联文档")
 class ComponentDocumentSampleActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_component_document_sample)
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_component_document_sample)
+  }
 }

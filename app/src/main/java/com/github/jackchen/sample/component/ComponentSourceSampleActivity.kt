@@ -9,8 +9,8 @@ import com.github.jackchen.sample.R
 @SampleSourceCode
 @Register(title = "源码组件", desc = "展示如何为示例添加源码查看组件")
 class ComponentSourceSampleActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_component_source_code_sample)
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_component_source_code_sample)
+  }
 }

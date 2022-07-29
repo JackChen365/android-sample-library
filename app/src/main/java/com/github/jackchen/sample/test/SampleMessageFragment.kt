@@ -18,16 +18,16 @@ import com.github.jackchen.sample.databinding.FragmentMessageLayoutBinding
 @SampleSourceCode
 @Register(title = "消息输出", desc = "演示加载系统System.out流操作")
 class SampleMessageFragment : Fragment() {
-    private lateinit var binding: FragmentMessageLayoutBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentMessageLayoutBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+  private lateinit var binding: FragmentMessageLayoutBinding
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    binding = FragmentMessageLayoutBinding.inflate(inflater, container, false)
+    return binding.root
+  }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        binding.outButton.setOnClickListener {
-            println("System.out from fragment.")
-        }
+  override fun onActivityCreated(savedInstanceState: Bundle?) {
+    super.onActivityCreated(savedInstanceState)
+    binding.outButton.setOnClickListener {
+      println("System.out from fragment.")
     }
+  }
 }
