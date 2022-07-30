@@ -140,34 +140,33 @@ abstract class AndroidSample protected constructor() {
       }
     }
 
-    private fun deserializationSampleList(sampleArray: JSONArray): List<SampleItem> {
-      val sampleItemList = mutableListOf<SampleItem>()
-      for (i in 0 until sampleArray.length()) {
-        val sampleItem = SampleItem()
-        val sampleObject = sampleArray.getJSONObject(i)
-        sampleItem.className = sampleObject.getString("className")
-        val title = sampleObject.optString("title")
-        if (title.isNotEmpty()) {
-          sampleItem.title = title
-        } else {
-          val simpleClassName = sampleItem.className.substring(
-            sampleItem.className.lastIndexOf(".") + 1
-          )
-          sampleItem.title = simpleClassName
+        private fun deserializationSampleList(sampleArray: JSONArray): List<SampleItem> {
+            val sampleItemList = mutableListOf<SampleItem>()
+            for (i in 0 until sampleArray.length()) {
+                val sampleItem = SampleItem()
+                val sampleObject = sampleArray.getJSONObject(i)
+                sampleItem.className = sampleObject.getString("className")
+                val title = sampleObject.optString(SampleConstants.PARAMETER_TITLE)
+                if (title.isNotEmpty()) {
+                    sampleItem.title = title
+                } else {
+                    val simpleClassName = sampleItem.className.substring(
+                      sampleItem.className.lastIndexOf(".") + 1)
+                    sampleItem.title = simpleClassName
+                }
+                sampleItem.desc = sampleObject.optString(SampleConstants.PARAMETER_DESC)
+                sampleItem.path = sampleObject.optString(SampleConstants.PARAMETER_PATH)
+                if (sampleItem.path.isEmpty()) {
+                    //Use the package as path.
+                    sampleItem.path = sampleItem.className.substringBeforeLast(".").replace('.', '/')
+                }
+                sampleItem.isTestCase = sampleObject.getBoolean("isTestCase")
+                if (sampleItem.isAvailable) {
+                    sampleItemList.add(sampleItem)
+                }
+            }
+            return sampleItemList
         }
-        sampleItem.desc = sampleObject.optString("desc")
-        sampleItem.path = sampleObject.optString("path")
-        if (sampleItem.path.isEmpty()) {
-          // Use the package as path.
-          sampleItem.path = sampleItem.className.substringBeforeLast(".").replace('.', '/')
-        }
-        sampleItem.isTestCase = sampleObject.getBoolean("isTestCase")
-        if (sampleItem.isAvailable) {
-          sampleItemList.add(sampleItem)
-        }
-      }
-      return sampleItemList
-    }
 
     private fun initialExtensions(jsonObject: JSONObject) {
       val extensionArray = jsonObject.getJSONArray("extensions")
