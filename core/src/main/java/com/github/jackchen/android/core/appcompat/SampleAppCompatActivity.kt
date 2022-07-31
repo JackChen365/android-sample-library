@@ -26,9 +26,7 @@ open class SampleAppCompatActivity : AbstractSampleActivity() {
     private const val BIND_MAIN_SAMPLE_FRAGMENT_TAG = "android_sample_main_fragment"
   }
 
-  private val windowDelegate: WindowDelegate by lazy {
-    AppcompatWindowDelegate()
-  }
+  private var windowDelegate: WindowDelegate? = null
 
   private val isLauncherActivity: Boolean
     get() = launchActivityName() == javaClass.name
@@ -79,11 +77,14 @@ open class SampleAppCompatActivity : AbstractSampleActivity() {
 
   private fun setContentViewInternal(contentView: ViewGroup, view: View) {
     this.originalContentView = view
+    if (windowDelegate == null) {
+      windowDelegate = AppcompatWindowDelegate()
+    }
     if (hasToolBar(view)) {
-      val createView = windowDelegate.onCreateView(this, this, contentView, view, null)
+      val createView = windowDelegate!!.onCreateView(this, this, contentView, view, null)
       super.setContentView(createView)
     } else {
-      val createView = windowDelegate.onCreateView(this, this, contentView, view, null)
+      val createView = windowDelegate!!.onCreateView(this, this, contentView, view, null)
       if (!hasToolBar(createView)) {
         val toolBar = Toolbar(ContextThemeWrapper(this, R.style.AppTheme_AppBarOverlay))
         // set toolbar background color
