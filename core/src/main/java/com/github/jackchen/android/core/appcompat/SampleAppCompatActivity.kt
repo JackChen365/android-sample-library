@@ -136,7 +136,7 @@ open class SampleAppCompatActivity : AbstractSampleActivity() {
 
     supportFragmentManager.findFragmentByTag(BIND_MAIN_SAMPLE_FRAGMENT_TAG) ?: run {
       supportFragmentManager.beginTransaction()
-        .add(R.id.content, DefaultMainSampleFragment(), BIND_MAIN_SAMPLE_FRAGMENT_TAG)
+        .add(android.R.id.content, DefaultMainSampleFragment(), BIND_MAIN_SAMPLE_FRAGMENT_TAG)
         .commit()
     }
   }
