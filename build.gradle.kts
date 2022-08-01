@@ -9,6 +9,17 @@ plugins {
   alias(libs.plugins.ktlint).apply(true)
 }
 
+subprojects {
+  apply(plugin = "org.jlleitschuh.gradle.ktlint")
+  afterEvaluate {
+    ktlint {
+      debug.set(true)
+      android.set(isAndroidProject())
+      additionalEditorconfigFile.set(file("$rootDir/.editorconfig"))
+    }
+  }
+}
+
 tasks.register("clean", Delete::class) {
   delete(rootProject.buildDir)
 }

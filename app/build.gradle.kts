@@ -2,7 +2,6 @@ plugins {
   id("com.android.application")
   id("org.jetbrains.kotlin.android")
   id("io.github.jackchen365.sample")
-  id("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
@@ -48,10 +47,4 @@ dependencies {
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso)
   implementation(projects.extension)
-}
-
-ktlint {
-  debug.set(true)
-  android.set(true)
-  additionalEditorconfigFile.set(file("$rootDir/.editorconfig"))
 }

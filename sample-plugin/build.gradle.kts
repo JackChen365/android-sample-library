@@ -4,7 +4,6 @@ plugins {
   `java-gradle-plugin`
   id("org.jetbrains.kotlin.jvm")
   id("com.vanniktech.maven.publish")
-  id("org.jlleitschuh.gradle.ktlint")
 }
 
 gradlePlugin {
@@ -79,9 +78,4 @@ dependencies {
   testImplementation(libs.kotlin.reflect)
   testImplementation(libs.commons.io)
   testImplementation(libs.gradle.test.toolkit)
-}
-
-ktlint {
-  debug.set(true)
-  additionalEditorconfigFile.set(file("$rootDir/.editorconfig"))
 }
