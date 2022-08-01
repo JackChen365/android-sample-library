@@ -1,7 +1,16 @@
 *.iml
 .gradle
 /local.properties
-/.idea
+.idea/inspectionProfiles
+.idea/dictionaries
+.idea/libraries
+.idea/leetcode
+.idea/modules
+.idea/shelf
+.idea/caches
+.idea/*.xml
+.idea/.gitignore
+!.idea/codeStyles/
 .DS_Store
 /build
 /captures
