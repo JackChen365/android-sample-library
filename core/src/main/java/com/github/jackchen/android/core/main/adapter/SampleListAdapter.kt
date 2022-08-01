@@ -43,8 +43,12 @@ class SampleListAdapter(items: MutableList<AndroidSample.PathNode>) :
         binding.sampleImageArrow.visibility = View.VISIBLE
       } else if (item is SampleItem) {
         binding.sampleTitle.text = item.title?.replaceFirstChar { it.uppercaseChar() }
-        binding.sampleDescription.text = item.desc
-        binding.sampleDescription.visibility = View.VISIBLE
+        if (item.desc.isNotEmpty()) {
+          binding.sampleDescription.text = item.desc
+          binding.sampleDescription.visibility = View.VISIBLE
+        } else {
+          binding.sampleDescription.visibility = View.GONE
+        }
         binding.sampleImageArrow.visibility = View.GONE
       }
     }

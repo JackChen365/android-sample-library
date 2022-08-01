@@ -10,10 +10,9 @@ import com.github.jackchen.android.core.main.SampleActivityLifeCycleCallback
 import com.github.jackchen.android.core.processor.ActionProcessManager
 import com.github.jackchen.android.sample.api.ExtensionItem
 import com.github.jackchen.android.sample.api.SampleItem
-import java.io.IOException
-import java.util.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.IOException
 
 abstract class AndroidSample protected constructor() {
   companion object {
@@ -146,12 +145,18 @@ abstract class AndroidSample protected constructor() {
       for (i in 0 until sampleArray.length()) {
         val sampleItem = SampleItem()
         val sampleObject = sampleArray.getJSONObject(i)
-        sampleItem.className = sampleObject.optString("className")
-        sampleItem.title = sampleObject.getString("title")
-        sampleItem.desc = sampleObject.optString("desc")
-        sampleItem.path = sampleObject.optString("path")
+        sampleItem.className = sampleObject.getString("className")
+        val title = sampleObject.optString(SampleConstants.PARAMETER_TITLE)
+        if (title.isNotEmpty()) {
+          sampleItem.title = title
+        } else {
+          val simpleClassName = sampleItem.className.substringAfterLast(".")
+          sampleItem.title = simpleClassName
+        }
+        sampleItem.desc = sampleObject.optString(SampleConstants.PARAMETER_DESC)
+        sampleItem.path = sampleObject.optString(SampleConstants.PARAMETER_PATH)
         if (sampleItem.path.isEmpty()) {
-          // Use the package as path.
+          //Use the package as path.
           sampleItem.path = sampleItem.className.substringBeforeLast(".").replace('.', '/')
         }
         sampleItem.isTestCase = sampleObject.getBoolean("isTestCase")

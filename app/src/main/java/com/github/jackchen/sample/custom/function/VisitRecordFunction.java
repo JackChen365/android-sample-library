@@ -27,6 +27,6 @@ public class VisitRecordFunction implements SampleFunction {
 
     @Override
     public void execute(AppCompatActivity context, SampleItem item) {
-        Log.e(TAG, "Title:" + item.title + " class:" + item.className);
+        Log.e(TAG, "Title:" + item.getTitle() + " class:" + item.getClassName());
     }
 }
