@@ -12,21 +12,21 @@ import com.github.jackchen.android.core.AndroidSample
  * @email bingo110@126.com
  */
 class SampleActivityLifeCycleCallback : ActivityLifecycleCallbacks {
-    override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
-        //initialize all functions
-        val functionManager = AndroidSample.instance.getFunctionManager()
-        val functionList = functionManager.getFunctionList()
-        for (function in functionList) {
-            if (activity is AppCompatActivity) {
-                function.onInitialize(activity)
-            }
-        }
+  override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
+    // initialize all functions
+    val functionManager = AndroidSample.instance.getFunctionManager()
+    val functionList = functionManager.getFunctionList()
+    for (function in functionList) {
+      if (activity is AppCompatActivity) {
+        function.onInitialize(activity)
+      }
     }
+  }
 
-    override fun onActivityStarted(activity: Activity) {}
-    override fun onActivityResumed(activity: Activity) {}
-    override fun onActivityPaused(activity: Activity) {}
-    override fun onActivityStopped(activity: Activity) {}
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
-    override fun onActivityDestroyed(activity: Activity) {}
+  override fun onActivityStarted(activity: Activity) {}
+  override fun onActivityResumed(activity: Activity) {}
+  override fun onActivityPaused(activity: Activity) {}
+  override fun onActivityStopped(activity: Activity) {}
+  override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+  override fun onActivityDestroyed(activity: Activity) {}
 }

@@ -16,28 +16,30 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  */
 @Extension
 class SampleMemoryComponent : ComponentContainer {
-    override fun isComponentAvailable(component: Any): Boolean {
-        val sampleDocument = component.javaClass.getAnnotation(SampleMemory::class.java)
-        return null != sampleDocument && sampleDocument.value
-    }
+  override fun isComponentAvailable(component: Any): Boolean {
+    val sampleDocument = component.javaClass.getAnnotation(SampleMemory::class.java)
+    return null != sampleDocument && sampleDocument.value
+  }
 
-    override fun getComponentView(
-        context: AppCompatActivity, component: Any,
-        parentView: ViewGroup, view: View
-    ): View {
-        val layoutInflater = LayoutInflater.from(context)
-        val createView = layoutInflater.inflate(R.layout.sample_memory_layout, parentView, false)
-        val memoryView = createView.findViewById<View>(R.id.sampleMemoryView)
-        val sampleMemoryContainer = createView.findViewById<ViewGroup>(R.id.sampleMemoryContainer)
-        val sampleMemoryButton = createView.findViewById<FloatingActionButton>(R.id.sampleMemoryButton)
-        sampleMemoryButton.isSelected = true
-        sampleMemoryButton.setOnClickListener {
-            sampleMemoryButton.isSelected = !sampleMemoryButton.isSelected
-            memoryView.visibility = if (sampleMemoryButton.isSelected) View.VISIBLE else View.INVISIBLE
-        }
-        sampleMemoryContainer.addView(view)
-        return createView
+  override fun getComponentView(
+    context: AppCompatActivity,
+    component: Any,
+    parentView: ViewGroup,
+    view: View
+  ): View {
+    val layoutInflater = LayoutInflater.from(context)
+    val createView = layoutInflater.inflate(R.layout.sample_memory_layout, parentView, false)
+    val memoryView = createView.findViewById<View>(R.id.sampleMemoryView)
+    val sampleMemoryContainer = createView.findViewById<ViewGroup>(R.id.sampleMemoryContainer)
+    val sampleMemoryButton = createView.findViewById<FloatingActionButton>(R.id.sampleMemoryButton)
+    sampleMemoryButton.isSelected = true
+    sampleMemoryButton.setOnClickListener {
+      sampleMemoryButton.isSelected = !sampleMemoryButton.isSelected
+      memoryView.visibility = if (sampleMemoryButton.isSelected) View.VISIBLE else View.INVISIBLE
     }
+    sampleMemoryContainer.addView(view)
+    return createView
+  }
 
-    override fun onCreatedView(context: AppCompatActivity, `object`: Any, view: View) {}
+  override fun onCreatedView(context: AppCompatActivity, `object`: Any, view: View) {}
 }

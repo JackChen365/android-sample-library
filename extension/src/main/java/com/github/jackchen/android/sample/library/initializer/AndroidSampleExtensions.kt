@@ -9,13 +9,13 @@ import com.github.jackchen.android.sample.library.function.permission.SamplePerm
 
 class AndroidSampleExtensions {
 
-    fun initialize(context: Context) {
-        val functionManager = AndroidSample.instance.getFunctionManager()
-        functionManager.register(SamplePermissionFunction())
+  fun initialize(context: Context) {
+    val functionManager = AndroidSample.instance.getFunctionManager()
+    functionManager.register(SamplePermissionFunction())
 
-        val componentManager = AndroidSample.instance.getComponentManager()
-        componentManager.register(SamplePagerComponentContainer())
-        componentManager.register(SampleMemoryComponent())
-        componentManager.register(SampleMessageComponent())
-    }
+    val componentManager = AndroidSample.instance.getComponentManager()
+    componentManager.register(SamplePagerComponentContainer())
+    componentManager.register(SampleMemoryComponent())
+    componentManager.register(SampleMessageComponent())
+  }
 }

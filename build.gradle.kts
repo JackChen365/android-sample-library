@@ -6,6 +6,18 @@ plugins {
   alias(libs.plugins.kotlin.android).apply(false)
   alias(libs.plugins.vanniktech.maven.publish).apply(false)
   alias(libs.plugins.sample).apply(false)
+  alias(libs.plugins.ktlint).apply(true)
+}
+
+subprojects {
+  apply(plugin = "org.jlleitschuh.gradle.ktlint")
+  afterEvaluate {
+    ktlint {
+      debug.set(true)
+      android.set(isAndroidProject())
+      additionalEditorconfigFile.set(file("$rootDir/.editorconfig"))
+    }
+  }
 }
 
 tasks.register("clean", Delete::class) {

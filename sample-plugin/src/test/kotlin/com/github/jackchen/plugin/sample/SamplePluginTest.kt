@@ -79,7 +79,7 @@ class SamplePluginTest : GradlePluginTest() {
               """
                                 ### Readme
                                 This is a test mark down file.
-                            """.trimIndent()
+              """.trimIndent()
             }
             file("TestFragment.kt") {
               """
@@ -107,7 +107,7 @@ class SamplePluginTest : GradlePluginTest() {
   @Test
   @TestVersion(androidVersion = "7.2.1", gradleVersion = "7.4.1")
   fun `test sample plugin build`() {
-    //:app:assembleDebug
+    // :app:assembleDebug
     testProjectSetup {
       build(":app:transformDebugClassesWithAsm") {
         Assertions.assertEquals(
@@ -121,7 +121,7 @@ class SamplePluginTest : GradlePluginTest() {
   @Test
   @TestVersion(androidVersion = "7.2.1", gradleVersion = "7.4.1")
   fun `test assemble build`() {
-    //:app:assembleDebug
+    // :app:assembleDebug
     testProjectSetup {
       build(":app:assembleDebug") {
         Assertions.assertEquals(TaskOutcome.SUCCESS, task(":app:assembleDebug")?.outcome)
@@ -169,9 +169,9 @@ class SamplePluginTest : GradlePluginTest() {
         testProjectRunner.projectDir,
         testProjectRunner.testVersions.supportedGradleVersion
       )
-      module("app"){
-        kotlinSourceDir("com.android.test"){
-          //New file
+      module("app") {
+        kotlinSourceDir("com.android.test") {
+          // New file
           val testMethod = "testMethod${Random.nextInt().absoluteValue}"
           file("TestDialog2.kt") {
             """
@@ -187,7 +187,7 @@ class SamplePluginTest : GradlePluginTest() {
           }
         }
       }
-      buildTask(gradleRunner,":app:transformDebugClassesWithAsm") {
+      buildTask(gradleRunner, ":app:transformDebugClassesWithAsm") {
         Assertions.assertEquals(
           TaskOutcome.SUCCESS,
           task(":app:transformDebugClassesWithAsm")?.outcome

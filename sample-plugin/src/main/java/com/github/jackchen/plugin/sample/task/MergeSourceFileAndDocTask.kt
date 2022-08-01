@@ -91,30 +91,33 @@ open class MergeSourceFileAndDocTask : DefaultTask() {
     ignoreFiles.add("build")
     try {
       val projectDir = project.rootProject.projectDir
-      Files.walkFileTree(projectDir.toPath(), object : SimpleFileVisitor<Path>() {
-        @Throws(IOException::class)
-        override fun preVisitDirectory(
-          path: Path,
-          attributes: BasicFileAttributes
-        ): FileVisitResult {
-          val name = path.toFile().name
-          return if (ignoreFiles.contains(name)) {
-            FileVisitResult.SKIP_SUBTREE
-          } else {
-            FileVisitResult.CONTINUE
-          }
-        }
-
-        override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
-          if (!attrs.isDirectory) {
-            val f = file.toFile()
-            if (f.isDocumentFile()) {
-              documentList.add(f)
+      Files.walkFileTree(
+        projectDir.toPath(),
+        object : SimpleFileVisitor<Path>() {
+          @Throws(IOException::class)
+          override fun preVisitDirectory(
+            path: Path,
+            attributes: BasicFileAttributes
+          ): FileVisitResult {
+            val name = path.toFile().name
+            return if (ignoreFiles.contains(name)) {
+              FileVisitResult.SKIP_SUBTREE
+            } else {
+              FileVisitResult.CONTINUE
             }
           }
-          return FileVisitResult.CONTINUE
+
+          override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
+            if (!attrs.isDirectory) {
+              val f = file.toFile()
+              if (f.isDocumentFile()) {
+                documentList.add(f)
+              }
+            }
+            return FileVisitResult.CONTINUE
+          }
         }
-      })
+      )
     } catch (e: IOException) {
       e.printStackTrace()
     }

@@ -6,14 +6,14 @@ import com.github.jackchen.android.sample.library.component.document.DocumentAss
 
 @Suppress("unused")
 class AndroidSampleExtensionInitializer : Initializer<AndroidSampleExtensions> {
-    override fun create(context: Context): AndroidSampleExtensions {
-        val androidSampleExtensions = AndroidSampleExtensions()
-        androidSampleExtensions.initialize(context)
-        DocumentAssetsManager.getInstance().onCreate(context)
-        return androidSampleExtensions
-    }
+  override fun create(context: Context): AndroidSampleExtensions {
+    val androidSampleExtensions = AndroidSampleExtensions()
+    androidSampleExtensions.initialize(context)
+    DocumentAssetsManager.getInstance().onCreate(context)
+    return androidSampleExtensions
+  }
 
-    override fun dependencies(): List<Class<out Initializer<*>?>> {
-        return emptyList()
-    }
+  override fun dependencies(): List<Class<out Initializer<*>?>> {
+    return emptyList()
+  }
 }
