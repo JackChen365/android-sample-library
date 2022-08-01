@@ -32,11 +32,11 @@ android {
 }
 
 dependencies {
-  api(projects.api)
   implementation(libs.androidx.ktx)
   implementation(libs.androidx.appcompat)
   implementation(libs.androidx.constraintlayout)
   implementation(libs.androidx.recyclerview)
   implementation(libs.androidx.startup.runtime)
   implementation(libs.gson)
+  api(projects.api)
 }
