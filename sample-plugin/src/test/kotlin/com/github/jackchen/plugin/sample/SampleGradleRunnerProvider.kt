@@ -5,14 +5,14 @@ import org.gradle.testkit.runner.GradleRunner
 import java.io.File
 
 class SampleGradleRunnerProvider : GradleRunnerProvider {
-    companion object {
-        private val sharedTestKitDir = File(".").resolve(".gradle").absoluteFile.also {
-            if (!it.exists()) it.mkdir()
-        }
+  companion object {
+    private val sharedTestKitDir = File(".").resolve(".gradle").absoluteFile.also {
+      if (!it.exists()) it.mkdir()
     }
+  }
 
-    override fun getGradleRunner(projectDir: File, gradleVersion: String): GradleRunner {
-        return GradleRunner.create().withProjectDir(projectDir).withGradleVersion(gradleVersion)
-            .withTestKitDir(sharedTestKitDir).forwardOutput()
-    }
+  override fun getGradleRunner(projectDir: File, gradleVersion: String): GradleRunner {
+    return GradleRunner.create().withProjectDir(projectDir).withGradleVersion(gradleVersion)
+      .withTestKitDir(sharedTestKitDir).forwardOutput()
+  }
 }

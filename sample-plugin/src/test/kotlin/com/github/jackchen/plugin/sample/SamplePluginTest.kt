@@ -169,9 +169,9 @@ class SamplePluginTest : GradlePluginTest() {
         testProjectRunner.projectDir,
         testProjectRunner.testVersions.supportedGradleVersion
       )
-      module("app"){
-        kotlinSourceDir("com.android.test"){
-          //New file
+      module("app") {
+        kotlinSourceDir("com.android.test") {
+          // New file
           val testMethod = "testMethod${Random.nextInt().absoluteValue}"
           file("TestDialog2.kt") {
             """
@@ -187,7 +187,7 @@ class SamplePluginTest : GradlePluginTest() {
           }
         }
       }
-      buildTask(gradleRunner,":app:transformDebugClassesWithAsm") {
+      buildTask(gradleRunner, ":app:transformDebugClassesWithAsm") {
         Assertions.assertEquals(
           TaskOutcome.SUCCESS,
           task(":app:transformDebugClassesWithAsm")?.outcome
