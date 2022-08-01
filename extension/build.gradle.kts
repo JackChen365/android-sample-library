@@ -28,6 +28,7 @@ android {
 }
 
 dependencies {
+  implementation(libs.androidx.ktx)
   implementation(libs.androidx.appcompat)
   implementation(libs.androidx.constraintlayout)
   implementation(libs.android.material)
