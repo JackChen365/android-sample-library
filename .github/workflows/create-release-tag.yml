@@ -1,0 +1,121 @@
+####################################################################################
+# This is for Android programmer to create a release tag before start the sprint.
+#
+####################################################################################
+
+name: create-release
+
+# ONLY triggers on master branch
+on:
+  repository_dispatch:
+    types: [ create-release ]
+
+env:
+  release_tag: ${{ github.event.client_payload.release_tag }}
+  user_name: ${{ github.event.client_payload.user_name }}
+  user_email: ${{ github.event.client_payload.user_email }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set_matrix.outputs.matrix }}
+    steps:
+      - id: set_matrix
+        name: Setup matrix
+        run: |
+          echo "::set-output name=matrix::{\"include\": [\
+            {\"module\":\"app\",\"build-task\":\":app:assembleDebug\"}]}"
+
+  build_package:
+    runs-on: ubuntu-latest
+    needs: [ setup ]
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup git user
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+      - name: Git debug info
+        run: |
+          git --version
+          echo "--------------------------------------------------------"
+          echo "The current branch."
+          git branch | cat -
+          echo "--------------------------------------------------------"
+          echo "The recent commit logs."
+          git log -n 20 | cat -
+          echo "--------------------------------------------------------"
+
+      # Assemble android package and upload to Slack one by one.
+      - name: Assemble Android Package
+        id: assemble_package
+        run: |
+          echo "Build the android package:${{ matrix.build-task }}"
+          function assemble_android_package() {
+            local gradlew_return_code=0
+            local should_retry_task="$1"
+            ./gradlew "${{ matrix.build-task }}" || gradlew_return_code=$?
+            echo "gradlew_return_code:$gradlew_return_code"
+            if (( gradlew_return_code != 0 )); then
+              if [[ "$should_retry_task" == "true" ]]; then
+                echo "Grade failed and we will retry the task."
+                assemble_android_package false
+              else
+                echo "Grade failed with exit status $gradlew_return_code"
+                exit 1
+              fi
+            fi
+          }
+          assemble_android_package true
+          ls -d build/intermediates/apk/debug/*.apk
+          output_files=$(ls -d build/intermediates/apk/debug/*.apk)
+          artifacts="${output_files//$'\n'/,}"
+          echo "-------------------------------------------------------"
+          echo "artifacts:$artifacts"
+          echo "-------------------------------------------------------"
+          echo "::set-output name=release_artifact::$artifacts"
+          echo "::set-output name=release_tag::$release_tag_name"
+
+      # The retention period must be between 1 and 90 inclusive and the default retention days is 90. For more information see artifact and log retention policies.
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.module }}-artifact
+          path: ${{ steps.assemble_package.outputs.release_artifact }}
+
+  create-release:
+    needs: [ build_package ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout app repo
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          path: ./artifact
+
+      - name: Prepare release description
+        id: release_info
+        run: |
+          ls -d artifact/*
+          release_title="sample-$release_tag"
+          echo "::set-output name=release_title::$release_title"
+          output_files=$(ls -d artifact/*)
+          artifacts=$(echo "${output_files/$'\n'/,}")
+          echo "artifacts:$artifacts"
+          echo "::set-output name=artifacts::$artifacts"
+
+      - name: Create release
+        id: release_action
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.release_info.outputs.release_title }}
+          artifacts: ${{ steps.release_info.outputs.artifacts }}
+          token: ${{ github.token }}

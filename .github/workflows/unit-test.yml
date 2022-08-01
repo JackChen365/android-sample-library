@@ -1,0 +1,50 @@
+## Work flow name.
+name: Unit test
+on:
+  pull_request:
+    branches:
+      - dev
+
+env:
+  REPO_BUILD_WEB_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set_matrix.outputs.matrix }}
+    steps:
+      - id: set_matrix
+        run: |
+          echo "::set-output name=matrix::{\"include\":[ \
+            {\"module\":\"sample-plugin\",\"unitest_task\":\":sample-plugin:test\"}]}"
+
+  unit-test:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+    steps:
+      # Check out the repo.
+      - uses: actions/checkout@v3
+
+      - name: Run unit test
+        id: unit_test
+        run: |
+          # https://issuetracker.google.com/issues/196847367?pli=1
+          mkdir -p $ANDROID_HOME/platform-tools/api && cp $ANDROID_HOME/platforms/android-30/data/api-versions.xml $ANDROID_HOME/platform-tools/api/api-versions.xml
+          ./gradlew clean ${{ matrix.unitest_task }}
+
+      - name: Zip the test report
+        id: unit_test_report
+        run: |
+          title="$(echo ${{ matrix.title }} | tr '[A-Z]' '[a-z]' | tr ' ' '_')"
+          report_file="${title}_report.zip"
+          zip -r $report_file ${{ matrix.report_dir }}
+          echo "::set-output name=report_file::$report_file"
+
+      - name: Upload the test Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.title }}-report-artifact
+          path: ${{ steps.unit_test_report.outputs.report_file }}
