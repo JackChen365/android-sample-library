@@ -7,6 +7,7 @@ import com.github.jackchen.android.core.component.ComponentManager
 import com.github.jackchen.android.core.extension.ExtensionHandler
 import com.github.jackchen.android.core.function.FunctionManager
 import com.github.jackchen.android.core.main.SampleActivityLifeCycleCallback
+import com.github.jackchen.android.core.path.PathProvider
 import com.github.jackchen.android.core.processor.ActionProcessManager
 import com.github.jackchen.android.sample.api.ExtensionItem
 import com.github.jackchen.android.sample.api.SampleItem
@@ -78,6 +79,7 @@ abstract class AndroidSample protected constructor() {
       val sampleArray = jsonObject.getJSONArray("samples")
       val sampleList = deserializationSampleList(sampleArray)
       sampleItemList.addAll(sampleList)
+      PathProvider.init(sampleList)
       mergeSampleItems(sampleList)
     }
 
@@ -102,6 +104,7 @@ abstract class AndroidSample protected constructor() {
         }
         prevNode.add(PathNode(sampleItem))
       }
+      fillFullPath(rootNode)
       // Collect the single node in the path.
       val singleNodeList = mutableListOf<PathNode>()
       collectSingleNode(singleNodeList, root, root.isSingle())
@@ -109,6 +112,13 @@ abstract class AndroidSample protected constructor() {
       singleNodeList.forEach(PathNode::shiftUp)
       rootNode.children.forEach { childNode ->
         shrinkPathNode(rootNode, childNode)
+      }
+    }
+
+    private fun fillFullPath(root: PathNode) {
+      root.fullPath = root.fullPath()
+      root.children.forEach {
+        fillFullPath(it)
       }
     }
 
@@ -159,6 +169,8 @@ abstract class AndroidSample protected constructor() {
           //Use the package as path.
           sampleItem.path = sampleItem.className.substringBeforeLast(".").replace('.', '/')
         }
+        sampleItem.pathTitle = sampleObject.optString(SampleConstants.PARAMETER_PATH_TITLE)
+        sampleItem.pathDesc = sampleObject.optString(SampleConstants.PARAMETER_PATH_DESC)
         sampleItem.isTestCase = sampleObject.getBoolean("isTestCase")
         if (sampleItem.isAvailable) {
           sampleItemList.add(sampleItem)
@@ -239,7 +251,7 @@ abstract class AndroidSample protected constructor() {
     }
   }
 
-  class PathNode(var item: Any? = null) {
+  class PathNode(var item: Any? = null, var fullPath: String? = null) {
     var parent: PathNode? = null
     var children: ArrayList<PathNode> = ArrayList(1)
 
@@ -258,6 +270,16 @@ abstract class AndroidSample protected constructor() {
 
     fun isEmpty(): Boolean {
       return children.isEmpty()
+    }
+
+    fun fullPath(): String {
+      fullPath?.also { return it }
+      if (item == ".") return ""
+      val parentFullPath = parent?.fullPath() ?: ""
+      if (parentFullPath.isNotEmpty()) {
+        return "$parentFullPath/$item"
+      }
+      return item.toString()
     }
 
     fun path(pathStr: String): List<PathNode> {

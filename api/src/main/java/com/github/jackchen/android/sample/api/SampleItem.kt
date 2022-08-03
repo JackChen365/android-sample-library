@@ -1,6 +1,6 @@
 package com.github.jackchen.android.sample.api
 
-import java.util.*
+import java.util.Objects
 
 /**
  * @author airsaid
@@ -9,6 +9,8 @@ data class SampleItem(
   var title: String = "",
   var desc: String = "",
   var path: String = "",
+  var pathTitle: String = "",
+  var pathDesc: String = "",
   var className: String = "",
   var isTestCase: Boolean = false,
 ) : Comparable<SampleItem> {

@@ -3,7 +3,13 @@ package com.github.jackchen.android.core.main.component
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -17,6 +23,8 @@ import com.github.jackchen.android.core.SampleConstants
 import com.github.jackchen.android.core.databinding.SampleFragmentMainLayoutBinding
 import com.github.jackchen.android.core.main.adapter.MutableListAdapter
 import com.github.jackchen.android.core.main.adapter.SampleListAdapter
+import com.github.jackchen.android.core.util.displayDesc
+import com.github.jackchen.android.core.util.displayTitle
 import com.github.jackchen.android.sample.api.SampleItem
 
 /**
@@ -95,7 +103,8 @@ class DefaultMainSampleFragment : Fragment() {
         if (null != activityClass) {
           val clazz = Class.forName(activityClass)
           Intent(requireActivity(), clazz).apply {
-            putExtra(SampleConstants.PARAMETER_TITLE, category)
+            putExtra(SampleConstants.PARAMETER_TITLE, pathNode.displayTitle())
+            putExtra(SampleConstants.PARAMETER_DESC, pathNode.displayDesc())
             putExtra(SampleConstants.PARAMETER_PATH, subDirectory)
             startActivity(this)
           }
