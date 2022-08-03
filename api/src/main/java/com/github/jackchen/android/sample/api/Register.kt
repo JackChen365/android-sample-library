@@ -35,4 +35,20 @@ annotation class Register(
    * based on the package name of the simple class.
    */
   val path: String = "",
+
+  /**
+   * The path title of the [path].
+   *
+   * When specified, the category name of the path will be displayed in the list.
+   * If it is not specified, the name of the most recent [path] will be displayed.
+   */
+  val pathTitle: String = "",
+
+  /**
+   * The path description of the [path].
+   *
+   * When specified, the category desc of the path will be displayed in the list.
+   * If it is not specified, it will not be displayed.
+   */
+  val pathDesc: String = ""
 )

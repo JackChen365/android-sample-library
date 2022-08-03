@@ -25,6 +25,8 @@ class ComponentAnnotationHandler : AnnotationHandler() {
       "title" -> sampleItem?.title = value.toString()
       "desc" -> sampleItem?.desc = value.toString()
       "path" -> sampleItem?.path = value.toString()
+      "pathTitle" -> sampleItem?.pathTitle = value.toString()
+      "pathDesc" -> sampleItem?.pathDesc = value.toString()
     }
   }
 }

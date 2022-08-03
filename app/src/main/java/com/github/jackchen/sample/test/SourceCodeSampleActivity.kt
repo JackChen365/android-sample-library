@@ -14,7 +14,7 @@ import com.github.jackchen.sample.databinding.ActivitySourceCodeSampleBinding
  * @email bingo110@126.com
  * @see SourceCodeView A webView that responsible for demonstrate source code.
  */
-@Register(title = "演示源码加载", desc = "演示源码加载,高度展示")
+@Register(title = "演示源码加载", desc = "演示源码加载,高度展示", pathTitle = "测试", pathDesc = "测试各个组件的使用")
 class SourceCodeSampleActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {

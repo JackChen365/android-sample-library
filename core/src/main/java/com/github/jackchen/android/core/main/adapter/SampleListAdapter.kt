@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.jackchen.android.core.AndroidSample
 import com.github.jackchen.android.core.databinding.SampleListItemBinding
+import com.github.jackchen.android.core.util.displayDesc
+import com.github.jackchen.android.core.util.displayTitle
 import com.github.jackchen.android.sample.api.SampleItem
 
 /**
@@ -36,19 +38,19 @@ class SampleListAdapter(items: MutableList<AndroidSample.PathNode>) :
 
   class ViewHolder(private val binding: SampleListItemBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(node: AndroidSample.PathNode) {
+      binding.sampleTitle.text = node.displayTitle()
+      val desc = node.displayDesc()
+      if (desc.isNotEmpty()) {
+        binding.sampleDescription.text = desc
+        binding.sampleDescription.visibility = View.VISIBLE
+      } else {
+        binding.sampleDescription.visibility = View.GONE
+      }
+
       val item = node.item
       if (item is String) {
-        binding.sampleTitle.text = item.replaceFirstChar { it.uppercaseChar() }
-        binding.sampleDescription.visibility = View.GONE
         binding.sampleImageArrow.visibility = View.VISIBLE
       } else if (item is SampleItem) {
-        binding.sampleTitle.text = item.title?.replaceFirstChar { it.uppercaseChar() }
-        if (item.desc.isNotEmpty()) {
-          binding.sampleDescription.text = item.desc
-          binding.sampleDescription.visibility = View.VISIBLE
-        } else {
-          binding.sampleDescription.visibility = View.GONE
-        }
         binding.sampleImageArrow.visibility = View.GONE
       }
     }
