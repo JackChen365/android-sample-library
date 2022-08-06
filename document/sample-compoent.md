@@ -11,44 +11,55 @@ As a result:It's all about how to add additional view to each samples
 ### Here are the solution.
 * First I have an abstract component container. It an interface.
 
-    ```
-    //SourceCode:core/com.cz.android.sample.component.CompanionComponentContainer
+```
+interface ComponentContainer {
+    /**
+     * We check if this object has Annotation:SampleBorder.
+     * If this sample object doesn't have this annotation. It won't call the other functions
+     *
+     * @return
+     */
+    fun isComponentAvailable(component: Any): Boolean
 
-    public interface ComponentContainer {
-        /**
-         * if there was a condition that make this component available or not
-         * @return
-         */
-        boolean isComponentAvailable(@NonNull Object object);
+    /**
+     * This function is an critical function. It's move like a chain. Each component will call this function
+     * And return a new view for the next.
+     * Tips:
+     * 1. If the sample is not a activity or fragment. Take a look on [AppcompatWindowDelegate]
+     *
+     * @param context    activity context
+     * @param component     the instance of the sample. It depends on which one that you registered
+     * @param parentView The parent view of your original view.
+     * @param view       your fragment/activity content view
+     * @return
+     */
+    fun getComponentView(context: AppCompatActivity, component: Any, parentView: ViewGroup, view: View): View
 
-        /**
-         * Get component view by view. If you want to maintain the original view just return it back;
-         * @return
-         */
-        View getComponentView(@NonNull FragmentActivity context,@NonNull Object object,@NonNull ViewGroup parentView,@NonNull View view);
+    /**
+     * After this component created a new view. This function will call automatically.
+     * The view is the one you created. You only have this chance to initialize your code here or it will be changed by the other component.
+     *
+     * @param context
+     * @param object
+     * @param view
+     */
+    fun onCreatedView(context: AppCompatActivity, `object`: Any, view: View)
 
-        /**
-         * When component is already. This method will call
-         * @see ComponentContainer#isComponentAvailable(java.lang.Object)
-         * @param context
-         * @param view
-         */
-        void onCreatedView(@NonNull FragmentActivity context,@NonNull Object object,@NonNull View view);
-
-        /**
-         * This will put this component to top or bottom in stack
-         * @return
-         */
-        int getComponentPriority();
-    }
-    ```
+    /**
+     * The priority in the component queue. If you want your component run before others
+     *
+     * @return
+     */
+    fun getComponentPriority(): Int = 0
+}
+```
 
 #### Here is a sample for ComponentContainer
 
 ##### *Sample File*
 
 ```
-//SourceCode:app/com.cz.sample.custom.component
+//SourceCode:app/com.github.jackchen.sample.custom.component
     |-- BorderComponent
     |-- BorderLayout
     |-- SampleBorder
@@ -59,61 +70,50 @@ It comes with the annotation: SampleBorder. That's your custom annotation to che
 <br>
 
 ```
-@Component
-public class BorderComponent implements ComponentContainer {
+@Extension
+class BorderComponent : ComponentContainer {
     /**
      * We check if this object has Annotation:SampleBorder.
      * If this sample object doesn't have this annotation. It won't call the other functions
-     * @param object
+     * @param component
      * @return
      */
-    @Override
-    public boolean isComponentAvailable(@NonNull Object object) {
-        SampleBorder sampleBorder = object.getClass().getAnnotation(SampleBorder.class);
-        return null!=sampleBorder&&sampleBorder.value();
+    override fun isComponentAvailable(component: Any): Boolean {
+        val sampleBorder = component.javaClass.getAnnotation(SampleBorder::class.java)
+        return null != sampleBorder && sampleBorder.value
     }
 
     /**
      * This function is an critical function. It's move like a chain. Each component will call this function
      * And return a new view for the next.
-     *
      * Tips:
-     * 1. If the sample is not a activity or fragment. Take a look on {@link ComponentWindowDelegate}
+     * 1. If the sample is not a activity or fragment. Take a look on [com.github.jackchen.android.core.window.AppcompatWindowDelegate]
      *
-     * @param context activity context
-     * @param object the instance of the sample. It depends on which one that you registered
+     * @param context    activity context
+     * @param component     the instance of the sample. It depends on which one that you registered
      * @param parentView The parent view of your original view.
-     * @param view your fragment/activity content view
+     * @param view       your fragment/activity content view
      * @return
      */
-    @Override
-    public View getComponentView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull ViewGroup parentView, @NonNull View view) {
-        BorderLayout borderLayout=new BorderLayout(context);
-        borderLayout.addView(view);
-        return borderLayout;
+    override fun getComponentView(
+        context: AppCompatActivity, component: Any,
+        parentView: ViewGroup, view: View
+    ): View {
+        val borderLayout = BorderLayout(context)
+        borderLayout.addView(view)
+        return borderLayout
     }
 
     /**
      * After this component created a new view. This function will call automatically.
      * The view is the one you created. You only have this chance to initialize your code here or it will be changed by the other component.
+     *
      * @param context
      * @param object
      * @param view
      */
-    @Override
-    public void onCreatedView(@NonNull FragmentActivity context, @NonNull Object object, @NonNull View view) {
-    }
-
-    /**
-     * The priority in the component queue. If you want your component run before others
-     * @return
-     */
-    @Override
-    public int getComponentPriority() {
-        return 0;
-    }
+    override fun onCreatedView(context: AppCompatActivity, `object`: Any, view: View) {}
 }
-
 ```
 
 ### Some component We already have
@@ -121,7 +121,7 @@ public class BorderComponent implements ComponentContainer {
 #### *Component List*
 
 ```
-//SourceCode:library/com.cz.android.sample.library.component
+//SourceCode:extension/com.github.jackchen.sample.library.component
 |-- code
 |-- document
 |-- memory
