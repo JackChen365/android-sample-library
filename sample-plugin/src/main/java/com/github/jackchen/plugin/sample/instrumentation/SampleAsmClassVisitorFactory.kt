@@ -41,7 +41,6 @@ abstract class SampleAsmClassVisitorFactory :
         return true
       }
     }
-    SampleClassHandler.cleanDirtyData(classData.className)
     return false
   }
 

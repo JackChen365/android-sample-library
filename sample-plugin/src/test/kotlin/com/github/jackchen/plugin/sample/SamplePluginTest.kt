@@ -9,6 +9,7 @@ import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import java.io.File
 import kotlin.math.absoluteValue
 import kotlin.random.Random
 
@@ -169,18 +170,19 @@ class SamplePluginTest : GradlePluginTest() {
         testProjectRunner.projectDir,
         testProjectRunner.testVersions.supportedGradleVersion
       )
+      File(projectDir, "app/src/main/kotlin/com/android/test").deleteRecursively()
       module("app") {
         kotlinSourceDir("com.android.test") {
-          // New file
-          val testMethod = "testMethod${Random.nextInt().absoluteValue}"
-          file("TestDialog2.kt") {
+          // New file with new method. So we always remove an old file and add a new class file to test the incremental change.
+          val newClassName = "TestDialog${Random.nextInt().absoluteValue}"
+          file("$newClassName.kt") {
             """
               |package com.android.test
               |import androidx.appcompat.app.AppCompatDialog
-              |@com.github.jackchen.android.sample.api.Register(title="The test dialog2")
-              |class TestDialog2{
-              |   fun $testMethod(){
-              |     println("$testMethod")
+              |@com.github.jackchen.android.sample.api.Register(title="The test $newClassName")
+              |class $newClassName{
+              |   fun testMethod(){
+              |     println("testMethod")
               |   }
               |}
             """.trimMargin()
