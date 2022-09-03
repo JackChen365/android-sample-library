@@ -5,15 +5,12 @@ import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.tasks.TransformClassesWithAsmTask
-import com.github.jackchen.android.sample.api.ExtensionItem
-import com.github.jackchen.android.sample.api.SampleItem
 import com.github.jackchen.plugin.sample.extension.SampleExtension
-import com.github.jackchen.plugin.sample.instrumentation.AndroidSampleTemplateCreator
 import com.github.jackchen.plugin.sample.instrumentation.SampleAsmClassVisitorFactory
-import com.github.jackchen.plugin.sample.instrumentation.SampleClassHandler
 import com.github.jackchen.plugin.sample.task.MergeSourceFileAndDocTask
+import com.github.jackchen.plugin.sample.task.PostTransformClassesWithAsmTask
+import com.github.jackchen.plugin.sample.task.PreTransformClassesWithAsmTask
 import com.github.jackchen.plugin.sample.util.isAndroidProject
-import com.google.gson.Gson
 import org.gradle.api.*
 import org.gradle.configurationcache.extensions.capitalized
 import java.io.File
@@ -73,31 +70,34 @@ class SamplePlugin : Plugin<Project> {
     project: Project,
     sampleExtension: SampleExtension
   ) {
+    val configurationOutputFile = File(
+      project.buildDir,
+      "intermediates/${PostTransformClassesWithAsmTask.TASK_NAME}/output"
+    )
+    val preTransformClassesWithAsmTask = project.tasks.create(
+      PreTransformClassesWithAsmTask.TASK_NAME,
+      PreTransformClassesWithAsmTask::class.java
+    ) { task ->
+      task.configurationOutputFileProvider.set(configurationOutputFile)
+      task.outputs.upToDateWhen { false }
+    }
+    val postTransformClassesWithAsmTask = project.tasks.create(
+      PostTransformClassesWithAsmTask.TASK_NAME,
+      PostTransformClassesWithAsmTask::class.java
+    ) { task ->
+      task.outputDebugLogProvider.set(sampleExtension.enableDebug)
+      task.configurationOutputFileProvider.set(configurationOutputFile)
+      task.outputs.upToDateWhen { false }
+    }
     project.tasks.withType(TransformClassesWithAsmTask::class.java) { transformTask ->
       transformTask.doLast(object : Action<Task> {
         override fun execute(t: Task) {
-          val files = transformTask.outputs.files.files
-          val sampleList = SampleClassHandler.getSampleList()
-          val extensionList = SampleClassHandler.getExtensionList()
-          if (files.isNotEmpty()) {
-            val destFolder = files.first()
-            createSampleConfigurationClass(destFolder, sampleList, extensionList)
-          }
-          if (sampleExtension.enableDebug.get()) {
-            PathNodePrinter.printPathTree(sampleList)
-          }
+          val outputFiles = transformTask.outputs.files.files
+          postTransformClassesWithAsmTask.transformOutputsProvider.set(outputFiles)
         }
       })
+      transformTask.dependsOn(preTransformClassesWithAsmTask)
+      transformTask.finalizedBy(postTransformClassesWithAsmTask)
     }
-  }
-
-  private fun createSampleConfigurationClass(
-    destFolder: File,
-    sampleItemList: List<SampleItem>,
-    extensionList: List<ExtensionItem>
-  ) {
-    val configurationJsonText =
-      Gson().toJson(mapOf("samples" to sampleItemList, "extensions" to extensionList))
-    AndroidSampleTemplateCreator.create(destFolder, configurationJsonText)
   }
 }

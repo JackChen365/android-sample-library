@@ -2,6 +2,7 @@ package com.github.jackchen.plugin.sample.instrumentation
 
 import com.github.jackchen.android.sample.api.ExtensionItem
 import com.github.jackchen.android.sample.api.SampleItem
+import com.github.jackchen.plugin.sample.task.ClassConfigurations
 import com.github.jackchen.plugin.sample.visitor.SampleClassVisitor
 import com.github.jackchen.plugin.sample.visitor.annotaiton.AnnotationHandler
 import com.github.jackchen.plugin.sample.visitor.annotaiton.ComponentAnnotationHandler
@@ -55,22 +56,18 @@ object SampleClassHandler {
     return sampleAnnotationHandlerList.find { it.accept(classVisitor, desc, visible) }
   }
 
+  fun loadDataFromCache(classConfigurations: ClassConfigurations) {
+    sampleMap.clear()
+    classConfigurations.samples.forEach { sampleItem ->
+      sampleMap[sampleItem.className] = sampleItem
+    }
+    extensionMap.clear()
+    classConfigurations.extensions.forEach { extensionItem ->
+      extensionMap[extensionItem.className] = extensionItem
+    }
+  }
+
   fun getSampleList(): List<SampleItem> = sampleMap.values.toList()
 
   fun getExtensionList(): List<ExtensionItem> = extensionMap.values.toList()
-
-  /**
-   * For incremental scenarios, if the new class no longer matches,
-   * it needs to be removed from the list to avoid generating dirty data.
-   *
-   * @param notMatchClassName Class names that do not conform to the processing rules.
-   */
-  fun cleanDirtyData(notMatchClassName: String) {
-    if (sampleMap.containsKey(notMatchClassName)) {
-      sampleMap.remove(notMatchClassName)
-    }
-    if (extensionMap.containsKey(notMatchClassName)) {
-      extensionMap.remove(notMatchClassName)
-    }
-  }
 }
