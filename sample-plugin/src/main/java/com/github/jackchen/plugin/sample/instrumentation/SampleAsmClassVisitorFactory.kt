@@ -4,7 +4,6 @@ import com.android.build.api.instrumentation.AsmClassVisitorFactory
 import com.android.build.api.instrumentation.ClassContext
 import com.android.build.api.instrumentation.ClassData
 import com.android.build.api.instrumentation.InstrumentationParameters
-import com.android.build.gradle.internal.instrumentation.ClassContextImpl
 import com.github.jackchen.android.sample.api.Extension
 import com.github.jackchen.android.sample.api.Register
 import com.github.jackchen.android.sample.api.TestCase
@@ -29,9 +28,7 @@ abstract class SampleAsmClassVisitorFactory :
     classContext: ClassContext,
     nextClassVisitor: ClassVisitor
   ): ClassVisitor {
-    val classContextImpl = classContext as ClassContextImpl
-    val classesHierarchyResolver = classContextImpl.classesHierarchyResolver
-    return SampleClassVisitor(nextClassVisitor, classesHierarchyResolver)
+    return SampleClassVisitor(nextClassVisitor)
   }
 
   override fun isInstrumentable(classData: ClassData): Boolean {

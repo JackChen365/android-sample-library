@@ -1,6 +1,5 @@
 package com.github.jackchen.plugin.sample.visitor
 
-import com.android.build.gradle.internal.instrumentation.ClassesHierarchyResolver
 import com.github.jackchen.plugin.sample.instrumentation.SampleClassHandler
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassVisitor
@@ -9,10 +8,7 @@ import org.objectweb.asm.Opcodes
 /**
  * @author JackChen
  */
-class SampleClassVisitor(
-  classVisitor: ClassVisitor?,
-  private val classesHierarchyResolver: ClassesHierarchyResolver
-) : ClassVisitor(Opcodes.ASM6, classVisitor) {
+class SampleClassVisitor(classVisitor: ClassVisitor?) : ClassVisitor(Opcodes.ASM6, classVisitor) {
   companion object {
     private const val SUPER_CLASS_NAME = "com/github/jackchen/android/core/appcompat/SampleAppCompatActivity"
     const val ANDROIDX_COMPAT_ACTIVITY_CLASS_NAME = "androidx/appcompat/app/AppCompatActivity"
